@@ -6,9 +6,21 @@ import edu.cs.ai.alchourron.logic.Signature;
  * 
  * @author Kai Sauerwald
  *
- * @param <V> The type of variables
+ * @param <T> The type which are bound by this quantifier (Variables, Relations, ...)
  */
-public interface Quantor<V extends Variable<S>,S extends Signature> extends SyntacticElement<S> {
+public interface Quantor<T,S extends Signature> extends LogicalOperator<S> {
+	
+	
+	/***
+	 * Gets the parameters of this quantifier
+	 */
+	T getQuantifying();
+	
+	/***
+	 * Gets the formula which is quantified
+	 * @return
+	 */
+	SyntacticFormula<S> getQuantified();
 
 	/*
 	 * (non-Javadoc)

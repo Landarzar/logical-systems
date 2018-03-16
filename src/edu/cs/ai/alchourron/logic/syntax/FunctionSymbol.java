@@ -2,7 +2,20 @@ package edu.cs.ai.alchourron.logic.syntax;
 
 import edu.cs.ai.alchourron.logic.Signature;
 
-public interface FunctionSymbol<S extends Signature>  extends SyntacticElement<S> {
+public interface FunctionSymbol<FSym, S extends Signature>  extends Term<S> {
+	
+	/***
+	 * Gets the symbol of this function.
+	 * @author Kai Sauerwald
+	 */
+	FSym getSymbol();
+	
+
+	/***
+	 * Returns the arity of this function.
+	 * @author Kai Sauerwald
+	 */
+	int getArity();
 	
 	/*
 	 * (non-Javadoc)

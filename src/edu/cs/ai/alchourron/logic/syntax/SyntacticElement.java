@@ -9,7 +9,7 @@ import edu.cs.ai.alchourron.logic.Signature;
  *
  * @param <S> The signature of this formula 
  */
-public interface SyntacticElement<S extends Signature> extends Formula<S> {
+public interface SyntacticElement<S extends Signature> {
 	
 	/***
 	 * Checks where this elements represents a variable in this coressponding logic

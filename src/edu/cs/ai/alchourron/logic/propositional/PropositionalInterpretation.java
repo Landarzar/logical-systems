@@ -10,23 +10,23 @@ import edu.cs.ai.alchourron.logic.Interpretation;
  * Represents propositional interpretations.
  * @author Kai Sauerwald
  *
- * @param <V> The type of symbols used in the signature
+ * @param <PSym> The type of symbols used in the signature
  * @param <S> The type of the signature
  */
-public class PropositionalInterpretation<V, S extends PropositionalSignature<V>> implements Interpretation<S> {
+public class PropositionalInterpretation<PSym, S extends PropositionalSignature<PSym>> implements Interpretation<S> {
 
 	S signature;
-	Set<V> trueValued;
+	Set<PSym> trueValued;
 	
 	/***
 	 * Constructs a new interpretation
 	 * @param sig The signature over which the interpretation is defined
 	 * @param trueValued The elements which are considered to be true
 	 */
-	public PropositionalInterpretation(S sig, V[] trueValued) {
+	public PropositionalInterpretation(S sig, PSym[] trueValued) {
 		this.trueValued = new HashSet<>();
 		for (int i = 0; i < trueValued.length; i++) {
-			V v = trueValued[i];
+			PSym v = trueValued[i];
 			this.trueValued.add(v);
 		}
 	}
@@ -36,7 +36,7 @@ public class PropositionalInterpretation<V, S extends PropositionalSignature<V>>
 	 * @param sig The signature over which the interpretation is defined
 	 * @param trueValued The elements which are considered to be true
 	 */
-	public PropositionalInterpretation(S sig, Collection<V> trueValued) {
+	public PropositionalInterpretation(S sig, Collection<PSym> trueValued) {
 		this.trueValued = new HashSet<>(trueValued);
 	}
 	
@@ -45,7 +45,7 @@ public class PropositionalInterpretation<V, S extends PropositionalSignature<V>>
 	 * @author Kai Sauerwald
 	 * @param symbol The symbol
 	 */
-	public boolean isTrue(V symbol) {
+	public boolean isTrue(PSym symbol) {
 		return trueValued.contains(symbol);
 	}
 	
@@ -54,7 +54,7 @@ public class PropositionalInterpretation<V, S extends PropositionalSignature<V>>
 	 * @author Kai Sauerwald
 	 * @param symbol The symbol
 	 */
-	public boolean isFalse(V symbol) {
+	public boolean isFalse(PSym symbol) {
 		return !isTrue(symbol);
 	}
 

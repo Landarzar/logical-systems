@@ -8,28 +8,28 @@ import java.util.Set;
 import edu.cs.ai.alchourron.logic.Signature;
 
 /***
- * Represents a propositional signature, which uses Elements of the type V as symbol supply.
+ * Represents a propositional signature, which uses Elements of the type Psym as symbol supply.
  * @author Kai Sauerwald
  *
- * @param <V> The type of the symbols
+ * @param <PSym> The type of the symbols
  */
-public class PropositionalSignature<V> implements Signature {
+public class PropositionalSignature<PSym> implements Signature {
 	
 	/***
 	 * The symbols of this signature
 	 * @author Kai Sauerwald
 	 */
-	HashSet<V> symbols;
+	HashSet<PSym> symbols;
 	
 	/***
 	 * Constructs a new propositional signature
 	 * @author Kai Sauerwald
 	 * @param symbols The symbols of this signature
 	 */
-	public PropositionalSignature(V[] symbols) {
+	public PropositionalSignature(PSym[] symbols) {
 		this.symbols = new HashSet<>();
 		for (int i = 0; i < symbols.length; i++) {
-			V v = symbols[i];
+			PSym v = symbols[i];
 			this.symbols.add(v);
 		}
 	}
@@ -39,7 +39,7 @@ public class PropositionalSignature<V> implements Signature {
 	 * @author Kai Sauerwald
 	 * @param symbols The symbols of this signature
 	 */
-	public PropositionalSignature(Collection<V> symbols) {
+	public PropositionalSignature(Collection<PSym> symbols) {
 		this.symbols = new HashSet<>(symbols);
 	}
 	
@@ -47,7 +47,7 @@ public class PropositionalSignature<V> implements Signature {
 	 * Returns the set of the symbols of this signature 
 	 * @author Kai Sauerwald
 	 */
-	public Set<V> getSymbols(){
+	public Set<PSym> getSymbols(){
 		return Collections.unmodifiableSet(symbols);
 	}
 }

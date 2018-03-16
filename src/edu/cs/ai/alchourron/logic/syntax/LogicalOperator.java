@@ -10,7 +10,7 @@ import edu.cs.ai.alchourron.logic.Signature;
  *
  * @param <S> The Signature
  */
-public interface LogicalOperator<S extends Signature>  extends SyntacticElement<S> {
+public interface LogicalOperator<S extends Signature>  extends SyntacticFormula<S> {
 	
 	
 	/***
