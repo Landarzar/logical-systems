@@ -1,6 +1,6 @@
-package cs.ai.logic.syntax;
+package edu.cs.ai.alchourron.logic.syntax;
 
-import cs.ai.logic.Signature;
+import edu.cs.ai.alchourron.logic.Signature;
 
 public interface Predicate<S extends Signature>  extends SyntacticElement<S> {
 	/*

@@ -1,11 +1,11 @@
-package cs.ai.logic.propositional;
+package edu.cs.ai.alchourron.logic.propositional;
 
 import java.util.Set;
 
-import cs.ai.logic.Formula;
-import cs.ai.logic.LogicalSystem;
-import cs.ai.logic.syntax.LogicalAND;
-import cs.ai.logic.syntax.SyntacticElement;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.LogicalSystem;
+import edu.cs.ai.alchourron.logic.syntax.LogicalAND;
+import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 
 /***
  * Logical System representing propositional logic over symbol space of type

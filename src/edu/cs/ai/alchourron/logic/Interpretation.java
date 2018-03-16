@@ -1,4 +1,4 @@
-package cs.ai.logic;
+package edu.cs.ai.alchourron.logic;
 
 /***
  * This class represents a interpretation type.

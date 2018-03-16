@@ -1,6 +1,6 @@
-package cs.ai.logic;
+package edu.cs.ai.alchourron.logic;
 
-import cs.ai.logic.syntax.SyntacticElement;
+import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 
 /***
  * Represents an formula

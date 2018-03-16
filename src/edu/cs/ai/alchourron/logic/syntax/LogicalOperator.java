@@ -1,8 +1,8 @@
-package cs.ai.logic.syntax;
+package edu.cs.ai.alchourron.logic.syntax;
 
 import java.util.List;
 
-import cs.ai.logic.Signature;
+import edu.cs.ai.alchourron.logic.Signature;
 
 /***
  * Base for 

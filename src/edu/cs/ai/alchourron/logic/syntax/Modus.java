@@ -1,6 +1,6 @@
-package cs.ai.logic.syntax;
+package edu.cs.ai.alchourron.logic.syntax;
 
-import cs.ai.logic.Signature;
+import edu.cs.ai.alchourron.logic.Signature;
 
 /***
  * Represents a modus of a modal logic. Typical is the modus "K" with the intended meaning someone "knows".

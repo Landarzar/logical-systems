@@ -1,11 +1,11 @@
-package cs.ai.logic.propositional;
+package edu.cs.ai.alchourron.logic.propositional;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import cs.ai.logic.Signature;
+import edu.cs.ai.alchourron.logic.Signature;
 
 /***
  * Represents a propositional signature, which uses Elements of the type V as symbol supply.

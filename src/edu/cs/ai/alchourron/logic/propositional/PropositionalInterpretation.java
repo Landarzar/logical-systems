@@ -1,10 +1,10 @@
-package cs.ai.logic.propositional;
+package edu.cs.ai.alchourron.logic.propositional;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import cs.ai.logic.Interpretation;
+import edu.cs.ai.alchourron.logic.Interpretation;
 
 /***
  * Represents propositional interpretations.
