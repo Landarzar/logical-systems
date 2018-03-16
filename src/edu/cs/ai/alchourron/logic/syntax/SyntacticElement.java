@@ -12,12 +12,6 @@ import edu.cs.ai.alchourron.logic.Signature;
 public interface SyntacticElement<S extends Signature> {
 	
 	/***
-	 * Checks where this elements represents a variable in this coressponding logic
-	 * @author Kai Sauerwald
-	 */
-	public boolean isVariable();
-	
-	/***
 	 * Checks where this elements is atomic in this coressponding logic
 	 * @author Kai Sauerwald
 	 */

@@ -17,7 +17,7 @@ public interface LogicalOperator<S extends Signature>  extends SyntacticFormula<
 	 * Returns the operands of this logical connective.
 	 * @author Kai Sauerwald
 	 */
-	List<SyntacticElement<S>> getOperands();
+	List<? extends SyntacticElement<S>> getOperands();
 	
 	/*
 	 * (non-Javadoc)

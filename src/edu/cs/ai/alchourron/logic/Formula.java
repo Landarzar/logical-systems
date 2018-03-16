@@ -16,7 +16,7 @@ public interface Formula<S extends Signature> {
 	 * @author Kai Sauerwald
 	 * @throws UnsupportedOperationException If the method is not implement or supported
 	 */
-	public SyntacticElement<S> getSyntax() throws UnsupportedOperationException;
+	public SyntacticElement<S> getSyntaxTree() throws UnsupportedOperationException;
 	
 	/***
 	 * Gets the (smalles) signature matching to this formula.
