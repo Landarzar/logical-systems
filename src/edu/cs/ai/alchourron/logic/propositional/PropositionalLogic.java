@@ -24,7 +24,7 @@ import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
  * @param <F>
  *            The type for formula
  */
-public class PropositionaLogic<PSym>
+public class PropositionalLogic<PSym>
 		implements LogicalSystem<Boolean, PropositionalSignature<PSym>, PropositionalFormula<PSym>, PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
 
 	/*

@@ -103,4 +103,12 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 		return signature;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return this.trueValued.toString();
+	}
 }

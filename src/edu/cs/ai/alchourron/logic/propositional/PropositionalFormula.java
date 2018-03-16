@@ -6,6 +6,7 @@ import java.util.List;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.syntax.LogicalAND;
+import edu.cs.ai.alchourron.logic.syntax.LogicalOR;
 import edu.cs.ai.alchourron.logic.syntax.Predicate;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.Term;
@@ -31,7 +32,7 @@ public abstract class PropositionalFormula<PSym> implements Formula<Propositiona
 		 * 
 		 * @author Kai Sauerwald
 		 */
-		public PropositionalAtom(PSym sign, PropositionalSignature<PSym> signature) {
+		public PropositionalAtom(PropositionalSignature<PSym> signature, PSym sign) {
 			this.symbol = sign;
 			this.signature = signature;
 		}
@@ -107,9 +108,24 @@ public abstract class PropositionalFormula<PSym> implements Formula<Propositiona
 		 * 
 		 * @author Kai Sauerwald
 		 */
-		public PropositionalAND(Collection<PropositionalFormula<PSym>> operands, PropositionalSignature<PSym> signature) {
+		public PropositionalAND(PropositionalSignature<PSym> signature, Collection<PropositionalFormula<PSym>> operands) {
 			this.signature = signature;
 			this.operands = new ArrayList<>(operands);
+		}
+		
+
+		/**
+		 * Constructs a new instance of this class
+		 * 
+		 * @author Kai Sauerwald
+		 */
+		@SafeVarargs
+		public PropositionalAND(PropositionalSignature<PSym> signature, PropositionalFormula<PSym>... operands) {
+			this.signature = signature;
+			this.operands = new ArrayList<>();
+			for (PropositionalFormula<PSym> op : operands) {
+				this.operands.add(op);
+			}
 		}
 
 		/*
@@ -151,7 +167,7 @@ public abstract class PropositionalFormula<PSym> implements Formula<Propositiona
 		}
 	}
 
-	public static class PropositionalOR<PSym> extends PropositionalFormula<PSym> implements LogicalAND<PropositionalSignature<PSym>> {
+	public static class PropositionalOR<PSym> extends PropositionalFormula<PSym> implements LogicalOR<PropositionalSignature<PSym>> {
 
 		protected PropositionalSignature<PSym> signature;
 		ArrayList<PropositionalFormula<PSym>> operands;
@@ -161,9 +177,24 @@ public abstract class PropositionalFormula<PSym> implements Formula<Propositiona
 		 * 
 		 * @author Kai Sauerwald
 		 */
-		public PropositionalOR(Collection<PropositionalFormula<PSym>> operands, PropositionalSignature<PSym> signature) {
+		public PropositionalOR(PropositionalSignature<PSym> signature, Collection<PropositionalFormula<PSym>> operands) {
 			this.signature = signature;
 			this.operands = new ArrayList<>(operands);
+		}
+		
+
+		/**
+		 * Constructs a new instance of this class
+		 * 
+		 * @author Kai Sauerwald
+		 */
+		@SafeVarargs
+		public PropositionalOR(PropositionalSignature<PSym> signature, PropositionalFormula<PSym>... operands) {
+			this.signature = signature;
+			this.operands = new ArrayList<>();
+			for (PropositionalFormula<PSym> op : operands) {
+				this.operands.add(op);
+			}
 		}
 
 		/*
@@ -215,7 +246,7 @@ public abstract class PropositionalFormula<PSym> implements Formula<Propositiona
 		 * 
 		 * @author Kai Sauerwald
 		 */
-		public PropositionalNEG(PropositionalFormula<PSym> operand, PropositionalSignature<PSym> signature) {
+		public PropositionalNEG(PropositionalSignature<PSym> signature, PropositionalFormula<PSym> operand) {
 			this.signature = signature;
 			this.operand = operand;
 		}
