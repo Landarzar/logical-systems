@@ -91,7 +91,7 @@ public class PropositionalLogic<PSym>
 	 */
 	@Override
 	public boolean entails(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> interpretation, PropositionalFormula<PSym> formula) {
-		assert this.validFormula(formula) : "given formula ist not valid";
+		assert this.validFormula(formula) : "the given formula ist not valid";
 				
 		if (formula instanceof PropositionalFormula.PropositionalAtom<?>) {
 			PropositionalFormula.PropositionalAtom<PSym> atom = (PropositionalFormula.PropositionalAtom<PSym>) formula;
