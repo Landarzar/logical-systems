@@ -41,7 +41,7 @@ public class PropositionalSignature<PSym> implements Signature, Iterable<Proposi
 	 * @param symbols
 	 *            The symbols of this signature
 	 */
-	public PropositionalSignature(PSym[] symbols) {
+	public PropositionalSignature(PSym... symbols) {
 		this.symbols = new ArrayList<>();
 		for (int i = 0; i < symbols.length; i++) {
 			PSym v = symbols[i];
