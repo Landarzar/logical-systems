@@ -32,6 +32,7 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 *            The elements which are considered to be true
 	 */
 	public PropositionalInterpretation(S sig, PSym[] trueValued) {
+		this.signature =sig;
 		this.trueValued = new HashSet<>();
 		for (int i = 0; i < trueValued.length; i++) {
 			PSym v = trueValued[i];
@@ -48,6 +49,7 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 *            The elements which are considered to be true
 	 */
 	public PropositionalInterpretation(S sig, Collection<PSym> trueValued) {
+		this.signature =sig;
 		this.trueValued = new HashSet<>(trueValued);
 	}
 
@@ -109,6 +111,13 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 */
 	@Override
 	public String toString() {
-		return this.trueValued.toString();
+		StringBuilder builder = new StringBuilder();
+		for (PSym pSym : signature.symbols) {
+			if(trueValued.contains(pSym))
+			builder.append(pSym);
+			else
+				builder.append("\u0305" + pSym);
+		}
+		return builder.toString();
 	}
 }
