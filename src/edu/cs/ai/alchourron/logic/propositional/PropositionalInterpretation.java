@@ -7,6 +7,10 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import edu.cs.ai.alchourron.logic.Interpretation;
+import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula.PropositionalAtom;
+import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula.PropositionalNEG;
+import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula.PropositionalAND;
+import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula.PropositionalOR;
 
 /***
  * Represents propositional interpretations.
@@ -119,5 +123,24 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 				builder.append("\u0305" + pSym);
 		}
 		return builder.toString();
+	}
+	
+	
+	public PropositionalFormula<PSym> getCharacterizingFormula(){
+		PropositionalFormula<PSym> result = null;
+		
+		for (PSym pSym : signature.getSymbols()) {
+			PropositionalFormula<PSym>  tmp;
+			if(isTrue(pSym))
+				tmp = new PropositionalAtom<PSym>(signature,pSym);
+			else
+				tmp = new PropositionalAtom<PSym>(signature,pSym).Neg();
+			
+			if(result == null)
+				result = tmp;
+			else
+				result= result.And(tmp);
+		}
+		return result;
 	}
 }

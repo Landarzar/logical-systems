@@ -21,6 +21,18 @@ import edu.cs.ai.alchourron.logic.syntax.Term;
  */
 public abstract class PropositionalFormula<PSym> implements Formula<PropositionalSignature<PSym>>, SyntacticElement<PropositionalSignature<PSym>> {
 	
+	public PropositionalFormula<PSym> Neg(){
+		return new PropositionalNEG<>(this.getSignature(), this);
+	}
+	
+	public PropositionalFormula<PSym> And(PropositionalFormula<PSym> f){
+		return new PropositionalAND<>(this.getSignature(), this, f);
+	}
+	
+	public PropositionalFormula<PSym> Or(PropositionalFormula<PSym> f){
+		return new PropositionalOR<>(this.getSignature(), this, f);
+	}
+
 
 	public static class PropositionalAtom<PSym> extends PropositionalFormula<PSym> implements Predicate<PSym, PropositionalSignature<PSym>> {
 
