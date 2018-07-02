@@ -143,4 +143,19 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 		}
 		return result;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof PropositionalInterpretation))
+			return false;
+		PropositionalInterpretation<PSym, PropositionalSignature<PSym>> pi = (PropositionalInterpretation<PSym, PropositionalSignature<PSym>>) obj;
+		if(!pi.getSignature().equals(this.getSignature()))
+			return false;
+		for (PSym pSym : getSignature().symbols) {
+			if(pi.isTrue(pSym) != this.isTrue(pSym))
+				return false;
+		}
+		
+		return true;
+	}
 }
