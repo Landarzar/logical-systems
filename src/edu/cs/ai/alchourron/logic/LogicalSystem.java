@@ -79,6 +79,7 @@ public interface LogicalSystem<T, S extends Signature, F extends Formula<S>, I e
 	 *             entailment. (Or the {@link models} throws an exception on a call with {@link f1} or {@link f2})
 	 */
 	public default boolean entails(F f1, F f2) {
-		return models(f2).containsAll(models(f1));
+		Set<I> mf2 = models(f2);
+		return models(f1).parallelStream().allMatch(i -> mf2.parallelStream().anyMatch(i2 -> i2.equals(i)));
 	}
 }
