@@ -301,5 +301,9 @@ public abstract class PropositionalFormula<PSym> implements Formula<Propositiona
 			return false;
 		}
 	}
-
+@Override
+public boolean equals(Object obj) {
+	// TODO Auto-generated method stub
+	return super.equals(obj);
+}
 }

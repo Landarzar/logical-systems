@@ -5,7 +5,7 @@ package edu.cs.ai.alchourron.logic;
  * @author Kai Sauerwald
  *
  */
-public interface Signature {
+public interface Signature  {
 
 	
 	

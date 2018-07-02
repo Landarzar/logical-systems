@@ -120,7 +120,7 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 			if(trueValued.contains(pSym))
 			builder.append(pSym);
 			else
-				builder.append("\u0305" + pSym);
+				builder.append("\u00AC" + pSym);
 		}
 		return builder.toString();
 	}
@@ -142,5 +142,19 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 				result= result.And(tmp);
 		}
 		return result;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof PropositionalInterpretation<?, ?>))
+			return super.equals(obj);
+		PropositionalInterpretation<PSym, PropositionalSignature<PSym>> pi = (PropositionalInterpretation<PSym, PropositionalSignature<PSym>>) obj;
+		if(pi==null)
+			return false;
+		for (PSym pSym : signature.getSymbols()) {
+			if(pi.isTrue(pSym) != this.isTrue(pSym))
+				return false;
+		}
+		return true;
 	}
 }
