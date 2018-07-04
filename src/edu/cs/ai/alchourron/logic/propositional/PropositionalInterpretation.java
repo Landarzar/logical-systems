@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Set;
 
 import edu.cs.ai.alchourron.logic.Interpretation;
@@ -156,5 +157,10 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 				return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		return signature.hashCode() * 31 + trueValued.hashCode();
 	}
 }

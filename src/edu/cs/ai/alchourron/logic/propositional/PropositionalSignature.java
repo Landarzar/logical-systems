@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
@@ -124,5 +125,30 @@ public class PropositionalSignature<PSym> implements Signature, Iterable<Proposi
 			}
 
 		};
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return symbols.hashCode();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+            return true;
+        if (!(o instanceof PropositionalSignature))
+            return false;
+        
+        PropositionalSignature<PSym> sig = (PropositionalSignature<PSym>) o;
+
+	    return this.symbols.equals(sig.symbols);
 	}
 }
