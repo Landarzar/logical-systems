@@ -80,6 +80,6 @@ public interface LogicalSystem<T, S extends Signature, F extends Formula<S>, I e
 	 */
 	public default boolean entails(F f1, F f2) {
 		Set<I> mf2 = models(f2);
-		return models(f1).parallelStream().allMatch(i -> mf2.parallelStream().anyMatch(i2 -> i2.equals(i)));
+		return models(f1).stream().allMatch(i -> mf2.stream().anyMatch(i2 -> i2.equals(i)));
 	}
 }

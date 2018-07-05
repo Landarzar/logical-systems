@@ -108,6 +108,15 @@ public abstract class PropositionalFormula<PSym> implements Formula<Propositiona
 		public int getArity() {
 			return 0;
 		}
+		
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return symbol.toString();
+		}
 	}
 
 	public static class PropositionalAND<PSym> extends PropositionalFormula<PSym> implements LogicalAND<PropositionalSignature<PSym>> {
@@ -176,6 +185,31 @@ public abstract class PropositionalFormula<PSym> implements Formula<Propositiona
 		@Override
 		public boolean isAtom() {
 			return false;
+		}		
+		
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("(");
+			
+			boolean first = true;
+			
+			for (PropositionalFormula<PSym> propositionalFormula : operands) {
+				if(first) {
+					builder.append(propositionalFormula.toString());
+					continue;
+				}
+				builder.append(" AND ");
+				builder.append(propositionalFormula.toString());
+			}
+			
+
+			builder.append(")");
+			return "(" + this.operands;
 		}
 	}
 
@@ -245,6 +279,31 @@ public abstract class PropositionalFormula<PSym> implements Formula<Propositiona
 		@Override
 		public boolean isAtom() {
 			return false;
+		}		
+		
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("(");
+			
+			boolean first = true;
+			
+			for (PropositionalFormula<PSym> propositionalFormula : operands) {
+				if(first) {
+					builder.append(propositionalFormula.toString());
+					continue;
+				}
+				builder.append(" OR ");
+				builder.append(propositionalFormula.toString());
+			}
+			
+
+			builder.append(")");
+			return "(" + this.operands;
 		}
 	}
 
@@ -299,11 +358,15 @@ public abstract class PropositionalFormula<PSym> implements Formula<Propositiona
 		@Override
 		public boolean isAtom() {
 			return false;
+		}		
+		
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return "NOT " + this.operand;
 		}
 	}
-@Override
-public boolean equals(Object obj) {
-	// TODO Auto-generated method stub
-	return super.equals(obj);
-}
 }
