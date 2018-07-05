@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula.PropositionalAtom;
 import edu.cs.ai.alchourron.logic.syntax.LogicalAND;
 import edu.cs.ai.alchourron.logic.syntax.LogicalOR;
 import edu.cs.ai.alchourron.logic.syntax.Predicate;
@@ -31,6 +32,16 @@ public abstract class PropositionalFormula<PSym> implements Formula<Propositiona
 	
 	public PropositionalFormula<PSym> Or(PropositionalFormula<PSym> f){
 		return new PropositionalOR<>(this.getSignature(), this, f);
+	}
+	
+	public static <PSym> PropositionalFormula<PSym> getFalsum(PropositionalSignature<PSym> signature) {
+		return new PropositionalAtom<>(signature, signature.getSymbols().get(0)).Neg()
+		.And(new PropositionalAtom<>(signature, signature.getSymbols().get(0)));
+	}
+	
+	public static <PSym> PropositionalFormula<PSym> getTOP(PropositionalSignature<PSym> signature) {
+		return new PropositionalAtom<>(signature, signature.getSymbols().get(0)).Neg()
+		.Or(new PropositionalAtom<>(signature, signature.getSymbols().get(0)));
 	}
 
 
