@@ -39,7 +39,7 @@ public abstract class PropositionalFormula<PSym> implements Formula<Propositiona
 		.And(new PropositionalAtom<>(signature, signature.getSymbols().get(0)));
 	}
 	
-	public static <PSym> PropositionalFormula<PSym> getTOP(PropositionalSignature<PSym> signature) {
+	public static <PSym> PropositionalFormula<PSym> getTautology(PropositionalSignature<PSym> signature) {
 		return new PropositionalAtom<>(signature, signature.getSymbols().get(0)).Neg()
 		.Or(new PropositionalAtom<>(signature, signature.getSymbols().get(0)));
 	}

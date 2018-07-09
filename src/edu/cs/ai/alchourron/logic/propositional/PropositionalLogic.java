@@ -71,9 +71,9 @@ public class PropositionalLogic<PSym>
 	 * Formula)
 	 */
 	@Override
-	public Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> models(PropositionalFormula<PSym> formula) {
-		assert this.validFormula(formula) : "given formula ist not valid";
-		return formula.getSignature().stream().filter(i -> eval(i, formula)).collect(Collectors.toSet());
+	public Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> modelsOf(PropositionalFormula<PSym> formula) {
+		assert this.validFormula(formula) : "given formula ist not (syntactically) valid";
+		return formula.getSignature().stream().filter(i -> entails(i, formula)).collect(Collectors.toSet());
 	}
 
 	/*

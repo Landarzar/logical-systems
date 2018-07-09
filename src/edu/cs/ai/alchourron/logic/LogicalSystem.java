@@ -18,7 +18,7 @@ import java.util.Set;
 public interface LogicalSystem<T, S extends Signature, F extends Formula<S>, I extends Interpretation<S>> {
 	
 	/***
-	 * Checks where the given Formula is valid in the Logical System.
+	 * Checks where the given Formula is (syntactically) valid in the Logical System.
 	 * @author Kai Sauerwald
 	 * @param formula The formula
 	 * @return True if {@link formula} is a valid formula
@@ -40,7 +40,7 @@ public interface LogicalSystem<T, S extends Signature, F extends Formula<S>, I e
 	 *             <li>or the author of the implementation was lazy.</li>
 	 *             </ol>
 	 */
-	public Set<I> models(F formula);
+	public Set<I> modelsOf(F formula);
 
 	/***
 	 * Computes the truth value (type of {@link T}) of {@link formula} under the
@@ -62,7 +62,7 @@ public interface LogicalSystem<T, S extends Signature, F extends Formula<S>, I e
 	 * @author Kai Sauerwald
 	 * @param interpretation The interpretation
 	 * @param formula The formula
-	 * @return {@literal true} if the interpretation {@link I} entails {@link formula}, otherweise it returns {@literal false}.
+	 * @return {@literal true} if the interpretation {@link I} entails {@link formula}, otherwise it returns {@literal false}.
 	 */
 	public boolean entails(I interpretation, F formula);
 
@@ -79,8 +79,8 @@ public interface LogicalSystem<T, S extends Signature, F extends Formula<S>, I e
 	 *             entailment. (Or the {@link models} throws an exception on a call with {@link f1} or {@link f2})
 	 */
 	public default boolean entails(F f1, F f2) {
-		Set<I> mf2 = models(f2);
-		Set<I> mf1 = models(f1);
+		Set<I> mf2 = modelsOf(f2);
+		Set<I> mf1 = modelsOf(f1);
 		return mf2.containsAll(mf1);
 	}
 }
