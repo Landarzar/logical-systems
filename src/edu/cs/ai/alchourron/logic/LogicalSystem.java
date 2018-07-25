@@ -64,7 +64,7 @@ public interface LogicalSystem<T, S extends Signature, F extends Formula<S>, I e
 	 * @param formula The formula
 	 * @return {@literal true} if the interpretation {@link I} entails {@link formula}, otherwise it returns {@literal false}.
 	 */
-	public boolean entails(I interpretation, F formula);
+	public boolean satisfies(I interpretation, F formula);
 
 	/***
 	 * Represents the logical entailment
