@@ -126,6 +126,20 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 		return builder.toString();
 	}
 	
+	/***
+	 * Generats a LaTeX-ified version of the stringrepresentation
+	 */
+	public String toLaTeX() {
+		StringBuilder builder = new StringBuilder();
+		for (PSym pSym : signature.symbols) {
+			if(trueValued.contains(pSym))
+			builder.append(pSym);
+			else
+				builder.append("\\negOf{" + pSym + "}");
+		}
+		return builder.toString();
+	}
+	
 	
 	public PropositionalFormula<PSym> getCharacterizingFormula(){
 		PropositionalFormula<PSym> result = null;
