@@ -39,7 +39,7 @@ public abstract class PropositionalFormula<PSym>
 	 * @param intps The set of interpretations
 	 * @param sig The signature
 	 */
-	public static <PSym> PropositionalFormula<PSym> toDNF(Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> intps, PropositionalSignature<PSym> sig){
+	public static <PSym> PropositionalFormula<PSym> toDNF(Collection<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> intps, PropositionalSignature<PSym> sig){
 		if(intps.isEmpty())
 			return getFalsum(sig);	
 		
