@@ -109,9 +109,15 @@ public class PropositionalLogic<PSym>
 			PropositionalFormula.PropositionalNEG<PSym> neg = (PropositionalFormula.PropositionalNEG<PSym>) formula;
 			return !satisfies(interpretation, (PropositionalFormula<PSym>) neg.getOperands().get(0) );
 		}
+		if (formula instanceof PropositionalFormula.PropositionalBottom<?>) {
+			return false;
+		}
+		if (formula instanceof PropositionalFormula.PropositionalTop<?>) {
+			return true;
+		}
 
 		
-		throw new InvalidParameterException("The given formula object is not a valid propistional formula");
+		throw new InvalidParameterException("The given formula object is not a valid propositional formula");
 	}
 
 }

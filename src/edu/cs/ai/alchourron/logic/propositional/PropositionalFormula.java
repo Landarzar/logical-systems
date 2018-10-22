@@ -8,9 +8,11 @@ import java.util.Set;
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula.PropositionalAtom;
 import edu.cs.ai.alchourron.logic.syntax.LogicalAND;
+import edu.cs.ai.alchourron.logic.syntax.LogicalNEG;
 import edu.cs.ai.alchourron.logic.syntax.LogicalOR;
 import edu.cs.ai.alchourron.logic.syntax.Predicate;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
+import edu.cs.ai.alchourron.logic.syntax.SyntacticFormula;
 import edu.cs.ai.alchourron.logic.syntax.Term;
 
 /***
@@ -23,35 +25,46 @@ import edu.cs.ai.alchourron.logic.syntax.Term;
 public abstract class PropositionalFormula<PSym>
 		implements Formula<PropositionalSignature<PSym>>, SyntacticElement<PropositionalSignature<PSym>> {
 
+//	public static <PSym> PropositionalFormula<PSym> getFalsum(PropositionalSignature<PSym> signature) {
+//		return new PropositionalAtom<>(signature, signature.getSymbols().get(0)).Neg()
+//				.And(new PropositionalAtom<>(signature, signature.getSymbols().get(0)));
+//	}
+//
+//	public static <PSym> PropositionalFormula<PSym> getTautology(PropositionalSignature<PSym> signature) {
+//		return new PropositionalAtom<>(signature, signature.getSymbols().get(0)).Neg()
+//				.Or(new PropositionalAtom<>(signature, signature.getSymbols().get(0)));
+//	}
+	
 	public static <PSym> PropositionalFormula<PSym> getFalsum(PropositionalSignature<PSym> signature) {
-		return new PropositionalAtom<>(signature, signature.getSymbols().get(0)).Neg()
-				.And(new PropositionalAtom<>(signature, signature.getSymbols().get(0)));
+		return new PropositionalBottom<>(signature);
 	}
 
 	public static <PSym> PropositionalFormula<PSym> getTautology(PropositionalSignature<PSym> signature) {
-		return new PropositionalAtom<>(signature, signature.getSymbols().get(0)).Neg()
-				.Or(new PropositionalAtom<>(signature, signature.getSymbols().get(0)));
+		return new PropositionalTop<>(signature);
 	}
 
 	/***
 	 * Constructions a disjunctive normal form representation of the set of worlds.
+	 * 
 	 * @author Kai Sauerwald
 	 * @param intps The set of interpretations
-	 * @param sig The signature
+	 * @param sig   The signature
 	 */
-	public static <PSym> PropositionalFormula<PSym> toDNF(Collection<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> intps, PropositionalSignature<PSym> sig){
-		if(intps.isEmpty())
-			return getFalsum(sig);	
-		
+	public static <PSym> PropositionalFormula<PSym> toDNF(
+			Collection<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> intps,
+			PropositionalSignature<PSym> sig) {
+		if (intps.isEmpty())
+			return getFalsum(sig);
+
 		PropositionalFormula<PSym> result = null;
-		
-		for (PropositionalInterpretation<PSym,PropositionalSignature<PSym>> in : intps) {
-			if(result == null)
+
+		for (PropositionalInterpretation<PSym, PropositionalSignature<PSym>> in : intps) {
+			if (result == null)
 				result = in.getCharacterizingFormula();
 			else
 				result.Or(in.getCharacterizingFormula());
 		}
-		
+
 		return result;
 	}
 
@@ -152,7 +165,7 @@ public abstract class PropositionalFormula<PSym>
 		public String toString() {
 			return symbol.toString();
 		}
-		
+
 		@Override
 		public String toLaTeX() {
 			return symbol.toString();
@@ -248,16 +261,17 @@ public abstract class PropositionalFormula<PSym>
 					continue;
 				}
 				builder.append(" AND ");
+				first = false;
 				builder.append(propositionalFormula.toString());
 			}
 
 			builder.append(")");
 			return builder.toString();
 		}
-		
 
 		/*
 		 * (non-Javadoc)
+		 * 
 		 * @see edu.cs.ai.alchourron.LaTeX#toLaTeX()
 		 */
 		@Override
@@ -270,9 +284,10 @@ public abstract class PropositionalFormula<PSym>
 			for (PropositionalFormula<PSym> propositionalFormula : operands) {
 				if (first) {
 					builder.append(propositionalFormula.toLaTeX());
+					first = false;
 					continue;
 				}
-				builder.append(" \\lor ");
+//				builder.append(" \\land "); // Short form
 				builder.append(propositionalFormula.toLaTeX());
 			}
 
@@ -367,6 +382,7 @@ public abstract class PropositionalFormula<PSym>
 			for (PropositionalFormula<PSym> propositionalFormula : operands) {
 				if (first) {
 					builder.append(propositionalFormula.toString());
+					first = false;
 					continue;
 				}
 				builder.append(" OR ");
@@ -376,9 +392,10 @@ public abstract class PropositionalFormula<PSym>
 			builder.append(")");
 			return builder.toString();
 		}
-		
+
 		/*
 		 * (non-Javadoc)
+		 * 
 		 * @see edu.cs.ai.alchourron.LaTeX#toLaTeX()
 		 */
 		@Override
@@ -390,6 +407,7 @@ public abstract class PropositionalFormula<PSym>
 			for (PropositionalFormula<PSym> propositionalFormula : operands) {
 				if (first) {
 					builder.append(propositionalFormula.toLaTeX());
+					first = false;
 					continue;
 				}
 				builder.append(" \\lor ");
@@ -400,7 +418,7 @@ public abstract class PropositionalFormula<PSym>
 	}
 
 	public static class PropositionalNEG<PSym> extends PropositionalFormula<PSym>
-			implements LogicalAND<PropositionalSignature<PSym>> {
+			implements LogicalNEG<PropositionalSignature<PSym>> {
 
 		protected PropositionalSignature<PSym> signature;
 		protected PropositionalFormula<PSym> operand;
@@ -467,129 +485,154 @@ public abstract class PropositionalFormula<PSym>
 
 		/*
 		 * (non-Javadoc)
+		 * 
 		 * @see edu.cs.ai.alchourron.LaTeX#toLaTeX()
 		 */
 		@Override
 		public String toLaTeX() {
 			// TODO Auto-generated method stub
-			return "\\negOf{" + this.operand.toLaTeX() +"}";
+			return "\\negOf{" + this.operand.toLaTeX() + "}";
 		}
 	}
-	/*
-	 * public static class PropositionalTop<PSym> extends PropositionalFormula<PSym>
-	 * {
-	 * 
-	 * protected PropositionalSignature<PSym> signature;
-	 * 
-	 *//**
+
+	public static class PropositionalTop<PSym> extends PropositionalFormula<PSym> implements SyntacticFormula<PropositionalSignature<PSym>> {
+
+		protected PropositionalSignature<PSym> signature;
+
+		/**
 		 * Constructs a new instance of this class
 		 * 
 		 * @author Kai Sauerwald
 		 */
-	/*
-	 * public PropositionalTop(PropositionalSignature<PSym> signature) {
-	 * this.signature = signature; }
-	 * 
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.Formula#getSyntaxTree()
-	 * 
-	 * @Override public SyntacticElement<PropositionalSignature<PSym>>
-	 * getSyntaxTree() throws UnsupportedOperationException { return this; }
-	 * 
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.Formula#getSignature()
-	 * 
-	 * @Override public PropositionalSignature<PSym> getSignature() { return
-	 * signature; }
-	 * 
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#stringify()
-	 * 
-	 * @Override public String stringify() { return "T"; }
-	 * 
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 * 
-	 * @Override public String toString() { return stringify(); }
-	 * 
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isAtom()
-	 * 
-	 * @Override public boolean isAtom() { return false; }
-	 * 
-	 * 
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
-	 * 
-	 * @Override public boolean isLogical() { return false; } }
-	 * 
-	 * public static class PropositionalBottom<PSym> extends
-	 * PropositionalFormula<PSym> {
-	 * 
-	 * protected PropositionalSignature<PSym> signature;
-	 * 
-	 *//**
+		public PropositionalTop(PropositionalSignature<PSym> signature) {
+			this.signature = signature;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see edu.cs.ai.alchourron.logic.Formula#getSyntaxTree()
+		 */
+		@Override
+		public SyntacticElement<PropositionalSignature<PSym>> getSyntaxTree() throws UnsupportedOperationException {
+			return this;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see edu.cs.ai.alchourron.logic.Formula#getSignature()
+		 */
+		@Override
+		public PropositionalSignature<PSym> getSignature() {
+			return signature;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#stringify()
+		 */
+		@Override
+		public String stringify() {
+			return "T";
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return stringify();
+		}
+
+		@Override
+		public String toLaTeX() {
+			return "\\top";
+		}
+
+		@Override
+		public boolean isAtom() {
+			return true;
+		}
+
+		@Override
+		public boolean isLogical() {
+			// TODO Auto-generated method stub
+			return true;
+		}
+	}
+	
+	public static class PropositionalBottom<PSym> extends PropositionalFormula<PSym> implements SyntacticFormula<PropositionalSignature<PSym>> {
+
+		protected PropositionalSignature<PSym> signature;
+
+		/**
 		 * Constructs a new instance of this class
 		 * 
 		 * @author Kai Sauerwald
-		 *//*
-			 * public PropositionalBottom(PropositionalSignature<PSym> signature) {
-			 * this.signature = signature; }
-			 * 
-			 * 
-			 * (non-Javadoc)
-			 * 
-			 * @see edu.cs.ai.alchourron.logic.Formula#getSyntaxTree()
-			 * 
-			 * @Override public SyntacticElement<PropositionalSignature<PSym>>
-			 * getSyntaxTree() throws UnsupportedOperationException { return this; }
-			 * 
-			 * 
-			 * (non-Javadoc)
-			 * 
-			 * @see edu.cs.ai.alchourron.logic.Formula#getSignature()
-			 * 
-			 * @Override public PropositionalSignature<PSym> getSignature() { return
-			 * signature; }
-			 * 
-			 * 
-			 * (non-Javadoc)
-			 * 
-			 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#stringify()
-			 * 
-			 * @Override public String stringify() { return "B"; }
-			 * 
-			 * 
-			 * (non-Javadoc)
-			 * 
-			 * @see java.lang.Object#toString()
-			 * 
-			 * @Override public String toString() { return stringify(); }
-			 * 
-			 * 
-			 * (non-Javadoc)
-			 * 
-			 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isAtom()
-			 * 
-			 * @Override public boolean isAtom() { return false; }
-			 * 
-			 * 
-			 * (non-Javadoc)
-			 * 
-			 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
-			 * 
-			 * @Override public boolean isLogical() { return false; } }
-			 * 
-			 */
+		 */
+		public PropositionalBottom(PropositionalSignature<PSym> signature) {
+			this.signature = signature;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see edu.cs.ai.alchourron.logic.Formula#getSyntaxTree()
+		 */
+		@Override
+		public SyntacticElement<PropositionalSignature<PSym>> getSyntaxTree() throws UnsupportedOperationException {
+			return this;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see edu.cs.ai.alchourron.logic.Formula#getSignature()
+		 */
+		@Override
+		public PropositionalSignature<PSym> getSignature() {
+			return signature;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#stringify()
+		 */
+		@Override
+		public String stringify() {
+			return "B";
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see java.lang.Object#toString()
+		 */
+		@Override
+		public String toString() {
+			return stringify();
+		}
+
+		@Override
+		public String toLaTeX() {
+			return "\\bot";
+		}
+
+		@Override
+		public boolean isAtom() {
+			return true;
+		}
+
+		@Override
+		public boolean isLogical() {
+			// TODO Auto-generated method stub
+			return true;
+		}
+	}
+
 }
