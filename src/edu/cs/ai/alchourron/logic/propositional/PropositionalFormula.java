@@ -152,6 +152,11 @@ public abstract class PropositionalFormula<PSym>
 		public String toString() {
 			return symbol.toString();
 		}
+		
+		@Override
+		public String toLaTeX() {
+			return symbol.toString();
+		}
 	}
 
 	public static class PropositionalAND<PSym> extends PropositionalFormula<PSym>
@@ -247,7 +252,32 @@ public abstract class PropositionalFormula<PSym>
 			}
 
 			builder.append(")");
-			return "(" + this.operands;
+			return builder.toString();
+		}
+		
+
+		/*
+		 * (non-Javadoc)
+		 * @see edu.cs.ai.alchourron.LaTeX#toLaTeX()
+		 */
+		@Override
+		public String toLaTeX() {
+			StringBuilder builder = new StringBuilder();
+			builder.append("(");
+
+			boolean first = true;
+
+			for (PropositionalFormula<PSym> propositionalFormula : operands) {
+				if (first) {
+					builder.append(propositionalFormula.toString());
+					continue;
+				}
+				builder.append(" \\lor ");
+				builder.append(propositionalFormula.toString());
+			}
+
+			builder.append(")");
+			return builder.toString();
 		}
 	}
 
@@ -344,7 +374,28 @@ public abstract class PropositionalFormula<PSym>
 			}
 
 			builder.append(")");
-			return "(" + this.operands;
+			return builder.toString();
+		}
+		
+		/*
+		 * (non-Javadoc)
+		 * @see edu.cs.ai.alchourron.LaTeX#toLaTeX()
+		 */
+		@Override
+		public String toLaTeX() {
+			StringBuilder builder = new StringBuilder();
+
+			boolean first = true;
+
+			for (PropositionalFormula<PSym> propositionalFormula : operands) {
+				if (first) {
+					builder.append(propositionalFormula.toString());
+					continue;
+				}
+				builder.append(" \\lor ");
+				builder.append(propositionalFormula.toString());
+			}
+			return builder.toString();
 		}
 	}
 
@@ -412,6 +463,16 @@ public abstract class PropositionalFormula<PSym>
 		@Override
 		public String toString() {
 			return "NOT " + this.operand;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see edu.cs.ai.alchourron.LaTeX#toLaTeX()
+		 */
+		@Override
+		public String toLaTeX() {
+			// TODO Auto-generated method stub
+			return "\\negOf{" + this.operand.toLaTeX() +"}";
 		}
 	}
 	/*

@@ -1,5 +1,6 @@
 package edu.cs.ai.alchourron.logic;
 
+import edu.cs.ai.alchourron.LaTeX;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 
 /***
@@ -8,7 +9,7 @@ import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
  *
  * @param <S> The signature
  */
-public interface Formula<S extends Signature> {
+public interface Formula<S extends Signature> extends LaTeX {
 	
 	/**
 	 * Returns the "syntax tree" for this formula.
