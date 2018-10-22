@@ -53,6 +53,8 @@ public abstract class PropositionalFormula<PSym>
 	public static <PSym> PropositionalFormula<PSym> toDNF(
 			Collection<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> intps,
 			PropositionalSignature<PSym> sig) {
+		if(sig.stream().allMatch(intps::contains))
+			return getTautology(sig);
 		if (intps.isEmpty())
 			return getFalsum(sig);
 
@@ -62,7 +64,7 @@ public abstract class PropositionalFormula<PSym>
 			if (result == null)
 				result = in.getCharacterizingFormula();
 			else
-				result.Or(in.getCharacterizingFormula());
+				result = result.Or(in.getCharacterizingFormula());
 		}
 
 		return result;
