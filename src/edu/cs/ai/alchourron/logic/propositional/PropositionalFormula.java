@@ -263,20 +263,20 @@ public abstract class PropositionalFormula<PSym>
 		@Override
 		public String toLaTeX() {
 			StringBuilder builder = new StringBuilder();
-			builder.append("(");
+//			builder.append("(");
 
 			boolean first = true;
 
 			for (PropositionalFormula<PSym> propositionalFormula : operands) {
 				if (first) {
-					builder.append(propositionalFormula.toString());
+					builder.append(propositionalFormula.toLaTeX());
 					continue;
 				}
 				builder.append(" \\lor ");
-				builder.append(propositionalFormula.toString());
+				builder.append(propositionalFormula.toLaTeX());
 			}
 
-			builder.append(")");
+//			builder.append(")");
 			return builder.toString();
 		}
 	}
@@ -389,11 +389,11 @@ public abstract class PropositionalFormula<PSym>
 
 			for (PropositionalFormula<PSym> propositionalFormula : operands) {
 				if (first) {
-					builder.append(propositionalFormula.toString());
+					builder.append(propositionalFormula.toLaTeX());
 					continue;
 				}
 				builder.append(" \\lor ");
-				builder.append(propositionalFormula.toString());
+				builder.append(propositionalFormula.toLaTeX());
 			}
 			return builder.toString();
 		}
