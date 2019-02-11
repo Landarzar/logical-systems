@@ -6,6 +6,12 @@ import java.util.stream.Collectors;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.LogicalSystem;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAND;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAtom;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalBottom;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalNEG;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalOR;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalTop;
 import edu.cs.ai.alchourron.logic.syntax.LogicalAND;
 import edu.cs.ai.alchourron.logic.syntax.LogicalNEG;
 import edu.cs.ai.alchourron.logic.syntax.LogicalOR;
@@ -93,26 +99,26 @@ public class PropositionalLogic<PSym>
 	public boolean satisfies(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> interpretation, PropositionalFormula<PSym> formula) {
 //		assert this.validFormula(formula) : "the given formula ist not valid";
 				
-		if (formula instanceof PropositionalFormula.PropositionalAtom<?>) {
-			PropositionalFormula.PropositionalAtom<PSym> atom = (PropositionalFormula.PropositionalAtom<PSym>) formula;
+		if (formula instanceof PropositionalAtom<?>) {
+			PropositionalAtom<PSym> atom = (PropositionalAtom<PSym>) formula;
 			return interpretation.isTrue(atom.getSymbol());
 		}
-		if (formula instanceof PropositionalFormula.PropositionalAND<?>) {
-			PropositionalFormula.PropositionalAND<PSym> and = (PropositionalFormula.PropositionalAND<PSym>) formula;
+		if (formula instanceof PropositionalAND<?>) {
+			PropositionalAND<PSym> and = (PropositionalAND<PSym>) formula;
 			return and.getOperands().stream().allMatch( o -> satisfies(interpretation, (PropositionalFormula<PSym>) o)  );
 		}
-		if (formula instanceof PropositionalFormula.PropositionalOR<?>) {
-			PropositionalFormula.PropositionalOR<PSym> or = (PropositionalFormula.PropositionalOR<PSym>) formula;
+		if (formula instanceof PropositionalOR<?>) {
+			PropositionalOR<PSym> or = (PropositionalOR<PSym>) formula;
 			return or.getOperands().stream().anyMatch( o -> satisfies(interpretation, (PropositionalFormula<PSym>) o)  );
 		}
-		if (formula instanceof PropositionalFormula.PropositionalNEG<?>) {
-			PropositionalFormula.PropositionalNEG<PSym> neg = (PropositionalFormula.PropositionalNEG<PSym>) formula;
+		if (formula instanceof PropositionalNEG<?>) {
+			PropositionalNEG<PSym> neg = (PropositionalNEG<PSym>) formula;
 			return !satisfies(interpretation, (PropositionalFormula<PSym>) neg.getOperands().get(0) );
 		}
-		if (formula instanceof PropositionalFormula.PropositionalBottom<?>) {
+		if (formula instanceof PropositionalBottom<?>) {
 			return false;
 		}
-		if (formula instanceof PropositionalFormula.PropositionalTop<?>) {
+		if (formula instanceof PropositionalTop<?>) {
 			return true;
 		}
 

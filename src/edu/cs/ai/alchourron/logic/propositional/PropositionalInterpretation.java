@@ -8,10 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import edu.cs.ai.alchourron.logic.Interpretation;
-import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula.PropositionalAtom;
-import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula.PropositionalNEG;
-import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula.PropositionalAND;
-import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula.PropositionalOR;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAtom;
 
 /***
  * Represents propositional interpretations.
