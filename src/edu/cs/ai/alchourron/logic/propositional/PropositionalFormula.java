@@ -1,14 +1,12 @@
 package edu.cs.ai.alchourron.logic.propositional;
 
-import java.util.Set;
-
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAND;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalBottom;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalNEG;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalOR;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalTop;
-import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
+import edu.cs.ai.alchourron.logic.syntax.SyntacticFormula;
 
 /***
  * Represents propositional formula.
@@ -18,7 +16,7 @@ import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
  * @param <PSym> The type of symbols over which the signature is defined
  */
 public abstract class PropositionalFormula<PSym>
-		implements Formula<PropositionalSignature<PSym>>, SyntacticElement<PropositionalSignature<PSym>> {
+		implements Formula<PropositionalSignature<PSym>>, SyntacticFormula<PropositionalSignature<PSym>> {
 
 //	public static <PSym> PropositionalFormula<PSym> getFalsum(PropositionalSignature<PSym> signature) {
 //		return new PropositionalAtom<>(signature, signature.getSymbols().get(0)).Neg()
