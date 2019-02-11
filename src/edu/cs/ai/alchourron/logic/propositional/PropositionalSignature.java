@@ -152,6 +152,10 @@ public class PropositionalSignature<PSym> implements Signature, Iterable<Proposi
 	    return this.symbols.equals(sig.symbols);
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return symbols.toString();
