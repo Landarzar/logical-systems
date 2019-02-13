@@ -2,6 +2,7 @@ package edu.cs.ai.alchourron.logic.propositional.formula;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
@@ -67,7 +68,7 @@ public class PropositionalAND<PSym> extends PropositionalFormula<PSym>
 		 */
 		@Override
 		public List<? extends SyntacticElement<PropositionalSignature<PSym>>> getOperands() {
-			return operands;
+			return Collections.unmodifiableList(operands);
 		}
 
 		/*
