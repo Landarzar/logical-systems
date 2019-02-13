@@ -138,6 +138,10 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	}
 	
 	
+	/***
+	 * Builds a formula which has exactly this interpretation as model
+	 * @author Kai Sauerwald
+	 */
 	public PropositionalFormula<PSym> getCharacterizingFormula(){
 		PropositionalFormula<PSym> result = null;
 		
