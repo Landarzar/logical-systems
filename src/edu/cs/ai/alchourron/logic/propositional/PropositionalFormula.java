@@ -27,7 +27,7 @@ public abstract class PropositionalFormula<PSym>
 //		return new PropositionalAtom<>(signature, signature.getSymbols().get(0)).Neg()
 //				.Or(new PropositionalAtom<>(signature, signature.getSymbols().get(0)));
 //	}
-	
+
 	public static <PSym> PropositionalFormula<PSym> getFalsum(PropositionalSignature<PSym> signature) {
 		return new PropositionalFalsum<>(signature);
 	}
@@ -48,4 +48,6 @@ public abstract class PropositionalFormula<PSym>
 		return new PropositionalOR<>(this.getSignature(), this, f);
 	}
 
+	@Override
+	public abstract boolean equals(Object obj);
 }

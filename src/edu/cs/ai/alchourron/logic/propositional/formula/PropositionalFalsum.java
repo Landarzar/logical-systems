@@ -1,5 +1,7 @@
 package edu.cs.ai.alchourron.logic.propositional.formula;
 
+import java.util.Objects;
+
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
@@ -45,7 +47,23 @@ public class PropositionalFalsum<PSym> extends PropositionalFormula<PSym> implem
 	 */
 	@Override
 	public String stringify() {
-		return "B";
+		return "False";
+	}
+	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(signature);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof PropositionalFalsum))
+			return false;
+		PropositionalFalsum other = (PropositionalFalsum) obj;
+		return Objects.equals(signature, other.signature);
 	}
 
 	/*

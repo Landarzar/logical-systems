@@ -1,6 +1,7 @@
 package edu.cs.ai.alchourron.logic.propositional.formula;
 
 import java.util.List;
+import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
@@ -84,6 +85,18 @@ public class PropositionalAtom<PSym> extends PropositionalFormula<PSym>
 		return 0;
 	}
 
+	
+
+//	@Override
+//	public boolean equals(Object obj) {
+//			if (obj instanceof PropositionalAtom<?>) {
+//				PropositionalAtom<PSym> other = (PropositionalAtom<PSym>) obj;
+//				return other.symbol.equals(this.symbol);
+//			}
+//
+//		return false;
+//	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -92,6 +105,21 @@ public class PropositionalAtom<PSym> extends PropositionalFormula<PSym>
 	@Override
 	public String toString() {
 		return symbol.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(signature, symbol);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof PropositionalAtom))
+			return false;
+		PropositionalAtom other = (PropositionalAtom) obj;
+		return Objects.equals(signature, other.signature) && Objects.equals(symbol, other.symbol);
 	}
 
 	@Override

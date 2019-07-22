@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
@@ -79,6 +80,21 @@ public class PropositionalAND<PSym> extends PropositionalFormula<PSym>
 		@Override
 		public boolean isAtom() {
 			return false;
+		}
+		
+		@Override
+		public int hashCode() {
+			return Objects.hash(operands, signature);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (!(obj instanceof PropositionalAND))
+				return false;
+			PropositionalAND other = (PropositionalAND) obj;
+			return Objects.equals(operands, other.operands) && Objects.equals(signature, other.signature);
 		}
 
 		/*

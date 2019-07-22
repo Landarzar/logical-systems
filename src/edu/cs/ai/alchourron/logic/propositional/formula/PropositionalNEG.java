@@ -1,6 +1,7 @@
 package edu.cs.ai.alchourron.logic.propositional.formula;
 
 import java.util.List;
+import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
@@ -61,6 +62,22 @@ public class PropositionalNEG<PSym> extends PropositionalFormula<PSym>
 	@Override
 	public boolean isAtom() {
 		return false;
+	}
+	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(operand, signature);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof PropositionalNEG))
+			return false;
+		PropositionalNEG other = (PropositionalNEG) obj;
+		return Objects.equals(operand, other.operand) && Objects.equals(signature, other.signature);
 	}
 
 	/*

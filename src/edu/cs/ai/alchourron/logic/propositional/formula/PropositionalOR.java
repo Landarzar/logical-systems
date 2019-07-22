@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
@@ -21,8 +22,7 @@ public class PropositionalOR<PSym> extends PropositionalFormula<PSym>
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public PropositionalOR(PropositionalSignature<PSym> signature,
-			Collection<PropositionalFormula<PSym>> operands) {
+	public PropositionalOR(PropositionalSignature<PSym> signature, Collection<PropositionalFormula<PSym>> operands) {
 		this.signature = signature;
 		this.operands = new ArrayList<>(operands);
 	}
@@ -79,6 +79,21 @@ public class PropositionalOR<PSym> extends PropositionalFormula<PSym>
 	@Override
 	public boolean isAtom() {
 		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(operands, signature);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof PropositionalOR))
+			return false;
+		PropositionalOR other = (PropositionalOR) obj;
+		return Objects.equals(operands, other.operands) && Objects.equals(signature, other.signature);
 	}
 
 	/*

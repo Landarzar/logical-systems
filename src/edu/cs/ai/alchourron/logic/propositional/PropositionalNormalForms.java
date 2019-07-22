@@ -2,6 +2,7 @@ package edu.cs.ai.alchourron.logic.propositional;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,43 @@ import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 
 public class PropositionalNormalForms<PSym> {
+
+	/*******************************************************************
+	 * Test Horn
+	 ******************************************************************/
+
+	public boolean isHornDefinable(PropositionalFormula<PSym> phi) {
+		PropositionalFormula<PSym> cnf = formulaToCNF(phi);
+
+		if (cnf instanceof PropositionalAND<?>) {
+			PropositionalAND<PSym> and = (PropositionalAND<PSym>) cnf;
+			for (PropositionalFormula<PSym> iterable_element : and.getOperands()) {
+				if (iterable_element instanceof PropositionalOR<?>) {
+					PropositionalOR<PSym> or = (PropositionalOR<PSym>) iterable_element;
+
+					int number_of_positive_literals = 0;
+					for (PropositionalFormula<PSym> literal : or.getOperands()) {
+						if (!(literal instanceof PropositionalNEG<?>))
+							number_of_positive_literals += 1;
+						if (number_of_positive_literals > 1)
+							return false;
+					}
+				}
+			}
+		}
+		if (cnf instanceof PropositionalOR<?>) {
+			PropositionalOR<PSym> or = (PropositionalOR<PSym>) cnf;
+			int number_of_positive_literals = 0;
+			for (PropositionalFormula<PSym> literal : or.getOperands()) {
+				if (!(literal instanceof PropositionalNEG<?>))
+					number_of_positive_literals += 1;
+				if (number_of_positive_literals > 1)
+					return false;
+			}
+		}
+
+		return true;
+	}
 
 	/*******************************************************************
 	 * Clear Tree
@@ -51,33 +89,31 @@ public class PropositionalNormalForms<PSym> {
 		if (phi.getOperands().size() == 1)
 			return clearTree((PropositionalFormula<PSym>) phi.getOperands().get(0));
 
-		ArrayList<PropositionalFormula<PSym>> list = new ArrayList<PropositionalFormula<PSym>>(
-				phi.getOperands().size());
+		HashSet<PropositionalFormula<PSym>> set = new HashSet<PropositionalFormula<PSym>>(phi.getOperands().size());
 
-		for (int i = 1; i < phi.getOperands().size(); i++) {
-			PropositionalFormula<PSym> form = (PropositionalFormula<PSym>) phi.getOperands().get(i);
-			list.add(clearTree(form));
+		for (PropositionalFormula<PSym> form : phi.getOperands()) {
+			set.add(clearTree(form));
 		}
 
-		ArrayList<PropositionalFormula<PSym>> list2 = new ArrayList<PropositionalFormula<PSym>>(list.size());
-		for (PropositionalFormula<PSym> form : list) {
+		HashSet<PropositionalFormula<PSym>> set2 = new HashSet<PropositionalFormula<PSym>>(set.size());
+		for (PropositionalFormula<PSym> form : set) {
 			if (form instanceof PropositionalAND<?>) {
-				list2.addAll(((PropositionalAND<PSym>) form).getOperands().stream()
+				set2.addAll(((PropositionalAND<PSym>) form).getOperands().stream()
 						.map(a -> (PropositionalFormula<PSym>) a).collect(Collectors.toList()));
 			} else if (form instanceof PropositionalVerum<?>)
 				continue;
 			else if (form instanceof PropositionalFalsum<?>)
 				return form;
 			else
-				list2.add(form);
+				set2.add(form);
 		}
 
-		if (list2.size() == 0)
+		if (set2.size() == 0)
 			return new PropositionalVerum<PSym>(phi.getSignature());
-		if (list2.size() == 1)
-			return list2.get(0);
+		if (set2.size() == 1)
+			return set2.stream().findFirst().get();
 
-		return new PropositionalAND<PSym>(phi.getSignature(), list2);
+		return new PropositionalAND<PSym>(phi.getSignature(), set2);
 	}
 
 	private PropositionalFormula<PSym> _clearTree(PropositionalOR<PSym> phi) {
@@ -86,33 +122,31 @@ public class PropositionalNormalForms<PSym> {
 		if (phi.getOperands().size() == 1)
 			return clearTree((PropositionalFormula<PSym>) phi.getOperands().get(0));
 
-		ArrayList<PropositionalFormula<PSym>> list = new ArrayList<PropositionalFormula<PSym>>(
-				phi.getOperands().size());
+		HashSet<PropositionalFormula<PSym>> set = new HashSet<PropositionalFormula<PSym>>(phi.getOperands().size());
 
-		for (int i = 1; i < phi.getOperands().size(); i++) {
-			PropositionalFormula<PSym> form = (PropositionalFormula<PSym>) phi.getOperands().get(i);
-			list.add(clearTree(form));
+		for (PropositionalFormula<PSym> form : phi.getOperands()) {
+			set.add(clearTree(form));
 		}
 
-		ArrayList<PropositionalFormula<PSym>> list2 = new ArrayList<PropositionalFormula<PSym>>(list.size());
-		for (PropositionalFormula<PSym> form : list) {
+		HashSet<PropositionalFormula<PSym>> set2 = new HashSet<PropositionalFormula<PSym>>(set.size());
+		for (PropositionalFormula<PSym> form : set) {
 			if (form instanceof PropositionalOR<?>) {
-				list2.addAll(((PropositionalOR<PSym>) form).getOperands().stream()
+				set2.addAll(((PropositionalOR<PSym>) form).getOperands().stream()
 						.map(a -> (PropositionalFormula<PSym>) a).collect(Collectors.toList()));
 			} else if (form instanceof PropositionalFalsum<?>)
 				continue;
 			else if (form instanceof PropositionalVerum<?>)
 				return form;
 			else
-				list2.add(form);
+				set2.add(form);
 		}
 
-		if (list2.size() == 0)
+		if (set2.size() == 0)
 			return new PropositionalVerum<PSym>(phi.getSignature());
-		if (list2.size() == 1)
-			return list2.get(0);
+		if (set2.size() == 1)
+			return set2.stream().findFirst().get();
 
-		return new PropositionalOR<PSym>(phi.getSignature(), list2);
+		return new PropositionalOR<PSym>(phi.getSignature(), set2);
 	}
 
 	/*******************************************************************
@@ -120,7 +154,7 @@ public class PropositionalNormalForms<PSym> {
 	 ******************************************************************/
 
 	public PropositionalFormula<PSym> formulaToCNF(PropositionalFormula<PSym> phi) {
-		return _formulaToCNF(formulaToNegationNormalForm(phi));
+		return clearTree(_formulaToCNF(formulaToNegationNormalForm(phi)));
 	}
 
 	private PropositionalFormula<PSym> _formulaToCNF(PropositionalFormula<PSym> phi) {
@@ -140,7 +174,7 @@ public class PropositionalNormalForms<PSym> {
 				phi.getOperands().size());
 		for (SyntacticElement<PropositionalSignature<PSym>> iterable_element : phi.getOperands()) {
 			PropositionalFormula<PSym> form = (PropositionalFormula<PSym>) iterable_element;
-			list.add(_formulaToCNF(form));
+			list.add(formulaToCNF(form));
 		}
 
 		return new PropositionalAND<PSym>(phi.getSignature(), list);
@@ -153,7 +187,7 @@ public class PropositionalNormalForms<PSym> {
 				PropositionalOR<PSym> theRestOR = new PropositionalOR<PSym>(phi.getSignature(),
 						phi.getOperands().stream().filter(a -> a != form).collect(Collectors.toList()));
 				return new PropositionalAND<PSym>(phi.getSignature(), and.getOperands().stream()
-						.map(a -> _formulaToCNF(a.Or(theRestOR))).collect(Collectors.toList()));
+						.map(a -> formulaToCNF(a.Or(theRestOR))).collect(Collectors.toList()));
 			}
 		}
 
