@@ -45,7 +45,6 @@ public class PropositionalNormalForms<PSym> {
 		return clearTree(param).Neg();
 	}
 
-	@SuppressWarnings("unchecked")
 	private PropositionalFormula<PSym> _clearTree(PropositionalAND<PSym> phi) {
 		if (phi.getOperands().isEmpty())
 			return new PropositionalVerum<PSym>(phi.getSignature());
@@ -81,7 +80,6 @@ public class PropositionalNormalForms<PSym> {
 		return new PropositionalAND<PSym>(phi.getSignature(), list2);
 	}
 
-	@SuppressWarnings("unchecked")
 	private PropositionalFormula<PSym> _clearTree(PropositionalOR<PSym> phi) {
 		if (phi.getOperands().isEmpty())
 			return new PropositionalVerum<PSym>(phi.getSignature());
