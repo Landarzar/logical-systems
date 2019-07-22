@@ -69,19 +69,17 @@ public class PropositionalNormalForms<PSym> {
 
 		return PowerSet.stream(signature.getSymbols()).allMatch(set -> {
 			// Build formula:
-			PropositionalFormula<PSym> formula = null;
+			PropositionalFormula<PSym> formula = phi;
 			for (PSym psym : set) {
-				if (formula == null)
-					formula = new PropositionalAtom<>(signature, psym);
-				else
-					formula = formula.And(new PropositionalAtom<>(signature, psym));
+				formula = formula.And(new PropositionalAtom<>(signature, psym));
 			}
-			
+
 			// i hate java.....
 			final PropositionalFormula<PSym> tmp = formula;
+			final PropositionalLogic<PSym> logic = new PropositionalLogic<>();
 
 			// search for a generic interpretation
-			return signature.stream().anyMatch(intp -> isGeneric(intp, tmp));
+			return  signature.stream().noneMatch(intp -> logic.satisfies(intp, tmp)) || signature.stream().anyMatch(intp -> isGeneric(intp, tmp));
 		});
 	}
 
