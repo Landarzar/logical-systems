@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAND;
@@ -13,6 +14,7 @@ import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalNEG;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalOR;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
+import edu.cs.ai.combinatorics.PowerSet;
 
 public class PropositionalNormalForms<PSym> {
 
@@ -20,8 +22,13 @@ public class PropositionalNormalForms<PSym> {
 	 * Test Horn
 	 ******************************************************************/
 
-	public boolean isHornDefinable(PropositionalFormula<PSym> phi) {
-		PropositionalFormula<PSym> cnf = formulaToCNF(phi);
+	/**
+	 * Tests where the given input CNF-Formula is horn. The correctness of this
+	 * function is not garuanteed if cnf is not in conjunctive normal form.
+	 * 
+	 * @param cnf
+	 */
+	public boolean isHorn(PropositionalFormula<PSym> cnf) {
 
 		if (cnf instanceof PropositionalAND<?>) {
 			PropositionalAND<PSym> and = (PropositionalAND<PSym>) cnf;
@@ -51,6 +58,51 @@ public class PropositionalNormalForms<PSym> {
 		}
 
 		return true;
+	}
+
+	public boolean isHornDefinable(PropositionalFormula<PSym> phi) {
+		// We use the characterization by Makowsky (1987): A formula is horndefinable
+		// if for any extension by positive atoms there exists a generic assignment.
+
+		// Signature
+		PropositionalSignature<PSym> signature = phi.getSignature();
+
+		return PowerSet.stream(signature.getSymbols()).allMatch(set -> {
+			// Build formula:
+			PropositionalFormula<PSym> formula = null;
+			for (PSym psym : set) {
+				if (formula == null)
+					formula = new PropositionalAtom<>(signature, psym);
+				else
+					formula = formula.And(new PropositionalAtom<>(signature, psym));
+			}
+			
+			// i hate java.....
+			final PropositionalFormula<PSym> tmp = formula;
+
+			// search for a generic interpretation
+			return signature.stream().anyMatch(intp -> isGeneric(intp, tmp));
+		});
+	}
+
+	/***
+	 * Test where a pair $(\omega,\phi)$ is generic. "generic" is defined by
+	 * Makowsky in 1987: (1) $\omega \models \phi$ (2) $\omega\models\sigma$ iff
+	 * $\phi\models\sigma$ for all $\sigma\in\Sigma$ where \Sigma is the signature.
+	 * 
+	 * @param intp    The interpretation $\omega$
+	 * @param formula The formula $\phi$
+	 */
+	public boolean isGeneric(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> intp,
+			PropositionalFormula<PSym> formula) {
+		PropositionalLogic<PSym> logic = new PropositionalLogic<>();
+		if (!logic.satisfies(intp, formula))
+			return false;
+
+		return formula.getSignature().getSymbols().stream().allMatch(sigma -> {
+			return logic.satisfies(intp, new PropositionalAtom<>(formula.getSignature(), sigma)) == logic
+					.entails(formula, new PropositionalAtom<>(formula.getSignature(), sigma));
+		});
 	}
 
 	/*******************************************************************
