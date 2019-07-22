@@ -5,7 +5,7 @@ import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticFormula;
 
-public class PropositionalBottom<PSym> extends PropositionalFormula<PSym> implements SyntacticFormula<PropositionalSignature<PSym>> {
+public class PropositionalVerum<PSym> extends PropositionalFormula<PSym> implements SyntacticFormula<PropositionalSignature<PSym>> {
 
 	protected PropositionalSignature<PSym> signature;
 
@@ -14,7 +14,7 @@ public class PropositionalBottom<PSym> extends PropositionalFormula<PSym> implem
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public PropositionalBottom(PropositionalSignature<PSym> signature) {
+	public PropositionalVerum(PropositionalSignature<PSym> signature) {
 		this.signature = signature;
 	}
 
@@ -45,7 +45,7 @@ public class PropositionalBottom<PSym> extends PropositionalFormula<PSym> implem
 	 */
 	@Override
 	public String stringify() {
-		return "B";
+		return "T";
 	}
 
 	/*
@@ -60,7 +60,7 @@ public class PropositionalBottom<PSym> extends PropositionalFormula<PSym> implem
 
 	@Override
 	public String toLaTeX() {
-		return "\\bot";
+		return "\\top";
 	}
 
 	@Override

@@ -2,10 +2,10 @@ package edu.cs.ai.alchourron.logic.propositional;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAND;
-import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalBottom;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalFalsum;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalNEG;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalOR;
-import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalTop;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticFormula;
 
 /***
@@ -29,11 +29,11 @@ public abstract class PropositionalFormula<PSym>
 //	}
 	
 	public static <PSym> PropositionalFormula<PSym> getFalsum(PropositionalSignature<PSym> signature) {
-		return new PropositionalBottom<>(signature);
+		return new PropositionalFalsum<>(signature);
 	}
 
 	public static <PSym> PropositionalFormula<PSym> getTautology(PropositionalSignature<PSym> signature) {
-		return new PropositionalTop<>(signature);
+		return new PropositionalVerum<>(signature);
 	}
 
 	public PropositionalFormula<PSym> Neg() {

@@ -8,10 +8,10 @@ import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.LogicalSystem;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAND;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAtom;
-import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalBottom;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalFalsum;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalNEG;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalOR;
-import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalTop;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
 import edu.cs.ai.alchourron.logic.syntax.LogicalAND;
 import edu.cs.ai.alchourron.logic.syntax.LogicalNEG;
 import edu.cs.ai.alchourron.logic.syntax.LogicalOR;
@@ -25,13 +25,12 @@ import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
  * 
  * @author Kai Sauerwald
  *
- * @param <PSym>
- *            The symbol space over which the signature is definable
- * @param <F>
- *            The type for formula
+ * @param <PSym> The symbol space over which the signature is definable
+ * @param <F>    The type for formula
  */
-public class PropositionalLogic<PSym>
-		implements LogicalSystem<Boolean, PropositionalSignature<PSym>, PropositionalFormula<PSym>, PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
+public class PropositionalLogic<PSym> implements
+		LogicalSystem<Boolean, PropositionalSignature<PSym>, PropositionalFormula<PSym>, PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
+
 
 	/*
 	 * (non-Javadoc)
@@ -49,12 +48,13 @@ public class PropositionalLogic<PSym>
 	 * propositional formula
 	 * 
 	 * @author Kai Sauerwald
-	 * @param syntacton
-	 *            the root of the syntax tree
+	 * @param syntacton the root of the syntax tree
 	 */
 	@SuppressWarnings("unchecked")
-	protected boolean validSyntaxTree(SyntacticElement<PropositionalSignature<PSym>> syntacton, PropositionalSignature<PSym> sig) {
-		if (syntacton instanceof LogicalAND<?> || syntacton instanceof LogicalOR<?> || syntacton instanceof LogicalNEG<?>) {
+	protected boolean validSyntaxTree(SyntacticElement<PropositionalSignature<PSym>> syntacton,
+			PropositionalSignature<PSym> sig) {
+		if (syntacton instanceof LogicalAND<?> || syntacton instanceof LogicalOR<?>
+				|| syntacton instanceof LogicalNEG<?>) {
 			LogicalOperator<PropositionalSignature<PSym>> le = (LogicalOperator<PropositionalSignature<PSym>>) syntacton;
 			return le.getOperands().stream().allMatch(se -> validSyntaxTree(se, sig));
 		} else if (syntacton instanceof Predicate<?, ?>) {
@@ -77,52 +77,60 @@ public class PropositionalLogic<PSym>
 	 * Formula)
 	 */
 	@Override
-	public Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> modelsOf(PropositionalFormula<PSym> formula) {
+	public Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> modelsOf(
+			PropositionalFormula<PSym> formula) {
 		assert this.validFormula(formula) : "given formula ist not (syntactically) valid";
 		return formula.getSignature().stream().filter(i -> satisfies(i, formula)).collect(Collectors.toSet());
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see edu.cs.ai.alchourron.logic.LogicalSystem#eval(edu.cs.ai.alchourron.logic.Interpretation, edu.cs.ai.alchourron.logic.Formula)
+	 * 
+	 * @see
+	 * edu.cs.ai.alchourron.logic.LogicalSystem#eval(edu.cs.ai.alchourron.logic.
+	 * Interpretation, edu.cs.ai.alchourron.logic.Formula)
 	 */
 	@Override
-	public Boolean eval(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> interpretation, PropositionalFormula<PSym> formula) {
+	public Boolean eval(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> interpretation,
+			PropositionalFormula<PSym> formula) {
 		return satisfies(interpretation, formula);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see edu.cs.ai.alchourron.logic.LogicalSystem#entails(edu.cs.ai.alchourron.logic.Interpretation, edu.cs.ai.alchourron.logic.Formula)
+	 * 
+	 * @see
+	 * edu.cs.ai.alchourron.logic.LogicalSystem#entails(edu.cs.ai.alchourron.logic.
+	 * Interpretation, edu.cs.ai.alchourron.logic.Formula)
 	 */
 	@Override
-	public boolean satisfies(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> interpretation, PropositionalFormula<PSym> formula) {
+	public boolean satisfies(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> interpretation,
+			PropositionalFormula<PSym> formula) {
 //		assert this.validFormula(formula) : "the given formula ist not valid";
-				
+
 		if (formula instanceof PropositionalAtom<?>) {
 			PropositionalAtom<PSym> atom = (PropositionalAtom<PSym>) formula;
 			return interpretation.isTrue(atom.getSymbol());
 		}
 		if (formula instanceof PropositionalAND<?>) {
 			PropositionalAND<PSym> and = (PropositionalAND<PSym>) formula;
-			return and.getOperands().stream().allMatch( o -> satisfies(interpretation, (PropositionalFormula<PSym>) o)  );
+			return and.getOperands().stream().allMatch(o -> satisfies(interpretation, (PropositionalFormula<PSym>) o));
 		}
 		if (formula instanceof PropositionalOR<?>) {
 			PropositionalOR<PSym> or = (PropositionalOR<PSym>) formula;
-			return or.getOperands().stream().anyMatch( o -> satisfies(interpretation, (PropositionalFormula<PSym>) o)  );
+			return or.getOperands().stream().anyMatch(o -> satisfies(interpretation, (PropositionalFormula<PSym>) o));
 		}
 		if (formula instanceof PropositionalNEG<?>) {
 			PropositionalNEG<PSym> neg = (PropositionalNEG<PSym>) formula;
-			return !satisfies(interpretation, (PropositionalFormula<PSym>) neg.getOperands().get(0) );
+			return !satisfies(interpretation, (PropositionalFormula<PSym>) neg.getOperands().get(0));
 		}
-		if (formula instanceof PropositionalBottom<?>) {
+		if (formula instanceof PropositionalFalsum<?>) {
 			return false;
 		}
-		if (formula instanceof PropositionalTop<?>) {
+		if (formula instanceof PropositionalVerum<?>) {
 			return true;
 		}
 
-		
 		throw new InvalidParameterException("The given formula object is not a valid propositional formula");
 	}
 

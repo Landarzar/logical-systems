@@ -67,7 +67,7 @@ public class PropositionalAND<PSym> extends PropositionalFormula<PSym>
 		 * @see edu.cs.ai.alchourron.logic.syntax.LogicalOperator#getOperands()
 		 */
 		@Override
-		public List<? extends SyntacticElement<PropositionalSignature<PSym>>> getOperands() {
+		public List<PropositionalFormula<PSym>> getOperands() {
 			return Collections.unmodifiableList(operands);
 		}
 
