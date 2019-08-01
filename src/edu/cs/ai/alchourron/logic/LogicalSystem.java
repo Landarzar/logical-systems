@@ -6,14 +6,14 @@ import java.util.Set;
  * 
  * @author Kai Sauerwald
  *
+ * @param <T>
+ *            The type of truth values
  * @param <S>
  *            The type of signature
  * @param <F>
  *            The type of formula
  * @param <I>
  *            The type of interpretations
- * @param <T>
- *            The type of truth values
  */
 public interface LogicalSystem<T, S extends Signature, F extends Formula<S>, I extends Interpretation<S>> {
 	
