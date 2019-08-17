@@ -35,7 +35,7 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 * @param trueValued
 	 *            The elements which are considered to be true
 	 */
-	public PropositionalInterpretation(S sig, PSym[] trueValued) {
+	public PropositionalInterpretation(S sig, PSym... trueValued) {
 		this.signature =sig;
 		this.trueValued = new HashSet<>();
 		for (int i = 0; i < trueValued.length; i++) {

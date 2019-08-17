@@ -38,6 +38,46 @@ public class DeFinettiSemantics<PSym>
 	}
 
 	/***
+	 * Get all Verifying models for a conditional
+	 * @author Kai Sauerwald
+	 * @param conditional
+	 */
+	public Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> getVerifications(
+			Conditional<PropositionalSignature<PSym>, PropositionalFormula<PSym>> conditional) {
+		return logic.modelsOf(conditional.getAntecendence().And(conditional.getConsequence()));
+	}
+
+	/***
+	 * Get all falsifying models for a conditional
+	 * @author Kai Sauerwald
+	 * @param conditional
+	 */
+	public Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> getFalsifications(
+			Conditional<PropositionalSignature<PSym>, PropositionalFormula<PSym>> conditional) {
+		return logic.modelsOf(conditional.getAntecendence().And(conditional.getConsequence().Neg()));
+	}
+
+	/***
+	 * Get all not applicable models for a conditional
+	 * @author Kai Sauerwald
+	 * @param conditional
+	 */
+	public Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> getNotApplicable(
+			Conditional<PropositionalSignature<PSym>, PropositionalFormula<PSym>> conditional) {
+		return logic.modelsOf(conditional.getAntecendence().Neg());
+	}
+
+	/***
+	 * Get all applicable models for a conditional
+	 * @author Kai Sauerwald
+	 * @param conditional
+	 */
+	public Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> getApplicable(
+			Conditional<PropositionalSignature<PSym>, PropositionalFormula<PSym>> conditional) {
+		return logic.modelsOf(conditional.getAntecendence());
+	}
+
+	/***
 	 * Says where intp verifies the conditional.
 	 * 
 	 * @author Kai Sauerwald
@@ -107,7 +147,7 @@ public class DeFinettiSemantics<PSym>
 			private Iterator<Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>>> itrAnt = PowerSet
 					.iterator(signature.stream().collect(Collectors.toSet()));
 			private Iterator<Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>>> itrCons = null;
-			
+
 			private Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> currAnt = null;
 
 			@Override
@@ -121,17 +161,17 @@ public class DeFinettiSemantics<PSym>
 			public Conditional<PropositionalSignature<PSym>, PropositionalFormula<PSym>> next() {
 				if (!hasNext())
 					throw new NoSuchElementException();
-				
-				if(currAnt == null)
+
+				if (currAnt == null)
 					currAnt = itrAnt.next();
 
 				if (itrCons == null)
 					itrCons = PowerSet.iterator(signature.stream().collect(Collectors.toSet()));
-				else if(!itrCons.hasNext()) {
+				else if (!itrCons.hasNext()) {
 					currAnt = itrAnt.next();
 					itrCons = PowerSet.iterator(signature.stream().collect(Collectors.toSet()));
 				}
-				
+
 				return new Conditional<PropositionalSignature<PSym>, PropositionalFormula<PSym>>(
 						logic.getCharacterisingFormula(signature, currAnt),
 						logic.getCharacterisingFormula(signature, itrCons.next()));
