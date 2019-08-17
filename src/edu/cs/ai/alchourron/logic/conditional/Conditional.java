@@ -34,6 +34,11 @@ public class Conditional<S extends Signature, F extends Formula<S>> {
 	public F getConsequence() {
 		return consequence;
 	}
+	
+	@Override
+	public String toString() {
+		return "( " + consequence.toString() + " | " + antecendence.toString() + " )";
+	}
 
 	@Override
 	public int hashCode() {

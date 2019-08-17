@@ -68,6 +68,32 @@ public class PropositionalLogic<PSym> implements
 
 		return false;
 	}
+	
+
+	
+
+	
+	/***
+	 * Generates a formula having exact having exact the set of interpretations as models.
+	 * @param set The set of models.
+	 */
+	public PropositionalFormula<PSym> getCharacterisingFormula(PropositionalSignature<PSym> sig, Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> set){
+		if(set.isEmpty())
+			return new PropositionalFalsum<PSym>(sig);
+		if(set.size() == 1)
+			return set.stream().findFirst().get().getCharacterizingFormula();
+		
+		PropositionalFormula<PSym> formula = null;
+		
+		for (PropositionalInterpretation<PSym, PropositionalSignature<PSym>> i : set) {
+			if(formula == null)
+				formula = i.getCharacterizingFormula();
+			else
+				formula = formula.Or(i.getCharacterizingFormula());
+		}
+		
+		return formula;
+	}
 
 	/*
 	 * (non-Javadoc)

@@ -9,6 +9,8 @@ import java.util.Set;
 
 import edu.cs.ai.alchourron.logic.Interpretation;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAtom;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalFalsum;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
 
 /***
  * Represents propositional interpretations.
