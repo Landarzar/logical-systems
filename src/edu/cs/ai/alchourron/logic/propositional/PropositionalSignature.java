@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
 
 /***
  * Represents a propositional signature, which uses Elements of the type Psym as
@@ -76,6 +77,28 @@ public class PropositionalSignature<PSym> implements Signature, Iterable<Proposi
      */
 	public Stream<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> stream() {
 		return StreamSupport.stream(Spliterators.spliterator(iterator(), /* initial size */ 0L, Spliterator.IMMUTABLE), false);
+	}
+	
+	/***
+	 * Generates a formula having exact having exact the set of interpretations as models.
+	 * @param set The set of models.
+	 */
+	public PropositionalFormula<PSym> getCharacterisingFormula(Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> set){
+		if(set.isEmpty())
+			return new PropositionalVerum<PSym>(this);
+		if(set.size() == 1)
+			return set.stream().findFirst().get().getCharacterizingFormula();
+		
+		PropositionalFormula<PSym> formula = null;
+		
+		for (PropositionalInterpretation<PSym, PropositionalSignature<PSym>> i : set) {
+			if(formula == null)
+				formula = i.getCharacterizingFormula();
+			else
+				formula.Or(i.getCharacterizingFormula());
+		}
+		
+		return formula;
 	}
 
 	/**
