@@ -36,6 +36,10 @@ public class DeFinettiSemantics<PSym>
 	public PropositionalSignature<PSym> getSignature() {
 		return signature;
 	}
+	
+	public PropositionalLogic<PSym> getLogic() {
+		return logic;
+	}
 
 	/***
 	 * Get all Verifying models for a conditional
