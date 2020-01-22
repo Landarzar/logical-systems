@@ -5,12 +5,12 @@ import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
-import edu.cs.ai.alchourron.logic.syntax.Predicate;
+import edu.cs.ai.alchourron.logic.syntax.Proposition;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.Term;
 
 public class PropositionalAtom<PSym> extends PropositionalFormula<PSym>
-		implements Predicate<PSym, PropositionalSignature<PSym>> {
+		implements Proposition<PSym, PropositionalSignature<PSym>> {
 
 	protected PSym symbol;
 	protected PropositionalSignature<PSym> signature;

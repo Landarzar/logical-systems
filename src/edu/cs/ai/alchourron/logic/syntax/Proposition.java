@@ -11,7 +11,7 @@ import edu.cs.ai.alchourron.logic.Signature;
  * @param <PSym> The type for predicate symbols
  * @param <S> The signature type
  */
-public interface Predicate<PSym, S extends PredicateLogicSignature>  extends SyntacticFormula<S> {
+public interface Proposition<PSym, S extends Signature>  extends SyntacticFormula<S> {
 	
 	
 	/***

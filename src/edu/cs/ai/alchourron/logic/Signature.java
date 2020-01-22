@@ -9,4 +9,7 @@ import edu.cs.ai.alchourron.LaTeX;
  */
 public interface Signature extends LaTeX {
 	
+	public default boolean isPredicateLogic() {
+		return false;
+	}
 }
