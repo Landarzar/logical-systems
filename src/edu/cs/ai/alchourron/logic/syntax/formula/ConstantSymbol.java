@@ -1,6 +1,7 @@
-package edu.cs.ai.alchourron.logic.syntax;
+package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 
 public interface ConstantSymbol<CSym, S extends Signature>  extends Term<S> {
 	

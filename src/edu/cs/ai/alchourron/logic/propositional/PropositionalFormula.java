@@ -6,7 +6,6 @@ import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalFalsum;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalNEG;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalOR;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
-import edu.cs.ai.alchourron.logic.syntax.SyntacticFormula;
 
 /***
  * Represents propositional formula.
@@ -16,7 +15,7 @@ import edu.cs.ai.alchourron.logic.syntax.SyntacticFormula;
  * @param <PSym> The type of symbols over which the signature is defined
  */
 public abstract class PropositionalFormula<PSym>
-		implements Formula<PropositionalSignature<PSym>>, SyntacticFormula<PropositionalSignature<PSym>> {
+		implements Formula<PropositionalSignature<PSym>> {
 
 //	public static <PSym> PropositionalFormula<PSym> getFalsum(PropositionalSignature<PSym> signature) {
 //		return new PropositionalAtom<>(signature, signature.getSymbols().get(0)).Neg()

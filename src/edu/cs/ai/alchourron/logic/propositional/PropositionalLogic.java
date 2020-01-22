@@ -12,12 +12,12 @@ import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalFalsum;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalNEG;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalOR;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
-import edu.cs.ai.alchourron.logic.syntax.LogicalAND;
-import edu.cs.ai.alchourron.logic.syntax.LogicalNEG;
-import edu.cs.ai.alchourron.logic.syntax.LogicalOR;
-import edu.cs.ai.alchourron.logic.syntax.LogicalOperator;
-import edu.cs.ai.alchourron.logic.syntax.Predicate;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalNEG;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOR;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
+import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
 
 /***
  * Logical System representing propositional logic over symbol space of type
@@ -57,8 +57,8 @@ public class PropositionalLogic<PSym> implements
 				|| syntacton instanceof LogicalNEG<?>) {
 			LogicalOperator<PropositionalSignature<PSym>> le = (LogicalOperator<PropositionalSignature<PSym>>) syntacton;
 			return le.getOperands().stream().allMatch(se -> validSyntaxTree(se, sig));
-		} else if (syntacton instanceof Predicate<?, ?>) {
-			Predicate<PSym, PropositionalSignature<PSym>> atom = (Predicate<PSym, PropositionalSignature<PSym>>) syntacton;
+		} else if (syntacton instanceof Proposition<?, ?>) {
+			Proposition<PSym, PropositionalSignature<PSym>> atom = (Proposition<PSym, PropositionalSignature<PSym>>) syntacton;
 			if (atom.getArity() != 0)
 				return false;
 			if (!sig.getSymbols().contains(atom.getSymbol()))

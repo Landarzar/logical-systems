@@ -9,15 +9,17 @@ import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
  *
  * @param <S> The signature
  */
-public interface Formula<S extends Signature> extends LaTeX {
+public interface Formula<S extends Signature> extends LaTeX, SyntacticElement<S> {
 	
 	/**
 	 * Returns the "syntax tree" for this formula.
-	 * This allows to seperate the representation of knoweldege from the syntactic structure.
 	 * @author Kai Sauerwald
 	 * @throws UnsupportedOperationException If the method is not implement or supported
 	 */
-	public SyntacticElement<S> getSyntaxTree() throws UnsupportedOperationException;
+	public default SyntacticElement<S> getSyntaxTree() throws UnsupportedOperationException
+	{
+		throw new UnsupportedOperationException("This operation is not implemented");
+	}; 
 	
 	/***
 	 * Gets the (smalles) signature matching to this formula.

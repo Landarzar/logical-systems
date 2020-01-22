@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import edu.cs.ai.alchourron.logic.conditional.Conditional;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalInterpretation;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalLogic;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
+import edu.cs.ai.alchourron.logic.syntax.formula.Conditional;
 import edu.cs.ai.combinatorics.PowerSet;
 
 /***

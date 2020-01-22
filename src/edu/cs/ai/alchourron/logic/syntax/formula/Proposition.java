@@ -1,8 +1,10 @@
-package edu.cs.ai.alchourron.logic.syntax;
+package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.List;
 
+import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 
 /***
  * Represents predicates, for instance relations in first order logic or propositional atoms.
@@ -11,7 +13,7 @@ import edu.cs.ai.alchourron.logic.Signature;
  * @param <PSym> The type for predicate symbols
  * @param <S> The signature type
  */
-public interface Proposition<PSym, S extends Signature>  extends SyntacticFormula<S> {
+public interface Proposition<PSym, S extends Signature>  extends Formula<S> {
 	
 	
 	/***

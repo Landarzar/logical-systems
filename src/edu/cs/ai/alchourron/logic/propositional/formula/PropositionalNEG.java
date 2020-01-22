@@ -5,8 +5,8 @@ import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
-import edu.cs.ai.alchourron.logic.syntax.LogicalNEG;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalNEG;
 
 public class PropositionalNEG<PSym> extends PropositionalFormula<PSym>
 		implements LogicalNEG<PropositionalSignature<PSym>> {

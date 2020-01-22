@@ -8,8 +8,8 @@ import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
-import edu.cs.ai.alchourron.logic.syntax.LogicalOR;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOR;
 
 public class PropositionalOR<PSym> extends PropositionalFormula<PSym>
 		implements LogicalOR<PropositionalSignature<PSym>> {

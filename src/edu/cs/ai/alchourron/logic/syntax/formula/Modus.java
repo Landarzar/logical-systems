@@ -1,21 +1,22 @@
-package edu.cs.ai.alchourron.logic.syntax;
+package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.syntax.signature.ModalLogicSignature;
 
 /***
  * Represents a modus of a modal logic. Typical is the modus "K" with the intended meaning someone "knows".
  * @author Kai Sauerwald
  *
  * @param <S> The signature
- * @param <K> The type of modi
+ * @param <M> The type of modi
  */
-public interface Modus<S extends Signature, K> extends LogicalOperator<S> {
+public interface Modus<M,S extends ModalLogicSignature<M>> extends LogicalOperator<S> {
 	
 	/***
 	 * Gets the kind of the modus. 
 	 * @author Kai Sauerwald
 	 */
-	public K getKindofModus();
+	public M getKindofModus();
 	
 	/*
 	 * (non-Javadoc)

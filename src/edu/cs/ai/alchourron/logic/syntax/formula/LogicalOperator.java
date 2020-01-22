@@ -1,8 +1,10 @@
-package edu.cs.ai.alchourron.logic.syntax;
+package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.List;
 
+import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 
 /***
  * Base for 
@@ -10,7 +12,7 @@ import edu.cs.ai.alchourron.logic.Signature;
  *
  * @param <S> The Signature
  */
-public interface LogicalOperator<S extends Signature>  extends SyntacticFormula<S> {
+public interface LogicalOperator<S extends Signature>  extends Formula<S> {
 	
 	
 	/***

@@ -1,22 +1,23 @@
-package edu.cs.ai.alchourron.logic.conditional;
+package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 
 /***
  * 
  * @author Kai Sauerwald
  *
  * @param <S> Signature Type
- * @param <F> Formula Type
+ * @param <B> Formulas of the base logic
  */
-public class Conditional<S extends Signature, F extends Formula<S>> {
-	private F antecendence;
-	private F consequence;
+public class Conditional<S extends Signature, B extends Formula<S>> implements Formula<S> {
+	private B antecendence;
+	private B consequence;
 
-	public Conditional(F antecendence, F consequence) {
+	public Conditional(B antecendence, B consequence) {
 		this.antecendence = antecendence;
 		this.consequence = consequence;
 	}
@@ -24,14 +25,14 @@ public class Conditional<S extends Signature, F extends Formula<S>> {
 	/***
 	 * Returns the antecendence of this conditional
 	 */
-	public F getAntecendence() {
+	public B getAntecendence() {
 		return antecendence;
 	}
 
 	/***
 	 * Returns the consequence of this conditional
 	 */
-	public F getConsequence() {
+	public B getConsequence() {
 		return consequence;
 	}
 	
@@ -55,5 +56,31 @@ public class Conditional<S extends Signature, F extends Formula<S>> {
 		return Objects.equals(antecendence, other.antecendence) && Objects.equals(consequence, other.consequence);
 	}
 	
+	@Override
+	public String stringify() {
+		// TODO Auto-generated method stub
+		return toString();
+	}
 	
+	@Override
+	public boolean isAtom() {
+		return true;
+	}
+	
+	@Override
+	public boolean isLogical() {
+		return true;
+	}
+
+	@Override
+	public SyntacticElement<S> getSyntaxTree() throws UnsupportedOperationException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public S getSignature() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

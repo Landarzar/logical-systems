@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.cs.ai.alchourron.logic.syntax;
+package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import edu.cs.ai.alchourron.logic.Signature;
 

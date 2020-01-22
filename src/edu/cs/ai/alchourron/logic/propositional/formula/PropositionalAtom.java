@@ -5,9 +5,9 @@ import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
-import edu.cs.ai.alchourron.logic.syntax.Proposition;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
-import edu.cs.ai.alchourron.logic.syntax.Term;
+import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
+import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 
 public class PropositionalAtom<PSym> extends PropositionalFormula<PSym>
 		implements Proposition<PSym, PropositionalSignature<PSym>> {

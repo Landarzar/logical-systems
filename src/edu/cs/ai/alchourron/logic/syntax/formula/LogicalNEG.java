@@ -1,4 +1,4 @@
-package edu.cs.ai.alchourron.logic.syntax;
+package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import edu.cs.ai.alchourron.logic.Signature;
 
@@ -8,14 +8,13 @@ import edu.cs.ai.alchourron.logic.Signature;
  *
  * @param <S> The Signature
  */
-public interface LogicalAND<S extends Signature>  extends LogicalOperator<S> {
-
+public interface LogicalNEG<S extends Signature>  extends LogicalOperator<S> {
 	/*
 	 * (non-Javadoc)
 	 * @see cs.ai.logic.syntax.SyntacticElement#stringify()
 	 */
 	@Override
 	public default String stringify() {
-		return "(" + getOperands().get(0) + " AND " + getOperands().get(1) + ")";
+		return "( NOT " + getOperands().get(0) + ")";
 	}
 }

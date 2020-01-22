@@ -8,8 +8,8 @@ import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
-import edu.cs.ai.alchourron.logic.syntax.LogicalAND;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
 
 public class PropositionalAND<PSym> extends PropositionalFormula<PSym>
 			implements LogicalAND<PropositionalSignature<PSym>> {
