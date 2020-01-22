@@ -84,7 +84,7 @@ public class LogicalNEG<S extends NegationLogicSignature> implements LogicalOper
 			return true;
 		if (!(obj instanceof PropositionalNEG))
 			return false;
-		PropositionalNEG other = (PropositionalNEG) obj;
+		LogicalNEG<S> other = (LogicalNEG<S>) obj;
 		return Objects.equals(operand, other.operand) && Objects.equals(signature, other.signature);
 	}
 
@@ -114,7 +114,7 @@ public class LogicalNEG<S extends NegationLogicSignature> implements LogicalOper
 	 * @see cs.ai.logic.syntax.SyntacticElement#stringify()
 	 */
 	@Override
-	public default String stringify() {
+	public String stringify() {
 		return toString();
 	}
 }
