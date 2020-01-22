@@ -1,6 +1,6 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
-import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.syntax.Formula;
 import edu.cs.ai.alchourron.logic.syntax.signature.QuantificationLogicSignature;
 
 /***
@@ -9,7 +9,7 @@ import edu.cs.ai.alchourron.logic.syntax.signature.QuantificationLogicSignature;
  *
  * @param <Q> The type which are bound by this quantifier (Variables, Relations, ...)
  */
-public interface Quantor<Q,S extends QuantificationLogicSignature<Q>> extends LogicalOperator<S> {
+public interface Quantor<K extends Enum<K>,Q,S extends QuantificationLogicSignature<K,Q>> extends LogicalOperator<S> {
 	
 	
 	/***

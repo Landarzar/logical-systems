@@ -2,8 +2,8 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.List;
 
-import edu.cs.ai.alchourron.logic.Formula;
-import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.syntax.Formula;
+import edu.cs.ai.alchourron.logic.syntax.signature.PropositionLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 
 /***
@@ -13,7 +13,7 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  * @param <PSym> The type for predicate symbols
  * @param <S> The signature type
  */
-public interface Proposition<PSym, S extends Signature>  extends Formula<S> {
+public interface Proposition<PSym, S extends PropositionLogicSignature>  extends Formula<S> {
 	
 	
 	/***

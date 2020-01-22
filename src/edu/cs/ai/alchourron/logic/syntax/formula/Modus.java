@@ -1,6 +1,6 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
-import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.syntax.Signature;
 import edu.cs.ai.alchourron.logic.syntax.signature.ModalLogicSignature;
 
 /***

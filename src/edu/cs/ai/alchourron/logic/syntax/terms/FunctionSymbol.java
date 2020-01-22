@@ -1,6 +1,6 @@
 package edu.cs.ai.alchourron.logic.syntax.terms;
 
-import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.syntax.Signature;
 
 public interface FunctionSymbol<FSym, S extends Signature>  extends Term<S> {
 	

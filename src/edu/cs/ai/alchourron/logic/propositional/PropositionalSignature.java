@@ -15,8 +15,9 @@ import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import edu.cs.ai.alchourron.logic.Signature;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
+import edu.cs.ai.alchourron.logic.syntax.Signature;
+import edu.cs.ai.alchourron.logic.syntax.signature.TruthFunctionalLogicSignature;
 
 /***
  * Represents a propositional signature, which uses Elements of the type Psym as
@@ -27,7 +28,7 @@ import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
  * @param <PSym>
  *            The type of the symbols
  */
-public class PropositionalSignature<PSym> implements Signature, Iterable<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
+public class PropositionalSignature<PSym> implements Signature, TruthFunctionalLogicSignature,, Iterable<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
 
 	/***
 	 * The symbols of this signature

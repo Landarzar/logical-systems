@@ -1,11 +1,11 @@
 package edu.cs.ai.alchourron.logic.propositional;
 
-import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAND;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalFalsum;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalNEG;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalOR;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
+import edu.cs.ai.alchourron.logic.syntax.Formula;
 
 /***
  * Represents propositional formula.

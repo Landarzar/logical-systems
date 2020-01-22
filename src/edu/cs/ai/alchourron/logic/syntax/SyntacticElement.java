@@ -1,8 +1,5 @@
 package edu.cs.ai.alchourron.logic.syntax;
 
-import edu.cs.ai.alchourron.logic.Formula;
-import edu.cs.ai.alchourron.logic.Signature;
-
 /***
  * 
  * @author Kai Sauerwald

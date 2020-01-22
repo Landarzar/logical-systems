@@ -4,14 +4,14 @@ import java.security.InvalidParameterException;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import edu.cs.ai.alchourron.logic.Formula;
-import edu.cs.ai.alchourron.logic.LogicalSystem;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAND;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAtom;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalFalsum;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalNEG;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalOR;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
+import edu.cs.ai.alchourron.logic.semantics.ModelTheory;
+import edu.cs.ai.alchourron.logic.syntax.Formula;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalNEG;
@@ -29,7 +29,7 @@ import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
  * @param <F>    The type for formula
  */
 public class PropositionalLogic<PSym> implements
-		LogicalSystem<Boolean, PropositionalSignature<PSym>, PropositionalFormula<PSym>, PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
+		ModelTheory<Boolean, PropositionalSignature<PSym>, PropositionalFormula<PSym>, PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
 
 
 	/*

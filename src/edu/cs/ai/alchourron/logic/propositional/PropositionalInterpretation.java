@@ -7,10 +7,10 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Set;
 
-import edu.cs.ai.alchourron.logic.Interpretation;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAtom;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalFalsum;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
+import edu.cs.ai.alchourron.logic.semantics.Interpretation;
 
 /***
  * Represents propositional interpretations.
@@ -22,7 +22,7 @@ import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
  * @param <S>
  *            The type of the signature
  */
-public class PropositionalInterpretation<PSym, S extends PropositionalSignature<PSym>> implements Interpretation<S> {
+public class PropositionalInterpretation<PSym, S extends PropositionalSignature<PSym>> implements Interpretation {
 
 	S signature;
 	Set<PSym> trueValued;

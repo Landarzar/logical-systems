@@ -1,8 +1,8 @@
-package edu.cs.ai.alchourron.logic.syntax;
+package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.List;
 
-import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.syntax.Formula;
 import edu.cs.ai.alchourron.logic.syntax.signature.PredicateLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 
