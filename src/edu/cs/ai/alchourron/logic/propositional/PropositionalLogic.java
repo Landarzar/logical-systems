@@ -1,6 +1,7 @@
 package edu.cs.ai.alchourron.logic.propositional;
 
 import java.security.InvalidParameterException;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
  * @param <F>    The type for formula
  */
 public class PropositionalLogic<PSym> implements
-		ModelTheory<Boolean, PropositionalSignature<PSym>, PropositionalFormula<PSym>, PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
+		ModelTheory<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>, PropositionalFormula<PSym>, Boolean, PropositionalSignature<PSym>> {
 
 
 	/*
@@ -119,7 +120,7 @@ public class PropositionalLogic<PSym> implements
 	@Override
 	public Boolean eval(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> interpretation,
 			PropositionalFormula<PSym> formula) {
-		return satisfies(interpretation, formula);
+		return _satisfies(interpretation, formula);
 	}
 
 	/*
@@ -130,7 +131,19 @@ public class PropositionalLogic<PSym> implements
 	 * Interpretation, edu.cs.ai.alchourron.logic.Formula)
 	 */
 	@Override
-	public boolean satisfies(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> interpretation,
+	public Optional<Boolean> satisfies(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> interpretation,
+			PropositionalFormula<PSym> formula) {
+		return Optional.of(_satisfies(interpretation, formula));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * edu.cs.ai.alchourron.logic.LogicalSystem#entails(edu.cs.ai.alchourron.logic.
+	 * Interpretation, edu.cs.ai.alchourron.logic.Formula)
+	 */
+	private Boolean _satisfies(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> interpretation,
 			PropositionalFormula<PSym> formula) {
 //		assert this.validFormula(formula) : "the given formula ist not valid";
 
@@ -140,15 +153,15 @@ public class PropositionalLogic<PSym> implements
 		}
 		if (formula instanceof PropositionalAND<?>) {
 			PropositionalAND<PSym> and = (PropositionalAND<PSym>) formula;
-			return and.getOperands().stream().allMatch(o -> satisfies(interpretation, (PropositionalFormula<PSym>) o));
+			return and.getOperands().stream().allMatch(o -> _satisfies(interpretation, (PropositionalFormula<PSym>) o));
 		}
 		if (formula instanceof PropositionalOR<?>) {
 			PropositionalOR<PSym> or = (PropositionalOR<PSym>) formula;
-			return or.getOperands().stream().anyMatch(o -> satisfies(interpretation, (PropositionalFormula<PSym>) o));
+			return or.getOperands().stream().anyMatch(o -> _satisfies(interpretation, (PropositionalFormula<PSym>) o));
 		}
 		if (formula instanceof PropositionalNEG<?>) {
 			PropositionalNEG<PSym> neg = (PropositionalNEG<PSym>) formula;
-			return !satisfies(interpretation, (PropositionalFormula<PSym>) neg.getOperands().get(0));
+			return !_satisfies(interpretation, (PropositionalFormula<PSym>) neg.getOperands().get(0));
 		}
 		if (formula instanceof PropositionalFalsum<?>) {
 			return false;

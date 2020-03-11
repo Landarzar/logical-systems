@@ -11,6 +11,7 @@ import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAtom;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalFalsum;
 import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
 import edu.cs.ai.alchourron.logic.semantics.Interpretation;
+import edu.cs.ai.alchourron.logic.syntax.Signature;
 
 /***
  * Represents propositional interpretations.
@@ -22,7 +23,7 @@ import edu.cs.ai.alchourron.logic.semantics.Interpretation;
  * @param <S>
  *            The type of the signature
  */
-public class PropositionalInterpretation<PSym, S extends PropositionalSignature<PSym>> implements Interpretation {
+public class PropositionalInterpretation<PSym, S extends PropositionalSignature<PSym>> implements Interpretation<S> {
 
 	S signature;
 	Set<PSym> trueValued;
@@ -179,5 +180,11 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	@Override
 	public int hashCode() {
 		return signature.hashCode() * 31 + trueValued.hashCode();
+	}
+
+	@Override
+	public boolean isMatchingSignature(S signature) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

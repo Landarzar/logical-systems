@@ -15,7 +15,7 @@ import edu.cs.ai.alchourron.logic.syntax.Signature;
  * @param <F> The type of formula
  * @param <I> The type of interpretations
  */
-public interface ModelTheory<I extends Interpretation, F extends Formula<S>, T, S extends Signature> {
+public interface ModelTheory<I extends Interpretation<S>, F extends Formula<S>, T, S extends Signature> {
 
 	/***
 	 * Checks where the given Formula is (syntactically) valid in the Logical

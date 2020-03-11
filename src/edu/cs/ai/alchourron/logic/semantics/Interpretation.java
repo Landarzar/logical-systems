@@ -16,5 +16,12 @@ public interface Interpretation <S extends Signature> extends LaTeX {
 	 * @author Kai Sauerwald
 	 * @return The signature of the interpretation
 	 */
+	public S getSignature();
+	
+	/***
+	 * Checkes whether the signature matching to this Interpretation.
+	 * @author Kai Sauerwald
+	 * @return The signature of the interpretation
+	 */
 	public boolean isMatchingSignature(S signature);
 }
