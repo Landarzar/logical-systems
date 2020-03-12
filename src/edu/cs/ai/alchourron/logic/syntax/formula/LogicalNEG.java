@@ -3,11 +3,7 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 import java.util.List;
 import java.util.Objects;
 
-import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
-import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
-import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalNEG;
 import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.Signature;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.signature.NegationLogicSignature;
 
@@ -58,7 +54,7 @@ public class LogicalNEG<S extends NegationLogicSignature> implements LogicalOper
 	 * @see edu.cs.ai.alchourron.logic.syntax.LogicalOperator#getOperands()
 	 */
 	@Override
-	public List<? extends SyntacticElement<S>> getOperands() {
+	public List<? extends Formula<S>> getOperands() {
 		return List.of(operand);
 	}
 
@@ -82,8 +78,9 @@ public class LogicalNEG<S extends NegationLogicSignature> implements LogicalOper
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!(obj instanceof PropositionalNEG))
+		if (!(obj instanceof LogicalNEG))
 			return false;
+		@SuppressWarnings("unchecked")
 		LogicalNEG<S> other = (LogicalNEG<S>) obj;
 		return Objects.equals(operand, other.operand) && Objects.equals(signature, other.signature);
 	}

@@ -1,6 +1,5 @@
 package edu.cs.ai.alchourron.logic.semantics;
 
-import java.util.Optional;
 import java.util.Set;
 
 import edu.cs.ai.alchourron.logic.syntax.Formula;
@@ -68,7 +67,7 @@ public interface ModelTheory<I extends Interpretation<S>, F extends Formula<S>, 
 	 *         {@link formula}, otherwise it returns {@literal false}. It has no
 	 *         value, if this model theory may provides no satisfaction relation.
 	 */
-	public Optional<Boolean> satisfies(I interpretation, F formula);
+	public boolean satisfies(I interpretation, F formula);
 
 	/***
 	 * Represents the logical entailment

@@ -7,11 +7,12 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Set;
 
-import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAtom;
-import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalFalsum;
-import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
 import edu.cs.ai.alchourron.logic.semantics.Interpretation;
+import edu.cs.ai.alchourron.logic.syntax.Formula;
 import edu.cs.ai.alchourron.logic.syntax.Signature;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalNEG;
+import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
 
 /***
  * Represents propositional interpretations.
@@ -145,20 +146,20 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 * Builds a formula which has exactly this interpretation as model
 	 * @author Kai Sauerwald
 	 */
-	public PropositionalFormula<PSym> getCharacterizingFormula(){
-		PropositionalFormula<PSym> result = null;
+	public Formula<PropositionalSignature<PSym>> getCharacterizingFormula(){
+		Formula<PropositionalSignature<PSym>> result = null;
 		
 		for (PSym pSym : signature.getSymbols()) {
-			PropositionalFormula<PSym>  tmp;
+			Formula<PropositionalSignature<PSym>>  tmp;
 			if(isTrue(pSym))
-				tmp = new PropositionalAtom<PSym>(signature,pSym);
+				tmp = new Proposition<>(signature, pSym);
 			else
-				tmp = new PropositionalAtom<PSym>(signature,pSym).Neg();
+				tmp = new LogicalNEG<>(signature, new Proposition<>(signature, pSym));
 			
 			if(result == null)
 				result = tmp;
 			else
-				result= result.And(tmp);
+				result= new LogicalAND<>(signature, tmp);
 		}
 		return result;
 	}

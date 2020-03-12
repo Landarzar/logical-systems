@@ -19,7 +19,7 @@ public interface LogicalOperator<S extends Signature>  extends Formula<S> {
 	 * Returns the operands of this logical connective.
 	 * @author Kai Sauerwald
 	 */
-	List<? extends SyntacticElement<S>> getOperands();
+	List<? extends Formula<S>> getOperands();
 	
 	/*
 	 * (non-Javadoc)

@@ -4,43 +4,29 @@ import java.util.List;
 
 import edu.cs.ai.alchourron.logic.syntax.Formula;
 import edu.cs.ai.alchourron.logic.syntax.signature.PropositionLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.signature.VerumLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 
 /***
- * Represents predicates, for instance relations in first order logic or propositional atoms.
+ * Represents tautologies
  * @author Kai Sauerwald
  *
- * @param <PSym> The type for predicate symbols
  * @param <S> The signature type
  */
-public interface LogicalVerum<PSym, S extends PropositionLogicSignature>  extends Formula<S> {
-	
-	
-	/***
-	 * Gets the symbol of this predicate.
-	 * @author Kai Sauerwald
-	 */
-	PSym getSymbol();
+public class LogicalVerum<S extends VerumLogicSignature> implements Formula<S> {
 
-	/***
-	 * Returns the terms of this predicate
-	 * @author Kai Sauerwald
-	 */
-	List<Term<S>> getTerms();
+	S signature;
 	
-	
-	/***
-	 * Returns the arity of this predicate
-	 * @author Kai Sauerwald
-	 */
-	int getArity();
+	public LogicalVerum(S signature) {
+		this.signature = signature;
+	}
 	
 	/*
 	 * (non-Javadoc)
 	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
 	 */
 	@Override
-	default boolean isLogical() {
+	public boolean isLogical() {
 		return false;
 	}
 	
@@ -49,7 +35,18 @@ public interface LogicalVerum<PSym, S extends PropositionLogicSignature>  extend
 	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
 	 */
 	@Override
-	default boolean isAtom() {
+	public boolean isAtom() {
 		return true;
+	}
+
+	@Override
+	public String stringify() {
+		return "TOP";
+	}
+
+	@Override
+	public S getSignature() {
+		// TODO Auto-generated method stub
+		return signature;
 	}
 }
