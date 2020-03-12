@@ -9,8 +9,8 @@ import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 
-public class PropositionalVerum<PSym> extends PropositionalFormula<PSym>
-		 implements Proposition<PSym, PropositionalSignature<PSym>> {
+public class PropositionalVerum<PSym>  
+		 implements PropositionalFormula<PSym>, Proposition<PSym, PropositionalSignature<PSym>> {
 
 	protected PropositionalSignature<PSym> signature;
 

@@ -11,11 +11,9 @@ import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOR;
 
-public class PropositionalOR<PSym> extends PropositionalFormula<PSym>
-		implements LogicalOR<PropositionalSignature<PSym>> {
-
-	protected PropositionalSignature<PSym> signature;
-	ArrayList<PropositionalFormula<PSym>> operands;
+public class PropositionalOR<PSym> extends // PropositionalFormula<PSym>
+		LogicalOR<PropositionalSignature<PSym>>
+implements PropositionalFormula<PSym>{
 
 	/**
 	 * Constructs a new instance of this class
@@ -23,8 +21,8 @@ public class PropositionalOR<PSym> extends PropositionalFormula<PSym>
 	 * @author Kai Sauerwald
 	 */
 	public PropositionalOR(PropositionalSignature<PSym> signature, Collection<PropositionalFormula<PSym>> operands) {
-		this.signature = signature;
-		this.operands = new ArrayList<>(operands);
+		super.signature = signature;
+		super.operands = new ArrayList<>(operands);
 	}
 
 	/**
@@ -143,5 +141,17 @@ public class PropositionalOR<PSym> extends PropositionalFormula<PSym>
 			builder.append(propositionalFormula.toLaTeX());
 		}
 		return builder.toString();
+	}
+
+	@Override
+	public boolean isLogical() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String stringify() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

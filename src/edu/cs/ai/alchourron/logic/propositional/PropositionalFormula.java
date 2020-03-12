@@ -14,8 +14,8 @@ import edu.cs.ai.alchourron.logic.syntax.Formula;
  *
  * @param <PSym> The type of symbols over which the signature is defined
  */
-public abstract class PropositionalFormula<PSym>
-		implements Formula<PropositionalSignature<PSym>> {
+public interface PropositionalFormula<PSym>
+		extends Formula<PropositionalSignature<PSym>> {
 
 //	public static <PSym> PropositionalFormula<PSym> getFalsum(PropositionalSignature<PSym> signature) {
 //		return new PropositionalAtom<>(signature, signature.getSymbols().get(0)).Neg()
@@ -35,16 +35,16 @@ public abstract class PropositionalFormula<PSym>
 		return new PropositionalVerum<>(signature);
 	}
 
-	public PropositionalFormula<PSym> Neg() {
+	public default PropositionalFormula<PSym> Neg() {
 		return new PropositionalNEG<>(this.getSignature(), this);
 	}
 
-	public PropositionalFormula<PSym> And(PropositionalFormula<PSym> f) {
-		return new PropositionalAND<>(this.getSignature(), this, f);
+	public default PropositionalFormula<PSym> And(PropositionalFormula<PSym> f) {
+		return new PropositionalAND<>(this.getSignature(), f);
 	}
 
-	public PropositionalFormula<PSym> Or(PropositionalFormula<PSym> f) {
-		return new PropositionalOR<>(this.getSignature(), this, f);
+	public default PropositionalFormula<PSym> Or(PropositionalFormula<PSym> f) {
+		return new PropositionalOR<>(f.getSignature(), f);
 	}
 
 	@Override

@@ -11,4 +11,10 @@ public class Structure<D, S extends Signature> implements Interpretation<S> {
 		return false;
 	}
 
+	@Override
+	public S getSignature() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

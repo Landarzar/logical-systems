@@ -10,9 +10,11 @@ import edu.cs.ai.alchourron.logic.propositional.PropositionalFormula;
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOR;
 
-public class PropositionalAND<PSym> extends PropositionalFormula<PSym>
-			implements LogicalAND<PropositionalSignature<PSym>> {
+public class PropositionalAND<PSym> extends // PropositionalFormula<PSym>
+LogicalAND<PropositionalSignature<PSym>>
+implements PropositionalFormula<PSym>{
 
 		protected PropositionalSignature<PSym> signature;
 		ArrayList<PropositionalFormula<PSym>> operands;
