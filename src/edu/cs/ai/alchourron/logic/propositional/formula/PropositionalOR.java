@@ -66,7 +66,7 @@ implements PropositionalFormula<PSym>{
 	 */
 	@Override
 	public List<PropositionalFormula<PSym>> getOperands() {
-		return Collections.unmodifiableList(operands);
+		return (List<PropositionalFormula<PSym>>) Collections.unmodifiableList(operands);
 	}
 
 	/*
