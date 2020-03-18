@@ -70,7 +70,7 @@ public interface ModelTheory<I extends Interpretation<S>, F extends Formula<S>, 
 	public boolean satisfies(I interpretation, F formula);
 
 	/***
-	 * Represents the logical entailment
+	 * Represents the (monotonic) logical entailment
 	 * 
 	 * @author Kai Sauerwald
 	 * @param interpretation
