@@ -12,21 +12,21 @@ import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
  *
  * @param <S> The Signature
  */
-public interface LogicalOperator<S extends Signature>  extends Formula<S> {
+public abstract class LogicalOperator<S extends Signature>  extends Formula<S> {
 	
 	
 	/***
 	 * Returns the operands of this logical connective.
 	 * @author Kai Sauerwald
 	 */
-	List<? extends Formula<S>> getOperands();
+	public abstract List<? extends Formula<S>> getOperands();
 	
 	/*
 	 * (non-Javadoc)
 	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
 	 */
 	@Override
-	default boolean isLogical() {
+	public boolean isLogical() {
 		return true;
 	}
 

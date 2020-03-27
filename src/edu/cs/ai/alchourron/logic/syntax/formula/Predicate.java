@@ -13,34 +13,34 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  * @param <PSym> The type for predicate symbols
  * @param <S> The signature type
  */
-public interface Predicate<PSym, S extends PredicateLogicSignature>  extends Formula<S> {
+public abstract class Predicate<PSym, S extends PredicateLogicSignature>  extends Formula<S> {
 	
 	
 	/***
 	 * Gets the symbol of this predicate.
 	 * @author Kai Sauerwald
 	 */
-	PSym getSymbol();
+	public abstract PSym getSymbol();
 
 	/***
 	 * Returns the terms of this predicate
 	 * @author Kai Sauerwald
 	 */
-	List<Term<S>> getTerms();
+	public abstract List<Term<S>> getTerms();
 	
 	
 	/***
 	 * Returns the arity of this predicate
 	 * @author Kai Sauerwald
 	 */
-	int getArity();
+	public abstract int getArity();
 	
 	/*
 	 * (non-Javadoc)
 	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
 	 */
 	@Override
-	default boolean isLogical() {
+	public boolean isLogical() {
 		return false;
 	}
 	
@@ -49,7 +49,19 @@ public interface Predicate<PSym, S extends PredicateLogicSignature>  extends For
 	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
 	 */
 	@Override
-	default boolean isAtom() {
+	public boolean isAtom() {
 		return true;
+	}
+
+	@Override
+	public String stringify() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public S getSignature() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

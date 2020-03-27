@@ -13,7 +13,7 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  *
  * @param <S> The signature type
  */
-public class LogicalVerum<S extends VerumLogicSignature> implements Formula<S> {
+public class LogicalVerum<S extends VerumLogicSignature> extends Formula<S> {
 
 	S signature;
 	

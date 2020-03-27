@@ -17,7 +17,7 @@ import edu.cs.ai.alchourron.logic.syntax.signature.ConjunctionLogicSignature;
  *
  * @param <S> The Signature
  */
-public class LogicalAND<S extends ConjunctionLogicSignature>  implements LogicalOperator<S> {
+public class LogicalAND<S extends ConjunctionLogicSignature>  extends LogicalOperator<S> {
 
 	protected S signature;
 	ArrayList<Formula<S>> operands;
@@ -98,6 +98,7 @@ public class LogicalAND<S extends ConjunctionLogicSignature>  implements Logical
 			return true;
 		if (!(obj instanceof LogicalAND<?>))
 			return false;
+		@SuppressWarnings("unchecked")
 		LogicalAND<S> other = (LogicalAND<S>) obj;
 		return Objects.equals(operands, other.operands) && Objects.equals(signature, other.signature);
 	}

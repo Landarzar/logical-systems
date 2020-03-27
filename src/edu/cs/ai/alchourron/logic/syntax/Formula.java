@@ -8,14 +8,14 @@ import edu.cs.ai.alchourron.LaTeX;
  *
  * @param <S> The signature
  */
-public interface Formula<S extends Signature> extends LaTeX, SyntacticElement<S> {
+public abstract class Formula<S extends Signature> implements LaTeX, SyntacticElement<S> {
 	
 	/**
 	 * Returns the "syntax tree" for this formula.
 	 * @author Kai Sauerwald
 	 * @throws UnsupportedOperationException If the method is not implement or supported
 	 */
-	public default SyntacticElement<S> getSyntaxTree() throws UnsupportedOperationException
+	public SyntacticElement<S> getSyntaxTree() throws UnsupportedOperationException
 	{
 		throw new UnsupportedOperationException("This operation is not implemented");
 	}; 
@@ -25,14 +25,14 @@ public interface Formula<S extends Signature> extends LaTeX, SyntacticElement<S>
 	 * @author Kai Sauerwald
 	 * @return The signature of the formula
 	 */
-	public S getSignature();	
+	public abstract S getSignature();	
 	
 	/***
 	 * Checks whether the formula matches this signature
 	 * @author Kai Sauerwald
 	 * @param signature
 	 */
-	public default boolean isSignatureMatching(S signature)  throws UnsupportedOperationException
+	public boolean isSignatureMatching(S signature)  throws UnsupportedOperationException
 	{
 		throw new UnsupportedOperationException("This operation is not implemented");
 	}; 

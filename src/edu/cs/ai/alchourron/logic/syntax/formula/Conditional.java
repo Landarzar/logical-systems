@@ -13,7 +13,7 @@ import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
  * @param <S> Signature Type
  * @param <B> Formulas of the base logic
  */
-public class Conditional<S extends Signature, B extends Formula<S>> implements Formula<S> {
+public class Conditional<S extends Signature, B extends Formula<S>> extends Formula<S> {
 	private B antecendence;
 	private B consequence;
 
@@ -52,7 +52,8 @@ public class Conditional<S extends Signature, B extends Formula<S>> implements F
 			return true;
 		if (!(obj instanceof Conditional))
 			return false;
-		Conditional other = (Conditional) obj;
+		@SuppressWarnings("unchecked")
+		Conditional<S,B> other = (Conditional<S,B>) obj;
 		return Objects.equals(antecendence, other.antecendence) && Objects.equals(consequence, other.consequence);
 	}
 	

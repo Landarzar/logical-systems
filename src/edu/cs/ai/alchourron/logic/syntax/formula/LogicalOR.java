@@ -17,7 +17,7 @@ import edu.cs.ai.alchourron.logic.syntax.signature.DisjunctionLogicSignature;
  *
  * @param <S> The Signature
  */
-public class LogicalOR<S extends DisjunctionLogicSignature>  implements LogicalOperator<S> {
+public class LogicalOR<S extends DisjunctionLogicSignature>  extends LogicalOperator<S> {
 	protected S signature;
 	protected ArrayList<Formula<S>> operands;
 	

@@ -13,7 +13,7 @@ import edu.cs.ai.alchourron.logic.syntax.signature.NegationLogicSignature;
  *
  * @param <S> The Signature
  */
-public class LogicalNEG<S extends NegationLogicSignature> implements LogicalOperator<S> {
+public class LogicalNEG<S extends NegationLogicSignature> extends LogicalOperator<S> {
 	
 	protected S signature;
 	protected Formula<S> operand;

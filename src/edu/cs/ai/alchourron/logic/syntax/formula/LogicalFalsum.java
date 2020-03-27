@@ -13,7 +13,7 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  *
  * @param <S> The signature type
  */
-public class LogicalFalsum<S extends FalsumLogicSignature>  implements Formula<S> {
+public class LogicalFalsum<S extends FalsumLogicSignature>  extends Formula<S> {
 
 	S signature;
 	
