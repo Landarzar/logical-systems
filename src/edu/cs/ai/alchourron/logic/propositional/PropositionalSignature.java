@@ -13,7 +13,9 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import edu.cs.ai.alchourron.logic.syntax.Signature;
+import edu.cs.ai.alchourron.logic.syntax.signature.BiImplicationLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.signature.FalsumLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.signature.ImplicationLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.signature.PropositionLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.signature.TruthFunctionalLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.signature.VerumLogicSignature;
@@ -27,7 +29,7 @@ import edu.cs.ai.alchourron.logic.syntax.signature.VerumLogicSignature;
  * @param <PSym>
  *            The type of the symbols
  */
-public class PropositionalSignature<PSym> implements Signature, VerumLogicSignature, FalsumLogicSignature, TruthFunctionalLogicSignature, PropositionLogicSignature<PSym>, Iterable<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
+public class PropositionalSignature<PSym> implements Signature, VerumLogicSignature, FalsumLogicSignature, TruthFunctionalLogicSignature, PropositionLogicSignature<PSym>, ImplicationLogicSignature, BiImplicationLogicSignature, Iterable<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
 
 	/***
 	 * The symbols of this signature

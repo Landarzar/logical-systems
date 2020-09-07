@@ -9,7 +9,9 @@ import edu.cs.ai.alchourron.logic.semantics.ModelTheory;
 import edu.cs.ai.alchourron.logic.syntax.Formula;
 import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalBiImplication;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalFalsum;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalImplication;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalNEG;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOR;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
@@ -140,6 +142,17 @@ public class PropositionalLogic<PSym> implements
 		if (formula instanceof LogicalOR<?>) {
 			LogicalOR<PropositionalSignature<PSym>> or = (LogicalOR<PropositionalSignature<PSym>>) formula;
 			return or.getOperands().stream().anyMatch(o -> satisfies(interpretation, o));
+		}
+		if (formula instanceof LogicalImplication<?>) {
+			LogicalImplication<PropositionalSignature<PSym>> implication = (LogicalImplication<PropositionalSignature<PSym>>) formula;
+			return  !satisfies(interpretation, implication.getPremise()) || satisfies(interpretation, implication.getConclusion());
+		}
+
+		if (formula instanceof LogicalBiImplication<?>) {
+			LogicalBiImplication<PropositionalSignature<PSym>> implication = (LogicalBiImplication<PropositionalSignature<PSym>>) formula;
+			return  (satisfies(interpretation, implication.getFirst()) && satisfies(interpretation, implication.getSecond()))
+					|| (!satisfies(interpretation, implication.getFirst())
+							&& !satisfies(interpretation, implication.getSecond()));
 		}
 		if (formula instanceof LogicalNEG<?>) {
 			LogicalNEG<PropositionalSignature<PSym>> neg = (LogicalNEG<PropositionalSignature<PSym>>) formula;
