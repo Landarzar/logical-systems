@@ -51,4 +51,10 @@ public class LogicalImplication<S extends ImplicationLogicSignature> extends Log
 	public S getSignature() {
 		return signature;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return  stringify();
+	}
 }

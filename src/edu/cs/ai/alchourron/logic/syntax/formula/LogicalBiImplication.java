@@ -51,4 +51,10 @@ public class LogicalBiImplication<S extends BiImplicationLogicSignature> extends
 	public S getSignature() {
 		return signature;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return  stringify();
+	}
 }
