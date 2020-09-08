@@ -19,8 +19,12 @@ public class RankingFunction<T> extends AbstractCollection<Pair<T, Integer>> {
 
 	public RankingFunction() {
 	}
-	
 
+	public void normalize() {
+		while (this.getByRank(0).isEmpty()) {
+			elements.forEach(p -> p.setSecond(p.getSecond()-1));
+		}
+	}
 
 	public boolean add(T elem, Integer rank) {
 		return add(new Pair<>(elem, rank));
@@ -43,17 +47,18 @@ public class RankingFunction<T> extends AbstractCollection<Pair<T, Integer>> {
 	}
 
 	public Integer getMaxRank() {
-		int max  = 0;
+		int max = 0;
 		for (Pair<T, Integer> pair : elements) {
-			if(pair.getSecond() > max)
+			if (pair.getSecond() > max)
 				max = pair.getSecond();
 		}
 		return max;
 	}
-	
+
 	public Integer getRank(T element) {
-		Optional<Pair<T, Integer>> optional = this.elements.stream().filter(pair -> pair.getFirst().equals(element)).findFirst();
-		if(optional.isEmpty())
+		Optional<Pair<T, Integer>> optional = this.elements.stream().filter(pair -> pair.getFirst().equals(element))
+				.findFirst();
+		if (optional.isEmpty())
 			return null;
 		return optional.get().getSecond();
 	}
