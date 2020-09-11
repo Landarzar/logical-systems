@@ -3,7 +3,6 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 import java.util.List;
 
 import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.Signature;
 import edu.cs.ai.alchourron.logic.syntax.signature.ModalLogicSignature;
 
 /***
