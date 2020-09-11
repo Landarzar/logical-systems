@@ -118,10 +118,10 @@ public class LogicalAND<S extends ConjunctionLogicSignature>  extends LogicalOpe
 		for (Formula<S> propositionalFormula : operands) {
 			if (first) {
 				builder.append(propositionalFormula.toString());
+				first = false;
 				continue;
 			}
 			builder.append(" AND ");
-			first = false;
 			builder.append(propositionalFormula.toString());
 		}
 

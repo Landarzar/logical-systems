@@ -120,10 +120,10 @@ public class LogicalOR<S extends DisjunctionLogicSignature>  extends LogicalOper
 		for (Formula<S> propositionalFormula : operands) {
 			if (first) {
 				builder.append(propositionalFormula.toString());
+				first = false;
 				continue;
 			}
-			builder.append(" AND ");
-			first = false;
+			builder.append(" OR ");
 			builder.append(propositionalFormula.toString());
 		}
 
