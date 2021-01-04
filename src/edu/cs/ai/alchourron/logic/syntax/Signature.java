@@ -12,4 +12,6 @@ public interface Signature extends LaTeX {
 	public default boolean isPredicateLogic() {
 		return false;
 	}
+	
+	public Formula<Signature> parse(); 
 }
