@@ -18,13 +18,11 @@ import java.util.stream.StreamSupport;
  *
  */
 public class PowerSetLexicographic {
-	
-
 
 	public static void main(String[] args) {
 		ArrayList<Integer> fuenf = new ArrayList<>(50);
 		for (int i = 1; i <= 5; i++) {
-			fuenf.add(i);			
+			fuenf.add(i);
 		}
 //		Iterator<Set<Integer>> itr = KCombinationLex.iterator(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9), 3);
 		Iterator<Set<Integer>> itr = PowerSetLexicographic.iterator(fuenf);

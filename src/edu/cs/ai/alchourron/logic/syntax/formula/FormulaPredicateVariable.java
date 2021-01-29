@@ -7,7 +7,6 @@ import java.util.List;
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.syntax.structure.RelationLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.SecondOrderQuantificationLogic;
-import edu.cs.ai.alchourron.logic.syntax.structure.VariableTermLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 
 /***
@@ -21,12 +20,13 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  */
 public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, S extends SecondOrderQuantificationLogic<V> & RelationLogicSignature<R, K>>
 		extends Formula<S> {
-	
+
 	protected V variable;
 	protected List<Term<K, V>> terms;
 
 	/***
 	 * Constructs a new atomar predicate
+	 * 
 	 * @param sig
 	 * @param symbol
 	 * @param terms
@@ -45,7 +45,6 @@ public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, S
 	public V getVariable() {
 		return variable;
 	}
-
 
 	/***
 	 * Gets the symbol of this predicate.
@@ -93,24 +92,24 @@ public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, S
 	public boolean isAtom() {
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 
-	        Iterator<Term<K, V>> it = this.getTerms().iterator();
-	        if (! it.hasNext())
-	            return this.variable.toString();
+		Iterator<Term<K, V>> it = this.getTerms().iterator();
+		if (!it.hasNext())
+			return this.variable.toString();
 
-	        StringBuilder sb = new StringBuilder();
-	        sb.append(this.variable);
-	        sb.append('(');
-	        for (;;) {
-	        	Term<K, V> e = it.next();
-	            sb.append(e == this ? "(this Collection)" : e);
-	            if (! it.hasNext())
-	                return sb.append(')').toString();
-	            sb.append(',').append(' ');
-	        }
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.variable);
+		sb.append('(');
+		for (;;) {
+			Term<K, V> e = it.next();
+			sb.append(e == this ? "(this Collection)" : e);
+			if (!it.hasNext())
+				return sb.append(')').toString();
+			sb.append(',').append(' ');
+		}
 	}
 
 	@Override

@@ -2,11 +2,9 @@ package edu.cs.ai.math.combinatorics;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Stream;
@@ -120,7 +118,7 @@ public class KTupleEnumeration {
 						continue;
 					}
 
-					pos[i] = pos[i]+1;
+					pos[i] = pos[i] + 1;
 					for (int j = 1; i + j < ik; j++) {
 						pos[i + j] = 0;
 					}

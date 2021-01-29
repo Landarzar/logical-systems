@@ -22,7 +22,7 @@ public class KCombinationLexicographic {
 		ArrayList<Integer> fuenfzig = new ArrayList<>(50);
 		for (int i = 1; i <= 50; i++) {
 			fuenfzig.add(i);
-			
+
 		}
 //		Iterator<Set<Integer>> itr = KCombinationLex.iterator(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9), 3);
 		Iterator<Set<Integer>> itr = KCombinationLexicographic.iterator(fuenfzig, 3);
@@ -93,9 +93,9 @@ public class KCombinationLexicographic {
 
 			@Override
 			public Set<E> next() {
-				if(!hasNext())
+				if (!hasNext())
 					throw new NoSuchElementException();
-				
+
 				HashSet<E> set = new HashSet<>();
 
 				for (Integer ipos : pos) {

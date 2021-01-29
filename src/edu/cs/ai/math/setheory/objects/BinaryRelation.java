@@ -12,126 +12,140 @@ public interface BinaryRelation<X> {
 
 	/**
 	 * The first element is equal to the second with respect to the relation.
+	 * 
 	 * @author Kai Sauerwald
 	 */
-	public static long EQUAL = (1<<0);	
+	public static long EQUAL = (1 << 0);
+
 	/***
 	 * Is the comparison result EQUAL?
+	 * 
 	 * @author Kai Sauerwald
 	 */
 	public static boolean isEQUAL(long nbr) {
-		return is(nbr,EQUAL);
+		return is(nbr, EQUAL);
 	}
-	
+
 	/**
-	 * The first element is with respect to the relation strictly lower than the second.
+	 * The first element is with respect to the relation strictly lower than the
+	 * second.
+	 * 
 	 * @author Kai Sauerwald
 	 */
-	public static long STRICT_LESSER = (1<<1);	
+	public static long STRICT_LESSER = (1 << 1);
+
 	/***
 	 * Is the comparison result EQUAL?
+	 * 
 	 * @author Kai Sauerwald
 	 */
 	public static boolean isSTRICT_LESSER(long nbr) {
-		return is(nbr,STRICT_LESSER);
+		return is(nbr, STRICT_LESSER);
 	}
-	
+
 	/**
-	 * The first element is with respect to the relation strictly greater than the second.
+	 * The first element is with respect to the relation strictly greater than the
+	 * second.
+	 * 
 	 * @author Kai Sauerwald
 	 */
-	public static long STRICT_GREATER = (1<<2);
+	public static long STRICT_GREATER = (1 << 2);
+
 	/***
 	 * Is the comparison result EQUAL?
+	 * 
 	 * @author Kai Sauerwald
 	 */
 	public static boolean isSTRICT_GREATER(long nbr) {
-		return is(nbr,STRICT_GREATER);
+		return is(nbr, STRICT_GREATER);
 	}
-	
 
 	/**
 	 * The is no relation between the first and second element.
+	 * 
 	 * @author Kai Sauerwald
 	 */
-	public static long INCOMPARABLE = (1<<3);
+	public static long INCOMPARABLE = (1 << 3);
+
 	/***
 	 * Is the comparison result EQUAL?
+	 * 
 	 * @author Kai Sauerwald
 	 */
 	public static boolean isINCOMPARABLE(long nbr) {
-		return is(nbr,INCOMPARABLE);
+		return is(nbr, INCOMPARABLE);
 	}
-	
 
 	/**
 	 * The is a relation between the first and second element.
+	 * 
 	 * @author Kai Sauerwald
 	 */
 	public static long COMPARABLE = EQUAL | STRICT_LESSER | STRICT_GREATER;
+
 	/***
 	 * Is the comparison result EQUAL?
+	 * 
 	 * @author Kai Sauerwald
 	 */
 	public static boolean isCOMPARABLE(long nbr) {
-		return is(nbr,COMPARABLE);
+		return is(nbr, COMPARABLE);
 	}
-	
 
 	/**
 	 * The first element is with respect to the relation greater than the second.
+	 * 
 	 * @author Kai Sauerwald
 	 */
 	public static long GREATER_OR_EQUAL = EQUAL | STRICT_GREATER;
+
 	/***
 	 * Is the comparison result EQUAL?
+	 * 
 	 * @author Kai Sauerwald
 	 */
 	public static boolean isGREATER_OR_EQUAL(long nbr) {
-		return is(nbr,GREATER_OR_EQUAL);
+		return is(nbr, GREATER_OR_EQUAL);
 	}
-	
 
 	/**
 	 * The first element is with respect to the relation lower than the second.
+	 * 
 	 * @author Kai Sauerwald
 	 */
-	public static long LESSER_OR_EQUAL = EQUAL | STRICT_LESSER; 
+	public static long LESSER_OR_EQUAL = EQUAL | STRICT_LESSER;
+
 	/***
 	 * Is the comparison result EQUAL?
+	 * 
 	 * @author Kai Sauerwald
 	 */
 	public static boolean isLESSER_OR_EQUAL(long nbr) {
-		return is(nbr,LESSER_OR_EQUAL);
+		return is(nbr, LESSER_OR_EQUAL);
 	}
-	
 
-	
 	private static boolean is(long nbr, long cmpr) {
 		return (nbr & cmpr) > 0;
 	}
-	
-	
-	
+
 	/***
 	 * Gets the Elements on which this relation is defined on.
+	 * 
 	 * @author Kai Sauerwald
 	 */
 	public Set<X> getRelationBase();
-	
+
 	/***
-	 * Checks where the given elements are in relation with respect to this relation.
-	 * @param x1 
+	 * Checks where the given elements are in relation with respect to this
+	 * relation.
+	 * 
+	 * @param x1
 	 * @param x2
 	 */
 	public boolean inRelation(X x1, X x2);
-	
+
 	/***
-	 * Relates two elements of type <X>
-	 * @param x1
-	 * @param x2
-	 * @return 
-	 * @throws
+	 * Relates two elements of type <X> @param x1 @param x2 @return @throws
 	 */
 	public long relate(X x1, X x2);
 

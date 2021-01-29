@@ -14,7 +14,8 @@ import edu.cs.ai.math.setheory.objects.Relation;
 import edu.cs.ai.math.setheory.objects.Tuple;
 
 /***
- * Represents finite structues where for instance used first order logic as interpretations.
+ * Represents finite structues where for instance used first order logic as
+ * interpretations.
  * 
  * @author Kai Sauerwald
  *
@@ -33,33 +34,35 @@ public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends 
 
 	/***
 	 * Constructs a new interpretation
+	 * 
 	 * @author Kai Sauerwald
 	 * @param universe The universe of elements from <U>
-	 * @param rel The interpretations of predicate symbols
-	 * @param func The interpretation of function symbols
+	 * @param rel      The interpretations of predicate symbols
+	 * @param func     The interpretation of function symbols
 	 */
-	public FiniteStructure(S signature,Set<U> universe, Collection<Pair<R, Relation<U>>> rel, Collection<Pair<K, Function<Tuple<U>, U>>> func ) {
+	public FiniteStructure(S signature, Set<U> universe, Collection<Pair<R, Relation<U>>> rel,
+			Collection<Pair<K, Function<Tuple<U>, U>>> func) {
 		this.signature = signature;
 		this.universe = Collections.unmodifiableSet(universe);
-		
+
 		HashMap<R, Relation<U>> rmap = new HashMap<>();
 		rel.forEach(p -> rmap.put(p.getFirst(), p.getSecond()));
 		relations = Collections.unmodifiableMap(rmap);
-		
+
 		HashMap<K, Function<Tuple<U>, U>> fmap = new HashMap<>();
 		func.forEach(p -> fmap.put(p.getFirst(), p.getSecond()));
 		functions = Collections.unmodifiableMap(fmap);
 	}
-	
+
 	public Set<U> getUniverse() {
 		return universe;
 	}
-	
-	public Relation<U> getRelation(R symb){
+
+	public Relation<U> getRelation(R symb) {
 		return relations.get(symb);
 	}
-	
-	public Function<Tuple<U>, U> getFunction(K symb){
+
+	public Function<Tuple<U>, U> getFunction(K symb) {
 		return functions.get(symb);
 	}
 
@@ -71,21 +74,21 @@ public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		
+
 		builder.append("<");
 		builder.append(universe.toString());
 		builder.append(",");
-		if(!relations.isEmpty()) {
-		relations.forEach((r,a) ->{
-			builder.append(r + ": ");
-			builder.append(a  + " ");
-		});
+		if (!relations.isEmpty()) {
+			relations.forEach((r, a) -> {
+				builder.append(r + ": ");
+				builder.append(a + " ");
+			});
 		}
 
-		if(!functions.isEmpty()) {
-		functions.forEach((f,a) ->{
-			builder.append(f  + " ");
-		});
+		if (!functions.isEmpty()) {
+			functions.forEach((f, a) -> {
+				builder.append(f + " ");
+			});
 		}
 		builder.append(">");
 
@@ -95,13 +98,14 @@ public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends 
 	/***
 	 * Generats a LaTeX-ified version of the stringrepresentation
 	 */
+	@Override
 	public String toLaTeX() {
 		StringBuilder builder = new StringBuilder();
-		
+
 		builder.append("<");
 		builder.append(universe.toString());
 		builder.append(",");
-		relations.forEach((r,a) ->{
+		relations.forEach((r, a) -> {
 			builder.append(r);
 		});
 

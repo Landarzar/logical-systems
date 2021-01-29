@@ -37,7 +37,7 @@ public class FormulaConditional<S extends Signature, B extends Formula<S>> exten
 	public B getConsequence() {
 		return consequence;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "( " + consequence.toString() + " | " + antecendence.toString() + " )";
@@ -55,21 +55,21 @@ public class FormulaConditional<S extends Signature, B extends Formula<S>> exten
 		if (!(obj instanceof FormulaConditional))
 			return false;
 		@SuppressWarnings("unchecked")
-		FormulaConditional<S,B> other = (FormulaConditional<S,B>) obj;
+		FormulaConditional<S, B> other = (FormulaConditional<S, B>) obj;
 		return Objects.equals(antecendence, other.antecendence) && Objects.equals(consequence, other.consequence);
 	}
-	
+
 	@Override
 	public String stringify() {
 		// TODO Auto-generated method stub
 		return toString();
 	}
-	
+
 	@Override
 	public boolean isAtom() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean isLogical() {
 		return true;
@@ -77,7 +77,7 @@ public class FormulaConditional<S extends Signature, B extends Formula<S>> exten
 
 	@Override
 	public List<SyntacticElement> getSyntacticChildren() {
-		return List.of(this.getAntecendence(),this.getConsequence());
+		return List.of(this.getAntecendence(), this.getConsequence());
 	}
 
 //	/*

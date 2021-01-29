@@ -7,7 +7,7 @@ public interface ConjunctionLogicSignature extends Signature {
 
 	@Override
 	default Formula<Signature> parse() {
-	// TODO Auto-generated method stub
-	return null;
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

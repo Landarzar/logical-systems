@@ -4,6 +4,7 @@ import edu.cs.ai.alchourron.logic.Signature;
 
 /**
  * Describes logics, where there propositions as elements of the language
+ * 
  * @author Kai Sauerwald
  *
  * @param <P> The objects which propositionals are represented by.

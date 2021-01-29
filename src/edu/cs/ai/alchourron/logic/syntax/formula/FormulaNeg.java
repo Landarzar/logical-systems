@@ -13,7 +13,7 @@ import edu.cs.ai.alchourron.logic.syntax.structure.NegationLogicSignature;
  * @param <S> The Signature
  */
 public class FormulaNeg<S extends NegationLogicSignature> extends LogicalOperator<S> {
-	
+
 	protected Formula<S> operand;
 
 	/**
@@ -55,7 +55,6 @@ public class FormulaNeg<S extends NegationLogicSignature> extends LogicalOperato
 	public boolean isAtom() {
 		return false;
 	}
-	
 
 	@Override
 	public int hashCode() {
@@ -93,9 +92,10 @@ public class FormulaNeg<S extends NegationLogicSignature> extends LogicalOperato
 		// TODO Auto-generated method stub
 		return "\\negOf{" + this.operand.toLaTeX() + "}";
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see cs.ai.logic.syntax.SyntacticElement#stringify()
 	 */
 	@Override

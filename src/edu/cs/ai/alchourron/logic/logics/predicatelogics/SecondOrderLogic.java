@@ -2,7 +2,6 @@ package edu.cs.ai.alchourron.logic.logics.predicatelogics;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -17,14 +16,13 @@ import edu.cs.ai.alchourron.logic.syntax.formula.FormulaFalsum;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaImplication;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaNeg;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaOR;
-import edu.cs.ai.alchourron.logic.syntax.formula.FormulaVerum;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPredicate;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaQuantification;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaSOQuantification;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaVerum;
 import edu.cs.ai.alchourron.logic.syntax.terms.FunctionTerm;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
-import edu.cs.ai.math.combinatorics.EnumerativeCombinatorics;
 import edu.cs.ai.math.combinatorics.KTupleEnumeration;
 import edu.cs.ai.math.combinatorics.PowerSetLexicographic;
 import edu.cs.ai.math.setheory.objects.Pair;
@@ -215,6 +213,7 @@ public class SecondOrderLogic<R extends Enum<R>, K extends Enum<K>, V, P> implem
 	 * edu.cs.ai.alchourron.logic.LogicalSystem#entails(edu.cs.ai.alchourron.logic.
 	 * Interpretation, edu.cs.ai.alchourron.logic.Formula)
 	 */
+	@Override
 	public boolean satisfies(FiniteStructure<?, R, K, SOSignature<R, K, V, P>> interpretation,
 			Formula<SOSignature<R, K, V, P>> formula) {
 

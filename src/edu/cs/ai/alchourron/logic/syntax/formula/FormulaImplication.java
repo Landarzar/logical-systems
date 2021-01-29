@@ -44,10 +44,10 @@ public class FormulaImplication<S extends ImplicationLogicSignature> extends Log
 	public List<Formula<S>> getOperands() {
 		return List.of(premise, conclusion);
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return  stringify();
+		return stringify();
 	}
 }

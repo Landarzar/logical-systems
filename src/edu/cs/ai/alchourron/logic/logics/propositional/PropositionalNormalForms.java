@@ -1,4 +1,5 @@
 package edu.cs.ai.alchourron.logic.logics.propositional;
+
 //package edu.cs.ai.alchourron.logic.propositional;
 //
 //import java.security.InvalidParameterException;

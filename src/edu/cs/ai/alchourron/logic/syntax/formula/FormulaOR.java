@@ -15,17 +15,15 @@ import edu.cs.ai.alchourron.logic.syntax.structure.DisjunctionLogicSignature;
  *
  * @param <S> The Signature
  */
-public class FormulaOR<S extends DisjunctionLogicSignature>  extends LogicalOperator<S> {
+public class FormulaOR<S extends DisjunctionLogicSignature> extends LogicalOperator<S> {
 	protected ArrayList<Formula<S>> operands;
-	
 
 	/**
 	 * Constructs a new instance of this class
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public FormulaOR(S signature,
-			Collection<Formula<S>> operands) {
+	public FormulaOR(S signature, Collection<Formula<S>> operands) {
 		super(signature);
 		this.operands = new ArrayList<>(operands);
 	}
@@ -73,7 +71,7 @@ public class FormulaOR<S extends DisjunctionLogicSignature>  extends LogicalOper
 	public boolean isAtom() {
 		return false;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(operands, signature);
@@ -140,9 +138,10 @@ public class FormulaOR<S extends DisjunctionLogicSignature>  extends LogicalOper
 //		builder.append(")");
 		return builder.toString();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see cs.ai.logic.syntax.SyntacticElement#stringify()
 	 */
 	@Override

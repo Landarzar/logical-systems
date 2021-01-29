@@ -56,7 +56,7 @@ public class FOTest {
 			public int getArity() {
 				return 2;
 			}
-			
+
 			@Override
 			public String toString() {
 				return "(0,1), (1,2),...";
@@ -64,15 +64,16 @@ public class FOTest {
 		};
 
 		FiniteStructure<Integer, ABPredicates, Empty, FOSignature<ABPredicates, Empty, Character>> structure = new FiniteStructure<>(
-				signature, Set.of(0, 1, 2, 3, 4, 5),
-				List.of(new Pair<>(ABPredicates.IsA, IsAIntp), new Pair<>(ABPredicates.IsB, IsBIntp), new Pair<>(ABPredicates.SUCC,SuccIntp)), List.of());
+				signature, Set.of(0, 1, 2, 3, 4, 5), List.of(new Pair<>(ABPredicates.IsA, IsAIntp),
+						new Pair<>(ABPredicates.IsB, IsBIntp), new Pair<>(ABPredicates.SUCC, SuccIntp)),
+				List.of());
 
 		Formula<FOSignature<ABPredicates, Empty, Character>> myform = new FormulaQuantification<>(signature,
 				StandardQuantifier.EXISTS, 'x',
 				new FormulaPredicate<>(signature, ABPredicates.IsA, List.of(new VariableTerm<>('x'))));
 
 		FirstOrderLogic<ABPredicates, Empty, Character> fo = new FirstOrderLogic<>();
-		System.out.println(structure + " |= " + myform +" ? " + fo.satisfies(structure, myform));
+		System.out.println(structure + " |= " + myform + " ? " + fo.satisfies(structure, myform));
 
 	}
 

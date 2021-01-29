@@ -8,33 +8,34 @@ import edu.cs.ai.alchourron.logic.Signature;
 import edu.cs.ai.alchourron.logic.SyntacticElement;
 
 /***
- * Base for 
+ * Base for
+ * 
  * @author Kai Sauerwald
  *
  * @param <S> The Signature
  */
-public abstract class LogicalOperator<S extends Signature>  extends Formula<S> implements SyntacticElement {
-	
+public abstract class LogicalOperator<S extends Signature> extends Formula<S> implements SyntacticElement {
+
 	public LogicalOperator(S signature) {
 		super(signature);
 	}
-	
+
 	/***
 	 * Returns the operands of this logical connective.
+	 * 
 	 * @author Kai Sauerwald
 	 */
 	public abstract List<Formula<S>> getOperands();
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
 	 */
 	@Override
 	public boolean isLogical() {
 		return true;
 	}
-	
-
 
 	/*
 	 * (non-Javadoc)

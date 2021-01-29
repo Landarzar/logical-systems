@@ -26,10 +26,11 @@ import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
  * 
  * @author Kai Sauerwald
  *
- * @param <PSym>
- *            The type of the symbols
+ * @param <PSym> The type of the symbols
  */
-public class PropositionalSignature<PSym> implements Signature, VerumLogicSignature, FalsumLogicSignature, TruthFunctionalLogicSignature, PropositionLogicSignature<PSym>, ImplicationLogicSignature, BiImplicationLogicSignature, Iterable<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
+public class PropositionalSignature<PSym> implements Signature, VerumLogicSignature, FalsumLogicSignature,
+		TruthFunctionalLogicSignature, PropositionLogicSignature<PSym>, ImplicationLogicSignature,
+		BiImplicationLogicSignature, Iterable<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
 
 	/***
 	 * The symbols of this signature
@@ -42,8 +43,7 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 	 * Constructs a new propositional signature
 	 * 
 	 * @author Kai Sauerwald
-	 * @param symbols
-	 *            The symbols of this signature
+	 * @param symbols The symbols of this signature
 	 */
 	public PropositionalSignature(PSym... symbols) {
 		this.symbols = new ArrayList<>();
@@ -57,8 +57,7 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 	 * Constructs a new propositional signature
 	 * 
 	 * @author Kai Sauerwald
-	 * @param symbols
-	 *            The symbols of this signature
+	 * @param symbols The symbols of this signature
 	 */
 	public PropositionalSignature(Collection<PSym> symbols) {
 		this.symbols = new ArrayList<>(symbols);
@@ -73,16 +72,20 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 		return Collections.unmodifiableList(symbols);
 	}
 
-    /**
-     * Returns a {@code Stream} of all interpretations under this signature
-     * @author Kai Sauerwald.
-     */
+	/**
+	 * Returns a {@code Stream} of all interpretations under this signature
+	 * 
+	 * @author Kai Sauerwald.
+	 */
 	public Stream<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> stream() {
-		return StreamSupport.stream(Spliterators.spliterator(iterator(), /* initial size */ 0L, Spliterator.IMMUTABLE), false);
+		return StreamSupport.stream(Spliterators.spliterator(iterator(), /* initial size */ 0L, Spliterator.IMMUTABLE),
+				false);
 	}
 
 	/**
-	 * Creates an iterator, that iterates over all interpretations under this signature.
+	 * Creates an iterator, that iterates over all interpretations under this
+	 * signature.
+	 * 
 	 * @author Kai Sauerwald
 	 * @see java.lang.Iterable#iterator()
 	 */
@@ -129,34 +132,37 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 
 		};
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
 		return symbols.hashCode();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object o) {
 		if (o == this)
-            return true;
-        if (!(o instanceof PropositionalSignature))
-            return false;
-        
-        PropositionalSignature<PSym> sig = (PropositionalSignature<PSym>) o;
+			return true;
+		if (!(o instanceof PropositionalSignature))
+			return false;
 
-	    return this.symbols.equals(sig.symbols);
+		PropositionalSignature<PSym> sig = (PropositionalSignature<PSym>) o;
+
+		return this.symbols.equals(sig.symbols);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -164,6 +170,7 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 		return symbols.toString();
 	}
 
+	@Override
 	public String toLaTeX() {
 		return symbols.toString();
 	}

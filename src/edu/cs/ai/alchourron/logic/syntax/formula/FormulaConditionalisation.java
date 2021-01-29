@@ -13,7 +13,7 @@ import edu.cs.ai.alchourron.logic.Signature;
  *
  */
 public class FormulaConditionalisation<S extends Signature> extends LogicalOperator<S> {
-	
+
 	public FormulaConditionalisation(S signature) {
 		super(signature);
 	}

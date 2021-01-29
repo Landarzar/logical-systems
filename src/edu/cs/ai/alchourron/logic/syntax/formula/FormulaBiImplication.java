@@ -43,10 +43,10 @@ public class FormulaBiImplication<S extends BiImplicationLogicSignature> extends
 	public List<Formula<S>> getOperands() {
 		return List.of(implicant1, implicant2);
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return  stringify();
+		return stringify();
 	}
 }

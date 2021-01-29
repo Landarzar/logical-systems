@@ -9,11 +9,11 @@ import edu.cs.ai.alchourron.logic.syntax.structure.QuantificationLogicSignature;
  * 
  * @author Kai Sauerwald
  *
- * @param <Q> The type which are bound by this quantifier (Variables, Relations, ...)
+ * @param <Q> The type which are bound by this quantifier (Variables, Relations,
+ *            ...)
  */
-public class FormulaQuantification<Q,V,S extends QuantificationLogicSignature<Q,V>> extends LogicalOperator<S> {
-	
-	
+public class FormulaQuantification<Q, V, S extends QuantificationLogicSignature<Q, V>> extends LogicalOperator<S> {
+
 	private Q quantifiyer;
 	private V variable;
 	private Formula<S> quantified;
@@ -24,31 +24,33 @@ public class FormulaQuantification<Q,V,S extends QuantificationLogicSignature<Q,
 		this.variable = variable;
 		this.quantified = quantified;
 	}
-	
+
 	/***
 	 * Gets the parameters of this quantifier
 	 */
 	public Q getQuantifyer() {
 		return quantifiyer;
 	}
-	
+
 	/***
 	 * Gets the variable of this quantifier
 	 */
 	public V getVariables() {
 		return variable;
 	}
-	
+
 	/***
 	 * Gets the formula which is quantified
+	 * 
 	 * @return
 	 */
-	public Formula<S> getQuantified(){
+	public Formula<S> getQuantified() {
 		return quantified;
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
 	 */
 	@Override
@@ -68,7 +70,7 @@ public class FormulaQuantification<Q,V,S extends QuantificationLogicSignature<Q,
 		// TODO Auto-generated method stub
 		return List.of(this.quantified);
 	}
-	
+
 	@Override
 	public String toString() {
 		return quantifiyer.toString() + " " + variable + ". " + quantified;

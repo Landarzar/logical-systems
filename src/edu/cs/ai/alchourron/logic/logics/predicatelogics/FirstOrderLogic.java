@@ -13,9 +13,9 @@ import edu.cs.ai.alchourron.logic.syntax.formula.FormulaFalsum;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaImplication;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaNeg;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaOR;
-import edu.cs.ai.alchourron.logic.syntax.formula.FormulaVerum;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPredicate;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaQuantification;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaVerum;
 import edu.cs.ai.alchourron.logic.syntax.terms.FunctionTerm;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
@@ -44,56 +44,57 @@ public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 	@Override
 	public Boolean eval(FiniteStructure<?, R, K, FOSignature<R, K, V>> interpretation,
 			Formula<FOSignature<R, K, V>> formula) {
-		if(getFreeVariables(formula).isEmpty())
-		{
-			return eval(interpretation,formula, var -> null);
+		if (getFreeVariables(formula).isEmpty()) {
+			return eval(interpretation, formula, var -> null);
 		}
 		throw new UnsupportedOperationException("Not implemeted yed");
 	}
-	
-	public Set<V> getFreeVariables(Formula<FOSignature<R, K, V>> form){
+
+	public Set<V> getFreeVariables(Formula<FOSignature<R, K, V>> form) {
 		return Set.of();
 	}
 
 	/***
 	 * Evaluations a formula under a valuation function
+	 * 
 	 * @author Kai Sauerwald
 	 * @param interpretation The interpretation
-	 * @param formula The formula to be interpreted 
-	 * @param valuation A valuation for the variables of type <V>
+	 * @param formula        The formula to be interpreted
+	 * @param valuation      A valuation for the variables of type <V>
 	 */
 	public <U> Boolean eval(FiniteStructure<U, R, K, FOSignature<R, K, V>> interpretation,
 			Formula<FOSignature<R, K, V>> formula, Function<V, U> valuation) {
 
 		if (formula instanceof FormulaPredicate<?, ?, ?, ?>) {
 			FormulaPredicate<R, K, V, FOSignature<R, K, V>> pred = (FormulaPredicate<R, K, V, FOSignature<R, K, V>>) formula;
-			Tuple<U> tuple = new Tuple<>(pred.getTerms().stream().sorted().map(t -> eval(interpretation,t,valuation)).collect(Collectors.toUnmodifiableList()));
+			Tuple<U> tuple = new Tuple<>(pred.getTerms().stream().sorted().map(t -> eval(interpretation, t, valuation))
+					.collect(Collectors.toUnmodifiableList()));
 			return interpretation.getRelation(pred.getSymbol()).contains(tuple);
 		}
-		if (formula instanceof FormulaQuantification<?,?,?>) {
+		if (formula instanceof FormulaQuantification<?, ?, ?>) {
 			FormulaQuantification<StandardQuantifier, V, FOSignature<R, K, V>> quantor = (FormulaQuantification<StandardQuantifier, V, FOSignature<R, K, V>>) formula;
-			if(quantor.getQuantifyer() == StandardQuantifier.FORALL) {
+			if (quantor.getQuantifyer() == StandardQuantifier.FORALL) {
 				return interpretation.getUniverse().stream().allMatch(u -> {
 
 					Function<V, U> nval = var -> {
-						if(var.equals(quantor.getVariables()))
+						if (var.equals(quantor.getVariables()))
 							return u;
 						return valuation.apply(var);
 					};
-					
-					return eval(interpretation,quantor.getQuantified(),nval);
+
+					return eval(interpretation, quantor.getQuantified(), nval);
 				});
 			}
-			if(quantor.getQuantifyer() == StandardQuantifier.EXISTS) {
+			if (quantor.getQuantifyer() == StandardQuantifier.EXISTS) {
 				return interpretation.getUniverse().stream().anyMatch(u -> {
 
 					Function<V, U> nval = var -> {
-						if(var.equals(quantor.getVariables()))
+						if (var.equals(quantor.getVariables()))
 							return u;
 						return valuation.apply(var);
 					};
-					
-					return eval(interpretation,quantor.getQuantified(),nval);
+
+					return eval(interpretation, quantor.getQuantified(), nval);
 				});
 			}
 		}
@@ -133,10 +134,11 @@ public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 
 	/***
 	 * Evaluations a term under a valuation function
+	 * 
 	 * @author Kai Sauerwald
 	 * @param interpretation The interpretation
-	 * @param term The term to be interpreted 
-	 * @param valuation A valuation for the variables of type <V>
+	 * @param term           The term to be interpreted
+	 * @param valuation      A valuation for the variables of type <V>
 	 */
 	public <U> U eval(FiniteStructure<U, R, K, FOSignature<R, K, V>> interpretation, Term<K, V> term,
 			Function<V, U> valuation) {
@@ -161,6 +163,7 @@ public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 	 * edu.cs.ai.alchourron.logic.LogicalSystem#entails(edu.cs.ai.alchourron.logic.
 	 * Interpretation, edu.cs.ai.alchourron.logic.Formula)
 	 */
+	@Override
 	public boolean satisfies(FiniteStructure<?, R, K, FOSignature<R, K, V>> interpretation,
 			Formula<FOSignature<R, K, V>> formula) {
 

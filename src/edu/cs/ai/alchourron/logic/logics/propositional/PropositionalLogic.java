@@ -12,9 +12,9 @@ import edu.cs.ai.alchourron.logic.syntax.formula.FormulaFalsum;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaImplication;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaNeg;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaOR;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
-import edu.cs.ai.alchourron.logic.syntax.formula.FormulaVerum;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaProposition;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaVerum;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
 
 /***
  * Logical System representing propositional logic over symbol space of type
@@ -23,11 +23,10 @@ import edu.cs.ai.alchourron.logic.syntax.formula.FormulaProposition;
  * @author Kai Sauerwald
  *
  * @param <P> The symbol space over which the signature is definable
- * @param <F>    The type for formula
+ * @param <F> The type for formula
  */
 public class PropositionalLogic<P> implements
 		ModelTheoreticLogic<PropositionalInterpretation<P, PropositionalSignature<P>>, Formula<PropositionalSignature<P>>, Boolean, PropositionalSignature<P>> {
-
 
 	/*
 	 * (non-Javadoc)
@@ -49,8 +48,7 @@ public class PropositionalLogic<P> implements
 	 * @param syntacton the root of the syntax tree
 	 */
 	@SuppressWarnings("unchecked")
-	protected boolean validSyntaxTree(Formula<PropositionalSignature<P>> syntacton,
-			PropositionalSignature<P> sig) {
+	protected boolean validSyntaxTree(Formula<PropositionalSignature<P>> syntacton, PropositionalSignature<P> sig) {
 		if (syntacton instanceof FormulaAND<?> || syntacton instanceof FormulaOR<?>
 				|| syntacton instanceof FormulaNeg<?>) {
 			LogicalOperator<PropositionalSignature<P>> le = (LogicalOperator<PropositionalSignature<P>>) syntacton;
@@ -64,30 +62,29 @@ public class PropositionalLogic<P> implements
 
 		return false;
 	}
-	
 
-	
-
-	
 	/***
-	 * Generates a formula having exact having exact the set of interpretations as models.
+	 * Generates a formula having exact having exact the set of interpretations as
+	 * models.
+	 * 
 	 * @param set The set of models.
 	 */
-	public Formula<PropositionalSignature<P>> getCharacterisingFormula(PropositionalSignature<P> sig, Set<PropositionalInterpretation<P, PropositionalSignature<P>>> set){
-		if(set.isEmpty())
+	public Formula<PropositionalSignature<P>> getCharacterisingFormula(PropositionalSignature<P> sig,
+			Set<PropositionalInterpretation<P, PropositionalSignature<P>>> set) {
+		if (set.isEmpty())
 			return new FormulaVerum<>(sig);
-		if(set.size() == 1)
+		if (set.size() == 1)
 			return set.stream().findFirst().get().getCharacterizingFormula();
-		
+
 		Formula<PropositionalSignature<P>> formula = null;
-		
+
 		for (PropositionalInterpretation<P, PropositionalSignature<P>> i : set) {
-			if(formula == null)
+			if (formula == null)
 				formula = i.getCharacterizingFormula();
 			else
-				formula = new FormulaOR<PropositionalSignature<P>>(sig, formula, i.getCharacterizingFormula()) ;
+				formula = new FormulaOR<PropositionalSignature<P>>(sig, formula, i.getCharacterizingFormula());
 		}
-		
+
 		return formula;
 	}
 
@@ -125,12 +122,13 @@ public class PropositionalLogic<P> implements
 	 * edu.cs.ai.alchourron.logic.LogicalSystem#entails(edu.cs.ai.alchourron.logic.
 	 * Interpretation, edu.cs.ai.alchourron.logic.Formula)
 	 */
+	@Override
 	public boolean satisfies(PropositionalInterpretation<P, PropositionalSignature<P>> interpretation,
 			Formula<PropositionalSignature<P>> formula) {
 //		assert this.validFormula(formula) : "the given formula ist not valid";
 
-		if (formula instanceof FormulaProposition<?,?>) {
-			FormulaProposition<P,PropositionalSignature<P>> atom = (FormulaProposition<P,PropositionalSignature<P>>) formula;
+		if (formula instanceof FormulaProposition<?, ?>) {
+			FormulaProposition<P, PropositionalSignature<P>> atom = (FormulaProposition<P, PropositionalSignature<P>>) formula;
 			return interpretation.isTrue(atom.getSymbol());
 		}
 		if (formula instanceof FormulaAND<?>) {
@@ -143,12 +141,14 @@ public class PropositionalLogic<P> implements
 		}
 		if (formula instanceof FormulaImplication<?>) {
 			FormulaImplication<PropositionalSignature<P>> implication = (FormulaImplication<PropositionalSignature<P>>) formula;
-			return  !satisfies(interpretation, implication.getPremise()) || satisfies(interpretation, implication.getConclusion());
+			return !satisfies(interpretation, implication.getPremise())
+					|| satisfies(interpretation, implication.getConclusion());
 		}
 
 		if (formula instanceof FormulaBiImplication<?>) {
 			FormulaBiImplication<PropositionalSignature<P>> implication = (FormulaBiImplication<PropositionalSignature<P>>) formula;
-			return  (satisfies(interpretation, implication.getFirst()) && satisfies(interpretation, implication.getSecond()))
+			return (satisfies(interpretation, implication.getFirst())
+					&& satisfies(interpretation, implication.getSecond()))
 					|| (!satisfies(interpretation, implication.getFirst())
 							&& !satisfies(interpretation, implication.getSecond()));
 		}

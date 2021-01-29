@@ -20,12 +20,13 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  */
 public class FormulaPredicate<R extends Enum<R>, F extends Enum<F>, V, S extends VariableTermLogicSignature<V> & RelationLogicSignature<R, F>>
 		extends Formula<S> {
-	
+
 	protected R symbol;
 	protected List<Term<F, V>> terms;
 
 	/***
 	 * Constructs a new atomar predicate
+	 * 
 	 * @param sig
 	 * @param symbol
 	 * @param terms
@@ -82,24 +83,24 @@ public class FormulaPredicate<R extends Enum<R>, F extends Enum<F>, V, S extends
 	public boolean isAtom() {
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 
-	        Iterator<Term<F, V>> it = this.getTerms().iterator();
-	        if (! it.hasNext())
-	            return this.symbol.toString();
+		Iterator<Term<F, V>> it = this.getTerms().iterator();
+		if (!it.hasNext())
+			return this.symbol.toString();
 
-	        StringBuilder sb = new StringBuilder();
-	        sb.append(this.symbol);
-	        sb.append('(');
-	        for (;;) {
-	        	Term<F, V> e = it.next();
-	            sb.append(e == this ? "(this Collection)" : e);
-	            if (! it.hasNext())
-	                return sb.append(')').toString();
-	            sb.append(',').append(' ');
-	        }
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.symbol);
+		sb.append('(');
+		for (;;) {
+			Term<F, V> e = it.next();
+			sb.append(e == this ? "(this Collection)" : e);
+			if (!it.hasNext())
+				return sb.append(')').toString();
+			sb.append(',').append(' ');
+		}
 	}
 
 	@Override

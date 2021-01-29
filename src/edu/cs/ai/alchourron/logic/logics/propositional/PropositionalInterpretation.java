@@ -16,10 +16,8 @@ import edu.cs.ai.alchourron.logic.syntax.formula.FormulaProposition;
  * 
  * @author Kai Sauerwald
  *
- * @param <P>
- *            The type of symbols used in the signature
- * @param <S>
- *            The type of the signature
+ * @param <P> The type of symbols used in the signature
+ * @param <S> The type of the signature
  */
 public class PropositionalInterpretation<P, S extends PropositionalSignature<P>> implements Interpretation<S> {
 
@@ -29,13 +27,11 @@ public class PropositionalInterpretation<P, S extends PropositionalSignature<P>>
 	/***
 	 * Constructs a new interpretation
 	 * 
-	 * @param sig
-	 *            The signature over which the interpretation is defined
-	 * @param trueValued
-	 *            The elements which are considered to be true
+	 * @param sig        The signature over which the interpretation is defined
+	 * @param trueValued The elements which are considered to be true
 	 */
 	public PropositionalInterpretation(S sig, P... trueValued) {
-		this.signature =sig;
+		this.signature = sig;
 		this.trueValued = new HashSet<>();
 		for (int i = 0; i < trueValued.length; i++) {
 			P v = trueValued[i];
@@ -46,13 +42,11 @@ public class PropositionalInterpretation<P, S extends PropositionalSignature<P>>
 	/***
 	 * Constructs a new interpretation
 	 * 
-	 * @param sig
-	 *            The signature over which the interpretation is defined
-	 * @param trueValued
-	 *            The elements which are considered to be true
+	 * @param sig        The signature over which the interpretation is defined
+	 * @param trueValued The elements which are considered to be true
 	 */
 	public PropositionalInterpretation(S sig, Collection<P> trueValued) {
-		this.signature =sig;
+		this.signature = sig;
 		this.trueValued = new HashSet<>(trueValued);
 	}
 
@@ -60,8 +54,7 @@ public class PropositionalInterpretation<P, S extends PropositionalSignature<P>>
 	 * Checks where under this interpretation {@link symbol} is true.
 	 * 
 	 * @author Kai Sauerwald
-	 * @param symbol
-	 *            The symbol
+	 * @param symbol The symbol
 	 */
 	public boolean isTrue(P symbol) {
 		return trueValued.contains(symbol);
@@ -80,8 +73,7 @@ public class PropositionalInterpretation<P, S extends PropositionalSignature<P>>
 	 * Checks where under this interpretation {@link symbol} is false.
 	 * 
 	 * @author Kai Sauerwald
-	 * @param symbol
-	 *            The symbol
+	 * @param symbol The symbol
 	 */
 	public boolean isFalse(P symbol) {
 		return !isTrue(symbol);
@@ -110,71 +102,73 @@ public class PropositionalInterpretation<P, S extends PropositionalSignature<P>>
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		for (P pSym : signature.symbols) {
-			if(trueValued.contains(pSym))
-			builder.append(pSym);
+			if (trueValued.contains(pSym))
+				builder.append(pSym);
 			else
 				builder.append("\u00AC" + pSym);
 		}
 		return builder.toString();
 	}
-	
+
 	/***
 	 * Generats a LaTeX-ified version of the stringrepresentation
 	 */
+	@Override
 	public String toLaTeX() {
 		StringBuilder builder = new StringBuilder();
 		for (P pSym : signature.symbols) {
-			if(trueValued.contains(pSym))
-			builder.append(pSym);
+			if (trueValued.contains(pSym))
+				builder.append(pSym);
 			else
 				builder.append("\\negOf{" + pSym + "}");
 		}
 		return builder.toString();
 	}
-	
-	
+
 	/***
 	 * Builds a formula which has exactly this interpretation as model
+	 * 
 	 * @author Kai Sauerwald
 	 */
-	public Formula<PropositionalSignature<P>> getCharacterizingFormula(){
+	public Formula<PropositionalSignature<P>> getCharacterizingFormula() {
 		Formula<PropositionalSignature<P>> result = null;
-		
+
 		for (P pSym : signature.getSymbols()) {
-			Formula<PropositionalSignature<P>>  tmp;
-			if(isTrue(pSym))
+			Formula<PropositionalSignature<P>> tmp;
+			if (isTrue(pSym))
 				tmp = new FormulaProposition<>(signature, pSym);
 			else
 				tmp = new FormulaNeg<>(signature, new FormulaProposition<>(signature, pSym));
-			
-			if(result == null)
+
+			if (result == null)
 				result = tmp;
 			else
-				result= new FormulaAND<>(signature, tmp);
+				result = new FormulaAND<>(signature, tmp);
 		}
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if(!(obj instanceof PropositionalInterpretation))
+		if (!(obj instanceof PropositionalInterpretation))
 			return false;
 		PropositionalInterpretation<P, PropositionalSignature<P>> pi = (PropositionalInterpretation<P, PropositionalSignature<P>>) obj;
-		if(!pi.getSignature().equals(this.getSignature()))
+		if (!pi.getSignature().equals(this.getSignature()))
 			return false;
 		for (P pSym : getSignature().symbols) {
-			if(pi.isTrue(pSym) != this.isTrue(pSym))
+			if (pi.isTrue(pSym) != this.isTrue(pSym))
 				return false;
 		}
 		return true;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return signature.hashCode() * 31 + trueValued.hashCode();

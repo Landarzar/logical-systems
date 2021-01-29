@@ -16,13 +16,14 @@ public class PropositionalTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
-		PropositionalSignature<Character> signature = new PropositionalSignature<Character>('a','b');
-		
-		FormulaProposition<Character,PropositionalSignature<Character>> prop = new FormulaProposition<>(signature, 'a');
-		
+
+		PropositionalSignature<Character> signature = new PropositionalSignature<Character>('a', 'b');
+
+		FormulaProposition<Character, PropositionalSignature<Character>> prop = new FormulaProposition<>(signature,
+				'a');
+
 		System.out.println(prop);
-		
+
 	}
 
 }

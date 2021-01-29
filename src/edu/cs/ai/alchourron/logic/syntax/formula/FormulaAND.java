@@ -15,7 +15,7 @@ import edu.cs.ai.alchourron.logic.syntax.structure.ConjunctionLogicSignature;
  *
  * @param <S> The Signature
  */
-public class FormulaAND<S extends ConjunctionLogicSignature>  extends LogicalOperator<S> {
+public class FormulaAND<S extends ConjunctionLogicSignature> extends LogicalOperator<S> {
 
 	ArrayList<Formula<S>> operands;
 
@@ -24,8 +24,7 @@ public class FormulaAND<S extends ConjunctionLogicSignature>  extends LogicalOpe
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public FormulaAND(S signature,
-			Collection<Formula<S>> operands) {
+	public FormulaAND(S signature, Collection<Formula<S>> operands) {
 		super(signature);
 		this.operands = new ArrayList<>(operands);
 	}
@@ -63,7 +62,7 @@ public class FormulaAND<S extends ConjunctionLogicSignature>  extends LogicalOpe
 	public boolean isAtom() {
 		return false;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(operands, signature);
@@ -131,9 +130,10 @@ public class FormulaAND<S extends ConjunctionLogicSignature>  extends LogicalOpe
 //		builder.append(")");
 		return builder.toString();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see cs.ai.logic.syntax.SyntacticElement#stringify()
 	 */
 	@Override

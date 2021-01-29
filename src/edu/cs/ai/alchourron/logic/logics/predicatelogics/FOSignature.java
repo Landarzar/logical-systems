@@ -23,8 +23,9 @@ import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
  * @param <R> Relation Symbols
  * @param <K> Function Symbols
  */
-public class FOSignature<R extends Enum<R>, K extends Enum<K>, V> implements Signature, VerumLogicSignature,
-		FalsumLogicSignature, TruthFunctionalLogicSignature, RelationLogicSignature<R, K>, VariableTermLogicSignature<V>,
+public class FOSignature<R extends Enum<R>, K extends Enum<K>, V>
+		implements Signature, VerumLogicSignature, FalsumLogicSignature, TruthFunctionalLogicSignature,
+		RelationLogicSignature<R, K>, VariableTermLogicSignature<V>,
 		QuantificationLogicSignature<StandardQuantifier, V>, ImplicationLogicSignature, BiImplicationLogicSignature {
 
 	/***
@@ -73,7 +74,7 @@ public class FOSignature<R extends Enum<R>, K extends Enum<K>, V> implements Sig
 			R v = symbR[i];
 			this.predicateSymbols.add(v);
 		}
-		
+
 		this.functionSymbols = new ArrayList<>(symbF.length);
 		this.functionArity = new ArrayList<>(arityF.length);
 		for (int i = 0; i < symbF.length; i++) {
@@ -87,9 +88,9 @@ public class FOSignature<R extends Enum<R>, K extends Enum<K>, V> implements Sig
 	 * 
 	 * @author Kai Sauerwald
 	 * @param symbols The symbols of predicates
-	 * @param arity The arity of predicates
+	 * @param arity   The arity of predicates
 	 */
-	public FOSignature(List<R> symbols,List<Integer> arity) {
+	public FOSignature(List<R> symbols, List<Integer> arity) {
 		this.predicateSymbols = new ArrayList<>(symbols);
 	}
 
@@ -139,6 +140,7 @@ public class FOSignature<R extends Enum<R>, K extends Enum<K>, V> implements Sig
 		return "<" + predicateSymbols.toString() + "," + functionSymbols + ">";
 	}
 
+	@Override
 	public String toLaTeX() {
 		return predicateSymbols.toString();
 	}

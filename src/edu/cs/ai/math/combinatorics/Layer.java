@@ -3,14 +3,13 @@ package edu.cs.ai.math.combinatorics;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class Layer<E> {
 //	RankedDistanceStructure<E> mother;
 	Set<E> elements;
 	int rank;
 	Layer<E> prev;
 	Layer<E> next;
-	
+
 //	public Layer(int rank, RankedDistanceStructure<E> mother) {
 //		this.elements = new HashSet<>();
 //		this.rank = rank;
@@ -26,7 +25,7 @@ public class Layer<E> {
 //		this.prev = this;
 //		this.next = this;
 //	}
-	
+
 	public Layer(int rank) {
 		this.elements = new HashSet<>();
 		this.rank = rank;
@@ -40,7 +39,6 @@ public class Layer<E> {
 		this.prev = this;
 		this.next = this;
 	}
-
 
 	public Layer(int rank, E... obj) {
 		this.elements = new HashSet<>(Set.of(obj));
@@ -105,7 +103,7 @@ public class Layer<E> {
 //				layer.next.addRankAllAfter(mother.defaultDistance - (layer.next.rank - this.rank) + 1);
 //	}
 	}
-	
+
 	/***
 	 * Inserts the element <layer> before this element
 	 * 
@@ -125,24 +123,24 @@ public class Layer<E> {
 //			layer.rank = this.rank - mother.defaultDistance;
 //			if (layer.prev.rank + mother.defaultDistance >= this.rank)
 //			addRankAllAfter(mother.defaultDistance - (layer.prev.rank - this.rank) + 1);
-		}
+	}
 
 	private void addRankAllAfter(int a) {
 		rank += a;
 //		if (next != mother.root)
 //			next.addRankAllAfter(a);
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("{");
 		boolean first = true;
 		for (E e : elements) {
-			if(!first)
+			if (!first)
 				builder.append(',');
 			builder.append(e);
-			first =false;
+			first = false;
 		}
 		builder.append("}");
 		return builder.toString();
@@ -152,10 +150,10 @@ public class Layer<E> {
 		StringBuilder builder = new StringBuilder();
 		boolean first = true;
 		for (E e : elements) {
-			if(!first)
+			if (!first)
 				builder.append(',');
 			builder.append(e);
-			first =false;
+			first = false;
 		}
 		return builder.toString();
 	}

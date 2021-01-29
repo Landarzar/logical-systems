@@ -4,15 +4,15 @@ import java.util.List;
 
 import edu.cs.ai.alchourron.logic.SyntacticElement;
 
-public class VariableTerm<F extends Enum<F>,V> implements Term<F,V> {
-	
+public class VariableTerm<F extends Enum<F>, V> implements Term<F, V> {
+
 	V variable;
-	
+
 	public VariableTerm(V var) {
 		this.variable = var;
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public V getVariable() {
 		return variable;
 	}
@@ -34,13 +34,10 @@ public class VariableTerm<F extends Enum<F>,V> implements Term<F,V> {
 		return variable.toString();
 	}
 
-	
 	@Override
 	public List<SyntacticElement> getSyntacticChildren() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
-	
 }

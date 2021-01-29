@@ -1,19 +1,8 @@
 package edu.cs.ai.alchourron.logic.logics.predicatelogics;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import edu.cs.ai.alchourron.logic.Signature;
-import edu.cs.ai.alchourron.logic.syntax.structure.BiImplicationLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.FalsumLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.ImplicationLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.QuantificationLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.RelationLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.SecondOrderQuantificationLogic;
-import edu.cs.ai.alchourron.logic.syntax.structure.TruthFunctionalLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.VariableTermLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
 
 /***
  * Represents a propositional signature, which uses Elements of the type Psym as
@@ -26,7 +15,8 @@ import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
  * @param <V> Type for first-order variables
  * @param <P> Type for second-order variables
  */
-public class SOSignature<R extends Enum<R>, K extends Enum<K>, V, P> extends FOSignature<R, K, V> implements SecondOrderQuantificationLogic<P> {
+public class SOSignature<R extends Enum<R>, K extends Enum<K>, V, P> extends FOSignature<R, K, V>
+		implements SecondOrderQuantificationLogic<P> {
 
 	/***
 	 * Constructs a new signature
@@ -43,14 +33,12 @@ public class SOSignature<R extends Enum<R>, K extends Enum<K>, V, P> extends FOS
 	 * 
 	 * @author Kai Sauerwald
 	 * @param symbols The symbols of predicates
-	 * @param arity The arity of predicates
+	 * @param arity   The arity of predicates
 	 */
-	public SOSignature(List<R> symbols,List<Integer> arity) {
+	public SOSignature(List<R> symbols, List<Integer> arity) {
 		super(symbols, arity);
 	}
-	
-	
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -61,6 +49,7 @@ public class SOSignature<R extends Enum<R>, K extends Enum<K>, V, P> extends FOS
 		return "<" + predicateSymbols.toString() + "," + functionSymbols + ">";
 	}
 
+	@Override
 	public String toLaTeX() {
 		return predicateSymbols.toString();
 	}

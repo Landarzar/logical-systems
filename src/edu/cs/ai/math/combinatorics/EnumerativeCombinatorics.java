@@ -1,4 +1,5 @@
 package edu.cs.ai.math.combinatorics;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -9,7 +10,6 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
 
 public class EnumerativeCombinatorics {
 	static <T> void generateVariations(List<T> elements, Consumer<List<T>> eater) {
@@ -29,9 +29,9 @@ public class EnumerativeCombinatorics {
 	}
 
 	static <T> void generatePermutations(List<T> elements, Consumer<List<T>> eater) {
-		generatePermutations(0, new ArrayList<>(elements), new boolean[elements.size()], new ArrayList<>(elements), eater);
+		generatePermutations(0, new ArrayList<>(elements), new boolean[elements.size()], new ArrayList<>(elements),
+				eater);
 	}
-
 
 	/***
 	 * https://sol.cs.hm.edu/4129/html/208-permutationen.xhtml
@@ -42,7 +42,8 @@ public class EnumerativeCombinatorics {
 	 * @param elements
 	 * @param eater
 	 */
-	static <T> void generatePermutations(int length, List<T> permutation, boolean[] used, List<T> elements, Consumer<List<T>> eater) {
+	static <T> void generatePermutations(int length, List<T> permutation, boolean[] used, List<T> elements,
+			Consumer<List<T>> eater) {
 		if (length >= used.length)
 			eater.accept(permutation);
 		else
@@ -55,9 +56,8 @@ public class EnumerativeCombinatorics {
 				used[n] = false;
 			}
 	}
-	
-	public static <T> HashSet<List<Layer<T>>> constructPreorders(final HashSet<List<Integer>> preOrds,
-			List<T> source) {
+
+	public static <T> HashSet<List<Layer<T>>> constructPreorders(final HashSet<List<Integer>> preOrds, List<T> source) {
 		HashSet<List<Layer<T>>> result = new HashSet<>();
 
 		for (List<Integer> list : preOrds) {
@@ -81,8 +81,7 @@ public class EnumerativeCombinatorics {
 		}
 		return result;
 	}
-	
-	
+
 	public static <E> Set<Set<E>> powerSet(Collection<E> set) {
 		Set<Set<E>> result = new HashSet<>();
 		result.add(new HashSet<E>());
@@ -113,7 +112,7 @@ public class EnumerativeCombinatorics {
 				}
 				// Remove empty layers:
 				for (int i = 1; i < Collections.max(tmp);) {
-					if (!tmp.contains((Integer) i)) {
+					if (!tmp.contains(i)) {
 						for (int j = 0; j < tmp.size(); j++) {
 							if (tmp.get(j) > i)
 								tmp.set(j, tmp.get(j) - 1);

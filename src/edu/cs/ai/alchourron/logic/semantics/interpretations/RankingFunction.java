@@ -18,7 +18,7 @@ public class RankingFunction<T> extends AbstractCollection<Pair<T, Integer>> {
 
 	public void normalize() {
 		while (this.getByRank(0).isEmpty()) {
-			elements.forEach(p -> p.setSecond(p.getSecond()-1));
+			elements.forEach(p -> p.setSecond(p.getSecond() - 1));
 		}
 	}
 

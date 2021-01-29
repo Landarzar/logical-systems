@@ -29,17 +29,19 @@ public interface ModelTheoreticLogic<I extends Interpretation<S>, F extends Form
 	 * @author Kai Sauerwald
 	 * @param formula
 	 * @return
-	 * @throws UnsupportedOperationException
-	 *             Maybe:
-	 *             <ol>
-	 *             <li>There is no finite way to represent the set of all models of
-	 *             the formula, or</li>
-	 *             <li>there is no notion of model,</li>
-	 *             <li>or the author of the implementation was lazy.</li>
-	 *             </ol>
+	 * @throws UnsupportedOperationException Maybe:
+	 *                                       <ol>
+	 *                                       <li>There is no finite way to represent
+	 *                                       the set of all models of the formula,
+	 *                                       or</li>
+	 *                                       <li>there is no notion of model,</li>
+	 *                                       <li>or the author of the implementation
+	 *                                       was lazy.</li>
+	 *                                       </ol>
 	 */
 	public default Set<I> modelsOf(F formula) throws UnsupportedOperationException {
-		throw new UnsupportedOperationException("This logic does not support enumeration of models, or it is not implemeted (yet).");
+		throw new UnsupportedOperationException(
+				"This logic does not support enumeration of models, or it is not implemeted (yet).");
 	};
 
 	/***
@@ -71,8 +73,8 @@ public interface ModelTheoreticLogic<I extends Interpretation<S>, F extends Form
 	 * 
 	 * @author Kai Sauerwald
 	 * @param signature
-	 * @param f1             The first operand
-	 * @param f2             The second operand
+	 * @param f1        The first operand
+	 * @param f2        The second operand
 	 * @return
 	 * @throws UnsupportedOperationException If the implemented logic not have
 	 *                                       (decidable) notion of logical

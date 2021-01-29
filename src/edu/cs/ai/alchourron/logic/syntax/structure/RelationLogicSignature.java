@@ -11,8 +11,9 @@ import edu.cs.ai.alchourron.logic.Signature;
  * @param <R> The type for the relations
  * @param <F> The type for the functions
  */
-public interface RelationLogicSignature<R extends Enum<R>,F extends Enum<F>> extends Signature {
-	
+public interface RelationLogicSignature<R extends Enum<R>, F extends Enum<F>> extends Signature {
+
+	@Override
 	public default boolean isPredicateLogic() {
 		return true;
 	}
