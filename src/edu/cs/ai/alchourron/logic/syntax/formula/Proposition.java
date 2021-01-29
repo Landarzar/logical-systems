@@ -17,11 +17,10 @@ import edu.cs.ai.alchourron.logic.syntax.structure.PropositionLogicSignature;
  */
 public class Proposition<PSym, S extends PropositionLogicSignature<PSym>> extends Formula<S> {
 
-	protected S signature;
 	protected PSym symbol;
 
 	public Proposition(S signature, PSym symbol) {
-		this.signature = signature;
+		super(signature);
 		this.symbol = symbol;
 	}
 

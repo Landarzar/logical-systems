@@ -18,12 +18,8 @@ import edu.cs.ai.alchourron.logic.syntax.structure.DisjunctionLogicSignature;
  * @param <S> The Signature
  */
 public class LogicalOR<S extends DisjunctionLogicSignature>  extends LogicalOperator<S> {
-	protected S signature;
 	protected ArrayList<Formula<S>> operands;
 	
-	protected LogicalOR() {
-		
-	}
 
 	/**
 	 * Constructs a new instance of this class
@@ -32,7 +28,7 @@ public class LogicalOR<S extends DisjunctionLogicSignature>  extends LogicalOper
 	 */
 	public LogicalOR(S signature,
 			Collection<Formula<S>> operands) {
-		this.signature = signature;
+		super(signature);
 		this.operands = new ArrayList<>(operands);
 	}
 
@@ -43,7 +39,7 @@ public class LogicalOR<S extends DisjunctionLogicSignature>  extends LogicalOper
 	 */
 	@SafeVarargs
 	public LogicalOR(S signature, Formula<S>... operands) {
-		this.signature = signature;
+		super(signature);
 		this.operands = new ArrayList<>();
 		for (Formula<S> op : operands) {
 			this.operands.add(op);

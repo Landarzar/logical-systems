@@ -15,6 +15,9 @@ import edu.cs.ai.alchourron.logic.SyntacticElement;
  */
 public abstract class LogicalOperator<S extends Signature>  extends Formula<S> implements SyntacticElement {
 	
+	public LogicalOperator(S signature) {
+		super(signature);
+	}
 	
 	/***
 	 * Returns the operands of this logical connective.

@@ -2,6 +2,10 @@ package edu.cs.ai.alchourron.tools;
 
 import java.util.HashSet;
 
-public class Relation<U> extends HashSet<Tuple<U>> {
+public interface Relation<U> {
+	
+	public boolean contains(Tuple<U> tuple);
+	
+	public int getArity();
 
 }

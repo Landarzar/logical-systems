@@ -18,7 +18,8 @@ public class Conditional<S extends Signature, B extends Formula<S>> extends Form
 	private B antecendence;
 	private B consequence;
 
-	public Conditional(B antecendence, B consequence) {
+	public Conditional(S signature, B antecendence, B consequence) {
+		super(signature);
 		this.antecendence = antecendence;
 		this.consequence = consequence;
 	}

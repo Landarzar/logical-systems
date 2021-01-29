@@ -6,6 +6,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
@@ -36,8 +37,8 @@ public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends 
 
 	S signature;
 	Set<U> universe;
-	EnumMap<R, Relation<U>> relations;
-	EnumMap<K, Function<Tuple<U>, U>> functions;
+	Map<R, Relation<U>> relations;
+	Map<K, Function<Tuple<U>, U>> functions;
 
 	/***
 	 * Constructs a new interpretation
@@ -52,11 +53,11 @@ public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends 
 		
 		HashMap<R, Relation<U>> rmap = new HashMap<>();
 		rel.forEach(p -> rmap.put(p.getFirst(), p.getSecond()));
-		relations = new EnumMap<>(rmap);
+		relations = Collections.unmodifiableMap(rmap);
 		
 		HashMap<K, Function<Tuple<U>, U>> fmap = new HashMap<>();
 		func.forEach(p -> fmap.put(p.getFirst(), p.getSecond()));
-		functions = new EnumMap<>(fmap);
+		functions = Collections.unmodifiableMap(fmap);
 	}
 	
 	public Set<U> getUniverse() {

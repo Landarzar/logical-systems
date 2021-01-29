@@ -8,12 +8,11 @@ import edu.cs.ai.alchourron.logic.syntax.structure.BiImplicationLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.ImplicationLogicSignature;
 
 public class LogicalBiImplication<S extends BiImplicationLogicSignature> extends LogicalOperator<S> {
-	S signature;
 	Formula<S> implicant1;
 	Formula<S> implicant2;
 
 	public LogicalBiImplication(S signature, Formula<S> implicant1, Formula<S> implicant2) {
-		this.signature = signature;
+		super(signature);
 		this.implicant1 = implicant1;
 		this.implicant2 = implicant2;
 	}
@@ -45,11 +44,6 @@ public class LogicalBiImplication<S extends BiImplicationLogicSignature> extends
 	@Override
 	public List<Formula<S>> getOperands() {
 		return List.of(implicant1, implicant2);
-	}
-
-	@Override
-	public S getSignature() {
-		return signature;
 	}
 	
 	@Override

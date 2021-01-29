@@ -24,6 +24,11 @@ public class Tuple<T> {
 	 */
 	public Tuple(T... elements) {
 		implTuple = new ArrayList<>(elements.length);
+
+		for (int i = 0; i < elements.length; i++) {
+			T t = elements[i];
+			implTuple.add(t);
+		}
 	}
 	
 	/***
@@ -33,6 +38,10 @@ public class Tuple<T> {
 		implTuple = new ArrayList<>(elements);
 	}
 	
+	@Override
+	public String toString() {
+		return implTuple.toString();
+	}
 	
 	/***
 	 * The arity of this tuple

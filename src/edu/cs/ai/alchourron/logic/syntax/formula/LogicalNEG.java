@@ -15,7 +15,6 @@ import edu.cs.ai.alchourron.logic.syntax.structure.NegationLogicSignature;
  */
 public class LogicalNEG<S extends NegationLogicSignature> extends LogicalOperator<S> {
 	
-	protected S signature;
 	protected Formula<S> operand;
 
 	/**
@@ -24,7 +23,7 @@ public class LogicalNEG<S extends NegationLogicSignature> extends LogicalOperato
 	 * @author Kai Sauerwald
 	 */
 	public LogicalNEG(S signature, Formula<S> operand) {
-		this.signature = signature;
+		super(signature);
 		this.operand = operand;
 	}
 

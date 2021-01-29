@@ -22,12 +22,20 @@ public abstract class Formula<S extends Signature> implements LaTeX, SyntacticEl
 //		throw new UnsupportedOperationException("This operation is not implemented");
 //	}; 
 	
+	protected S signature;
+	
+	public Formula(S signature) {
+		this.signature = signature;
+	}
+	
 	/***
 	 * Gets the (smalles) signature matching to this formula.
 	 * @author Kai Sauerwald
 	 * @return The signature of the formula
 	 */
-	public abstract S getSignature();	
+	public S getSignature() {
+		return signature;
+	}
 	
 	/***
 	 * Checks whether the formula matches this signature

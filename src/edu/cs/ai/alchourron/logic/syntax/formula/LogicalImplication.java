@@ -8,12 +8,11 @@ import edu.cs.ai.alchourron.logic.syntax.structure.ImplicationLogicSignature;
 
 public class LogicalImplication<S extends ImplicationLogicSignature> extends LogicalOperator<S> {
 
-	S signature;
 	Formula<S> premise;
 	Formula<S> conclusion;
 
 	public LogicalImplication(S signature, Formula<S> premise, Formula<S> conclusion) {
-		this.signature = signature;
+		super(signature);
 		this.premise = premise;
 		this.conclusion = conclusion;
 	}
@@ -45,11 +44,6 @@ public class LogicalImplication<S extends ImplicationLogicSignature> extends Log
 	@Override
 	public List<Formula<S>> getOperands() {
 		return List.of(premise, conclusion);
-	}
-
-	@Override
-	public S getSignature() {
-		return signature;
 	}
 	
 	@Override

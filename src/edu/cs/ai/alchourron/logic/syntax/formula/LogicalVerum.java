@@ -15,10 +15,9 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  */
 public class LogicalVerum<S extends VerumLogicSignature> extends Formula<S> {
 
-	S signature;
 	
 	public LogicalVerum(S signature) {
-		this.signature = signature;
+		super(signature);
 	}
 	
 	/*

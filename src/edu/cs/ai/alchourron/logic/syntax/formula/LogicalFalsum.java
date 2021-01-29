@@ -16,10 +16,9 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  */
 public class LogicalFalsum<S extends FalsumLogicSignature>  extends Formula<S> {
 
-	S signature;
 	
 	public LogicalFalsum(S signature) {
-		this.signature = signature;
+		super(signature);
 	}
 	
 	/*
@@ -43,11 +42,5 @@ public class LogicalFalsum<S extends FalsumLogicSignature>  extends Formula<S> {
 	@Override
 	public String stringify() {
 		return "BOT";
-	}
-
-	@Override
-	public S getSignature() {
-		// TODO Auto-generated method stub
-		return signature;
 	}
 }

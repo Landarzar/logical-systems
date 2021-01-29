@@ -19,7 +19,6 @@ import edu.cs.ai.alchourron.logic.syntax.structure.ConjunctionLogicSignature;
  */
 public class LogicalAND<S extends ConjunctionLogicSignature>  extends LogicalOperator<S> {
 
-	protected S signature;
 	ArrayList<Formula<S>> operands;
 
 	/**
@@ -29,7 +28,7 @@ public class LogicalAND<S extends ConjunctionLogicSignature>  extends LogicalOpe
 	 */
 	public LogicalAND(S signature,
 			Collection<Formula<S>> operands) {
-		this.signature = signature;
+		super(signature);
 		this.operands = new ArrayList<>(operands);
 	}
 
@@ -40,21 +39,11 @@ public class LogicalAND<S extends ConjunctionLogicSignature>  extends LogicalOpe
 	 */
 	@SafeVarargs
 	public LogicalAND(S signature, Formula<S>... operands) {
-		this.signature = signature;
+		super(signature);
 		this.operands = new ArrayList<>();
 		for (Formula<S> op : operands) {
 			this.operands.add(op);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.Formula#getSignature()
-	 */
-	@Override
-	public S getSignature() {
-		return signature;
 	}
 
 	/*

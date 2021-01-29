@@ -13,6 +13,10 @@ import edu.cs.ai.alchourron.logic.Signature;
  *
  */
 public class Conditionalisation<S extends Signature> extends LogicalOperator<S> {
+	
+	public Conditionalisation(S signature) {
+		super(signature);
+	}
 
 	@Override
 	public boolean isAtom() {
