@@ -1,21 +1,26 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.signature.QuantificationLogicSignature;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.syntax.structure.QuantificationLogicSignature;
 
 /***
  * 
  * @author Kai Sauerwald
  *
- * @param <Q> The type which are bound by this quantifier (Variables, Relations, ...)
+ * @param <K> The type which are bound by this quantifier (Variables, Relations, ...)
  */
-public abstract class Quantor<K extends Enum<K>,Q,S extends QuantificationLogicSignature<K,Q>> extends LogicalOperator<S> {
+public abstract class Quantor<K extends Enum<K>,Q,V,S extends QuantificationLogicSignature<Q,V>> extends LogicalOperator<S> {
 	
 	
 	/***
 	 * Gets the parameters of this quantifier
 	 */
-	public abstract Q getQuantifying();
+	public abstract Q getQuantifyer();
+	
+	/***
+	 * Gets the variable of this quantifier
+	 */
+	public abstract V getVariables();
 	
 	/***
 	 * Gets the formula which is quantified

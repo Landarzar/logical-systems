@@ -1,7 +1,10 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.signature.PropositionLogicSignature;
+import java.util.List;
+
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.SyntacticElement;
+import edu.cs.ai.alchourron.logic.syntax.structure.PropositionLogicSignature;
 
 /***
  * Represents predicates, for instance relations in first order logic or
@@ -60,7 +63,7 @@ public class Proposition<PSym, S extends PropositionLogicSignature<PSym>> extend
 	public S getSignature() {
 		return signature;
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

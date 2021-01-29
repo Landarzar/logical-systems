@@ -1,10 +1,11 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
+import java.util.List;
 import java.util.Objects;
 
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.Signature;
-import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.SyntacticElement;
 
 /***
  * 
@@ -74,10 +75,19 @@ public class Conditional<S extends Signature, B extends Formula<S>> extends Form
 	}
 
 	@Override
-	public SyntacticElement<S> getSyntaxTree() throws UnsupportedOperationException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SyntacticElement> getSyntacticChildren() {
+		return List.of(this.getAntecendence(),this.getConsequence());
 	}
+
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see edu.cs.ai.alchourron.logic.Formula#getSyntaxTree()
+//	 */
+//	@Override
+//	public List<Formula<S>> getSyntaxTree() throws UnsupportedOperationException {
+//		return List.of(this.getAntecendence(),this.getConsequence());
+//	}
 
 	@Override
 	public S getSignature() {

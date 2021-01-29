@@ -2,9 +2,9 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.List;
 
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.signature.PropositionLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.signature.VerumLogicSignature;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.syntax.structure.PropositionLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 
 /***

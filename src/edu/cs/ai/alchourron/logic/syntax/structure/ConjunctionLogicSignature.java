@@ -1,7 +1,7 @@
-package edu.cs.ai.alchourron.logic.syntax.signature;
+package edu.cs.ai.alchourron.logic.syntax.structure;
 
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.Signature;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.Signature;
 
 public interface ConjunctionLogicSignature extends Signature {
 

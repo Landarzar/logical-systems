@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.Signature;
-import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
-import edu.cs.ai.alchourron.logic.syntax.signature.ConjunctionLogicSignature;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.SyntacticElement;
+import edu.cs.ai.alchourron.logic.syntax.structure.ConjunctionLogicSignature;
 
 /***
  * 
@@ -45,16 +45,6 @@ public class LogicalAND<S extends ConjunctionLogicSignature>  extends LogicalOpe
 		for (Formula<S> op : operands) {
 			this.operands.add(op);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.Formula#getSyntaxTree()
-	 */
-	@Override
-	public SyntacticElement<S> getSyntaxTree() throws UnsupportedOperationException {
-		return this;
 	}
 
 	/*

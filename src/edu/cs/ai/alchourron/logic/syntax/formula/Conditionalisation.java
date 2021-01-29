@@ -5,8 +5,8 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.List;
 
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.Signature;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.Signature;
 
 /**
  * @author Kai Sauerwald
@@ -27,7 +27,7 @@ public class Conditionalisation<S extends Signature> extends LogicalOperator<S> 
 	}
 
 	@Override
-	public List<? extends Formula<S>> getOperands() {
+	public List<Formula<S>> getOperands() {
 		// TODO Auto-generated method stub
 		return null;
 	}

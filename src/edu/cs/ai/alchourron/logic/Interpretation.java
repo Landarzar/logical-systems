@@ -1,7 +1,6 @@
-package edu.cs.ai.alchourron.logic.semantics;
+package edu.cs.ai.alchourron.logic;
 
 import edu.cs.ai.alchourron.LaTeX;
-import edu.cs.ai.alchourron.logic.syntax.Signature;
 
 /***
  * This class represents a interpretation type.

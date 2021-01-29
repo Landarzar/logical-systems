@@ -2,9 +2,9 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.List;
 
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.Signature;
-import edu.cs.ai.alchourron.logic.syntax.signature.ImplicationLogicSignature;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.syntax.structure.ImplicationLogicSignature;
 
 public class LogicalImplication<S extends ImplicationLogicSignature> extends LogicalOperator<S> {
 
@@ -43,7 +43,7 @@ public class LogicalImplication<S extends ImplicationLogicSignature> extends Log
 	}
 
 	@Override
-	public List<? extends Formula<S>> getOperands() {
+	public List<Formula<S>> getOperands() {
 		return List.of(premise, conclusion);
 	}
 

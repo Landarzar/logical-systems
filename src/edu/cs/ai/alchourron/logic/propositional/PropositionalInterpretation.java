@@ -7,9 +7,9 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Set;
 
-import edu.cs.ai.alchourron.logic.semantics.Interpretation;
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.Signature;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.Interpretation;
+import edu.cs.ai.alchourron.logic.Signature;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalNEG;
 import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
@@ -19,15 +19,15 @@ import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
  * 
  * @author Kai Sauerwald
  *
- * @param <PSym>
+ * @param <P>
  *            The type of symbols used in the signature
  * @param <S>
  *            The type of the signature
  */
-public class PropositionalInterpretation<PSym, S extends PropositionalSignature<PSym>> implements Interpretation<S> {
+public class PropositionalInterpretation<P, S extends PropositionalSignature<P>> implements Interpretation<S> {
 
 	S signature;
-	Set<PSym> trueValued;
+	Set<P> trueValued;
 
 	/***
 	 * Constructs a new interpretation
@@ -37,11 +37,11 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 * @param trueValued
 	 *            The elements which are considered to be true
 	 */
-	public PropositionalInterpretation(S sig, PSym... trueValued) {
+	public PropositionalInterpretation(S sig, P... trueValued) {
 		this.signature =sig;
 		this.trueValued = new HashSet<>();
 		for (int i = 0; i < trueValued.length; i++) {
-			PSym v = trueValued[i];
+			P v = trueValued[i];
 			this.trueValued.add(v);
 		}
 	}
@@ -54,7 +54,7 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 * @param trueValued
 	 *            The elements which are considered to be true
 	 */
-	public PropositionalInterpretation(S sig, Collection<PSym> trueValued) {
+	public PropositionalInterpretation(S sig, Collection<P> trueValued) {
 		this.signature =sig;
 		this.trueValued = new HashSet<>(trueValued);
 	}
@@ -66,7 +66,7 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 * @param symbol
 	 *            The symbol
 	 */
-	public boolean isTrue(PSym symbol) {
+	public boolean isTrue(P symbol) {
 		return trueValued.contains(symbol);
 	}
 
@@ -75,7 +75,7 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public Set<PSym> getAllTrue() {
+	public Set<P> getAllTrue() {
 		return Collections.unmodifiableSet(trueValued);
 	}
 
@@ -86,7 +86,7 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 * @param symbol
 	 *            The symbol
 	 */
-	public boolean isFalse(PSym symbol) {
+	public boolean isFalse(P symbol) {
 		return !isTrue(symbol);
 	}
 
@@ -95,8 +95,8 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public Set<PSym> getAllFalse() {
-		HashSet<PSym> set = new HashSet<>(signature.getSymbols());
+	public Set<P> getAllFalse() {
+		HashSet<P> set = new HashSet<>(signature.getSymbols());
 		set.removeAll(trueValued);
 		return Collections.unmodifiableSet(set);
 	}
@@ -118,7 +118,7 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		for (PSym pSym : signature.symbols) {
+		for (P pSym : signature.symbols) {
 			if(trueValued.contains(pSym))
 			builder.append(pSym);
 			else
@@ -132,7 +132,7 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 */
 	public String toLaTeX() {
 		StringBuilder builder = new StringBuilder();
-		for (PSym pSym : signature.symbols) {
+		for (P pSym : signature.symbols) {
 			if(trueValued.contains(pSym))
 			builder.append(pSym);
 			else
@@ -146,11 +146,11 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	 * Builds a formula which has exactly this interpretation as model
 	 * @author Kai Sauerwald
 	 */
-	public Formula<PropositionalSignature<PSym>> getCharacterizingFormula(){
-		Formula<PropositionalSignature<PSym>> result = null;
+	public Formula<PropositionalSignature<P>> getCharacterizingFormula(){
+		Formula<PropositionalSignature<P>> result = null;
 		
-		for (PSym pSym : signature.getSymbols()) {
-			Formula<PropositionalSignature<PSym>>  tmp;
+		for (P pSym : signature.getSymbols()) {
+			Formula<PropositionalSignature<P>>  tmp;
 			if(isTrue(pSym))
 				tmp = new Proposition<>(signature, pSym);
 			else
@@ -168,10 +168,10 @@ public class PropositionalInterpretation<PSym, S extends PropositionalSignature<
 	public boolean equals(Object obj) {
 		if(!(obj instanceof PropositionalInterpretation))
 			return false;
-		PropositionalInterpretation<PSym, PropositionalSignature<PSym>> pi = (PropositionalInterpretation<PSym, PropositionalSignature<PSym>>) obj;
+		PropositionalInterpretation<P, PropositionalSignature<P>> pi = (PropositionalInterpretation<P, PropositionalSignature<P>>) obj;
 		if(!pi.getSignature().equals(this.getSignature()))
 			return false;
-		for (PSym pSym : getSignature().symbols) {
+		for (P pSym : getSignature().symbols) {
 			if(pi.isTrue(pSym) != this.isTrue(pSym))
 				return false;
 		}

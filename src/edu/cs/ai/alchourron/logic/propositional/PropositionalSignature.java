@@ -12,13 +12,13 @@ import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import edu.cs.ai.alchourron.logic.syntax.Signature;
-import edu.cs.ai.alchourron.logic.syntax.signature.BiImplicationLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.signature.FalsumLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.signature.ImplicationLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.signature.PropositionLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.signature.TruthFunctionalLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.signature.VerumLogicSignature;
+import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.syntax.structure.BiImplicationLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.FalsumLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.ImplicationLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.PropositionLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.TruthFunctionalLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
 
 /***
  * Represents a propositional signature, which uses Elements of the type Psym as

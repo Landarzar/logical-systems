@@ -5,9 +5,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import edu.cs.ai.alchourron.logic.semantics.ModelTheory;
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.ModelTheoreticLogic;
+import edu.cs.ai.alchourron.logic.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalBiImplication;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalFalsum;
@@ -20,15 +20,15 @@ import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
 
 /***
  * Logical System representing propositional logic over symbol space of type
- * {@link PSym}.
+ * {@link P}.
  * 
  * @author Kai Sauerwald
  *
- * @param <PSym> The symbol space over which the signature is definable
+ * @param <P> The symbol space over which the signature is definable
  * @param <F>    The type for formula
  */
-public class PropositionalLogic<PSym> implements
-		ModelTheory<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>, Formula<PropositionalSignature<PSym>>, Boolean, PropositionalSignature<PSym>> {
+public class PropositionalLogic<P> implements
+		ModelTheoreticLogic<PropositionalInterpretation<P, PropositionalSignature<P>>, Formula<PropositionalSignature<P>>, Boolean, PropositionalSignature<P>> {
 
 
 	/*
@@ -37,7 +37,7 @@ public class PropositionalLogic<PSym> implements
 	 * @see cs.ai.logic.LogicalSystem#validFormula(cs.ai.logic.Formula)
 	 */
 	@Override
-	public boolean validFormula(Formula<PropositionalSignature<PSym>> formula) {
+	public boolean validFormula(Formula<PropositionalSignature<P>> formula) {
 //		SyntacticElement<PropositionalSignature<PSym>> syntacton = formula.getSyntaxTree();
 //		return validSyntaxTree(syntacton, (PropositionalSignature<PSym>) formula.getSignature());
 		throw new UnsupportedOperationException("Not impleted yet.");
@@ -51,14 +51,14 @@ public class PropositionalLogic<PSym> implements
 	 * @param syntacton the root of the syntax tree
 	 */
 	@SuppressWarnings("unchecked")
-	protected boolean validSyntaxTree(SyntacticElement<PropositionalSignature<PSym>> syntacton,
-			PropositionalSignature<PSym> sig) {
+	protected boolean validSyntaxTree(Formula<PropositionalSignature<P>> syntacton,
+			PropositionalSignature<P> sig) {
 		if (syntacton instanceof LogicalAND<?> || syntacton instanceof LogicalOR<?>
 				|| syntacton instanceof LogicalNEG<?>) {
-			LogicalOperator<PropositionalSignature<PSym>> le = (LogicalOperator<PropositionalSignature<PSym>>) syntacton;
+			LogicalOperator<PropositionalSignature<P>> le = (LogicalOperator<PropositionalSignature<P>>) syntacton;
 			return le.getOperands().stream().allMatch(se -> validSyntaxTree(se, sig));
 		} else if (syntacton instanceof Proposition<?, ?>) {
-			Proposition<PSym, PropositionalSignature<PSym>> atom = (Proposition<PSym, PropositionalSignature<PSym>>) syntacton;
+			Proposition<P, PropositionalSignature<P>> atom = (Proposition<P, PropositionalSignature<P>>) syntacton;
 			if (!sig.getSymbols().contains(atom.getSymbol()))
 				return false;
 			return true;
@@ -75,19 +75,19 @@ public class PropositionalLogic<PSym> implements
 	 * Generates a formula having exact having exact the set of interpretations as models.
 	 * @param set The set of models.
 	 */
-	public Formula<PropositionalSignature<PSym>> getCharacterisingFormula(PropositionalSignature<PSym> sig, Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> set){
+	public Formula<PropositionalSignature<P>> getCharacterisingFormula(PropositionalSignature<P> sig, Set<PropositionalInterpretation<P, PropositionalSignature<P>>> set){
 		if(set.isEmpty())
 			return new LogicalVerum<>(sig);
 		if(set.size() == 1)
 			return set.stream().findFirst().get().getCharacterizingFormula();
 		
-		Formula<PropositionalSignature<PSym>> formula = null;
+		Formula<PropositionalSignature<P>> formula = null;
 		
-		for (PropositionalInterpretation<PSym, PropositionalSignature<PSym>> i : set) {
+		for (PropositionalInterpretation<P, PropositionalSignature<P>> i : set) {
 			if(formula == null)
 				formula = i.getCharacterizingFormula();
 			else
-				formula = new LogicalOR<PropositionalSignature<PSym>>(sig, formula, i.getCharacterizingFormula()) ;
+				formula = new LogicalOR<PropositionalSignature<P>>(sig, formula, i.getCharacterizingFormula()) ;
 		}
 		
 		return formula;
@@ -101,9 +101,9 @@ public class PropositionalLogic<PSym> implements
 	 * Formula)
 	 */
 	@Override
-	public Set<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> modelsOf(
-			Formula<PropositionalSignature<PSym>> formula) {
-		assert this.validFormula(formula) : "given formula ist not (syntactically) valid";
+	public Set<PropositionalInterpretation<P, PropositionalSignature<P>>> modelsOf(
+			Formula<PropositionalSignature<P>> formula) {
+//		assert this.validFormula(formula) : "given formula ist not (syntactically) valid";
 		return formula.getSignature().stream().filter(i -> satisfies(i, formula)).collect(Collectors.toSet());
 	}
 
@@ -115,8 +115,8 @@ public class PropositionalLogic<PSym> implements
 	 * Interpretation, edu.cs.ai.alchourron.logic.Formula)
 	 */
 	@Override
-	public Boolean eval(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> interpretation,
-			Formula<PropositionalSignature<PSym>> formula) {
+	public Boolean eval(PropositionalInterpretation<P, PropositionalSignature<P>> interpretation,
+			Formula<PropositionalSignature<P>> formula) {
 		return satisfies(interpretation, formula);
 	}
 
@@ -127,35 +127,35 @@ public class PropositionalLogic<PSym> implements
 	 * edu.cs.ai.alchourron.logic.LogicalSystem#entails(edu.cs.ai.alchourron.logic.
 	 * Interpretation, edu.cs.ai.alchourron.logic.Formula)
 	 */
-	public boolean satisfies(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> interpretation,
-			Formula<PropositionalSignature<PSym>> formula) {
+	public boolean satisfies(PropositionalInterpretation<P, PropositionalSignature<P>> interpretation,
+			Formula<PropositionalSignature<P>> formula) {
 //		assert this.validFormula(formula) : "the given formula ist not valid";
 
 		if (formula instanceof Proposition<?,?>) {
-			Proposition<PSym,PropositionalSignature<PSym>> atom = (Proposition<PSym,PropositionalSignature<PSym>>) formula;
+			Proposition<P,PropositionalSignature<P>> atom = (Proposition<P,PropositionalSignature<P>>) formula;
 			return interpretation.isTrue(atom.getSymbol());
 		}
 		if (formula instanceof LogicalAND<?>) {
-			LogicalAND<PropositionalSignature<PSym>> and = (LogicalAND<PropositionalSignature<PSym>>) formula;
+			LogicalAND<PropositionalSignature<P>> and = (LogicalAND<PropositionalSignature<P>>) formula;
 			return and.getOperands().stream().allMatch(o -> satisfies(interpretation, o));
 		}
 		if (formula instanceof LogicalOR<?>) {
-			LogicalOR<PropositionalSignature<PSym>> or = (LogicalOR<PropositionalSignature<PSym>>) formula;
+			LogicalOR<PropositionalSignature<P>> or = (LogicalOR<PropositionalSignature<P>>) formula;
 			return or.getOperands().stream().anyMatch(o -> satisfies(interpretation, o));
 		}
 		if (formula instanceof LogicalImplication<?>) {
-			LogicalImplication<PropositionalSignature<PSym>> implication = (LogicalImplication<PropositionalSignature<PSym>>) formula;
+			LogicalImplication<PropositionalSignature<P>> implication = (LogicalImplication<PropositionalSignature<P>>) formula;
 			return  !satisfies(interpretation, implication.getPremise()) || satisfies(interpretation, implication.getConclusion());
 		}
 
 		if (formula instanceof LogicalBiImplication<?>) {
-			LogicalBiImplication<PropositionalSignature<PSym>> implication = (LogicalBiImplication<PropositionalSignature<PSym>>) formula;
+			LogicalBiImplication<PropositionalSignature<P>> implication = (LogicalBiImplication<PropositionalSignature<P>>) formula;
 			return  (satisfies(interpretation, implication.getFirst()) && satisfies(interpretation, implication.getSecond()))
 					|| (!satisfies(interpretation, implication.getFirst())
 							&& !satisfies(interpretation, implication.getSecond()));
 		}
 		if (formula instanceof LogicalNEG<?>) {
-			LogicalNEG<PropositionalSignature<PSym>> neg = (LogicalNEG<PropositionalSignature<PSym>>) formula;
+			LogicalNEG<PropositionalSignature<P>> neg = (LogicalNEG<PropositionalSignature<P>>) formula;
 			return !satisfies(interpretation, neg.getOperands().get(0));
 		}
 		if (formula instanceof LogicalFalsum<?>) {

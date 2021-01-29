@@ -1,6 +1,7 @@
-package edu.cs.ai.alchourron.logic.syntax.signature;
+package edu.cs.ai.alchourron.logic.syntax.structure;
 
-import edu.cs.ai.alchourron.logic.syntax.Signature;
+import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.SyntacticStructure;
 
 /**
  * Describes logics, where there is a special tautology elements of the language

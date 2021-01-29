@@ -3,9 +3,9 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 import java.util.List;
 import java.util.Objects;
 
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
-import edu.cs.ai.alchourron.logic.syntax.signature.NegationLogicSignature;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.SyntacticElement;
+import edu.cs.ai.alchourron.logic.syntax.structure.NegationLogicSignature;
 
 /***
  * 
@@ -31,16 +31,6 @@ public class LogicalNEG<S extends NegationLogicSignature> extends LogicalOperato
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see edu.cs.ai.alchourron.logic.Formula#getSyntaxTree()
-	 */
-	@Override
-	public SyntacticElement<S> getSyntaxTree() throws UnsupportedOperationException {
-		return this;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see edu.cs.ai.alchourron.logic.Formula#getSignature()
 	 */
 	@Override
@@ -54,7 +44,7 @@ public class LogicalNEG<S extends NegationLogicSignature> extends LogicalOperato
 	 * @see edu.cs.ai.alchourron.logic.syntax.LogicalOperator#getOperands()
 	 */
 	@Override
-	public List<? extends Formula<S>> getOperands() {
+	public List<Formula<S>> getOperands() {
 		return List.of(operand);
 	}
 

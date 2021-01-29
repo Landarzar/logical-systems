@@ -1,8 +1,15 @@
 package edu.cs.ai.alchourron.logic.syntax.terms;
 
-import edu.cs.ai.alchourron.logic.syntax.Signature;
-import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
+import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.SyntacticElement;
 
-public interface Term<S extends Signature>  extends SyntacticElement<S>  {
-
+/***
+ * 
+ * @author Kai Sauerwald
+ *
+ * @param <F> The type for the function symbols
+ * @param <F> The type for the variables
+ */
+public interface Term<F extends Enum<F>>  extends SyntacticElement  {
+ 
 }

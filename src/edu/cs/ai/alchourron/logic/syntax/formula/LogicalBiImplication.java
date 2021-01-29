@@ -2,10 +2,10 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.List;
 
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.Signature;
-import edu.cs.ai.alchourron.logic.syntax.signature.BiImplicationLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.signature.ImplicationLogicSignature;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.syntax.structure.BiImplicationLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.ImplicationLogicSignature;
 
 public class LogicalBiImplication<S extends BiImplicationLogicSignature> extends LogicalOperator<S> {
 	S signature;
@@ -43,7 +43,7 @@ public class LogicalBiImplication<S extends BiImplicationLogicSignature> extends
 	}
 
 	@Override
-	public List<? extends Formula<S>> getOperands() {
+	public List<Formula<S>> getOperands() {
 		return List.of(implicant1, implicant2);
 	}
 

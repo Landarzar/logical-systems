@@ -2,8 +2,8 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.List;
 
-import edu.cs.ai.alchourron.logic.syntax.Formula;
-import edu.cs.ai.alchourron.logic.syntax.signature.ModalLogicSignature;
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.syntax.structure.ModalLogicSignature;
 
 /***
  * Represents a modus of a modal logic. Typical is the modus "K" with the intended meaning someone "knows".
@@ -44,7 +44,7 @@ public class Modus<M,S extends ModalLogicSignature<M>> extends LogicalOperator<S
 	}
 
 	@Override
-	public List<? extends Formula<S>> getOperands() {
+	public List<Formula<S>> getOperands() {
 		// TODO Auto-generated method stub
 		return null;
 	}

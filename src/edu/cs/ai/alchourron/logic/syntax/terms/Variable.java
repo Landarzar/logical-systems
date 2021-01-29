@@ -1,7 +1,43 @@
 package edu.cs.ai.alchourron.logic.syntax.terms;
 
-import edu.cs.ai.alchourron.logic.syntax.Signature;
+import java.util.List;
 
-public interface Variable<S extends Signature>   extends Term<S> {
+import edu.cs.ai.alchourron.logic.SyntacticElement;
 
+public class Variable<F extends Enum<F>,V> implements Term<F> {
+	
+	V variable;
+	
+	public Variable(V var) {
+		this.variable = variable;
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public boolean isAtom() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isLogical() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public String stringify() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	@Override
+	public List<SyntacticElement> getSyntacticChildren() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
 }

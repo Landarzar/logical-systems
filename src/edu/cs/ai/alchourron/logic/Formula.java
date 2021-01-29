@@ -1,4 +1,6 @@
-package edu.cs.ai.alchourron.logic.syntax;
+package edu.cs.ai.alchourron.logic;
+
+import java.util.List;
 
 import edu.cs.ai.alchourron.LaTeX;
 
@@ -8,17 +10,17 @@ import edu.cs.ai.alchourron.LaTeX;
  *
  * @param <S> The signature
  */
-public abstract class Formula<S extends Signature> implements LaTeX, SyntacticElement<S> {
+public abstract class Formula<S extends Signature> implements LaTeX, SyntacticElement {
 	
-	/**
-	 * Returns the "syntax tree" for this formula.
-	 * @author Kai Sauerwald
-	 * @throws UnsupportedOperationException If the method is not implement or supported
-	 */
-	public SyntacticElement<S> getSyntaxTree() throws UnsupportedOperationException
-	{
-		throw new UnsupportedOperationException("This operation is not implemented");
-	}; 
+//	/**
+//	 * Returns the "children" for this formula.
+//	 * @author Kai Sauerwald
+//	 * @throws UnsupportedOperationException If the method is not implement or supported
+//	 */
+//	public List<Formula<S>> getSyntaxTree() throws UnsupportedOperationException
+//	{
+//		throw new UnsupportedOperationException("This operation is not implemented");
+//	}; 
 	
 	/***
 	 * Gets the (smalles) signature matching to this formula.
