@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import edu.cs.ai.math.setheory.objects.Pair;
+import edu.cs.ai.math.settheory.objects.Pair;
 
 public class RankingFunction<T> extends AbstractCollection<Pair<T, Integer>> {
 

@@ -28,10 +28,10 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
 import edu.cs.ai.math.combinatorics.KTupleEnumeration;
 import edu.cs.ai.math.combinatorics.PowerSetLexicographic;
-import edu.cs.ai.math.setheory.objects.Pair;
-import edu.cs.ai.math.setheory.objects.Relation;
-import edu.cs.ai.math.setheory.objects.RelationImpl;
-import edu.cs.ai.math.setheory.objects.Tuple;
+import edu.cs.ai.math.settheory.objects.Pair;
+import edu.cs.ai.math.settheory.objects.Relation;
+import edu.cs.ai.math.settheory.objects.RelationImpl;
+import edu.cs.ai.math.settheory.objects.Tuple;
 
 /***
  * Logical System representing propositional logic over symbol space of type

@@ -15,10 +15,10 @@ import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPredicateVariable;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaQuantification;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaSOQuantification;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
-import edu.cs.ai.math.setheory.objects.Pair;
-import edu.cs.ai.math.setheory.objects.Relation;
-import edu.cs.ai.math.setheory.objects.RelationImpl;
-import edu.cs.ai.math.setheory.objects.Tuple;
+import edu.cs.ai.math.settheory.objects.Pair;
+import edu.cs.ai.math.settheory.objects.Relation;
+import edu.cs.ai.math.settheory.objects.RelationImpl;
+import edu.cs.ai.math.settheory.objects.Tuple;
 
 /**
  * @author Kai Sauerwald

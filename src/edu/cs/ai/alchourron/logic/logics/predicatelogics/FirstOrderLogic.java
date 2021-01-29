@@ -21,7 +21,7 @@ import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
 import edu.cs.ai.alchourron.logic.syntax.terms.FunctionTerm;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
-import edu.cs.ai.math.setheory.objects.Tuple;
+import edu.cs.ai.math.settheory.objects.Tuple;
 
 /***
  * Logical System representing propositional logic over symbol space of type

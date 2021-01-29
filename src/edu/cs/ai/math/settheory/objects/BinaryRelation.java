@@ -1,4 +1,4 @@
-package edu.cs.ai.math.setheory.objects;
+package edu.cs.ai.math.settheory.objects;
 
 import java.util.Set;
 
