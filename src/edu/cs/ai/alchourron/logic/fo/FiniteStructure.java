@@ -8,16 +8,18 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.Interpretation;
 import edu.cs.ai.alchourron.logic.Signature;
-import edu.cs.ai.alchourron.logic.semantics.interpretations.Relation;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalNEG;
 import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
 import edu.cs.ai.alchourron.logic.syntax.structure.RelationLogicSignature;
 import edu.cs.ai.alchourron.tools.Pair;
+import edu.cs.ai.alchourron.tools.Relation;
+import edu.cs.ai.alchourron.tools.Tuple;
 
 /***
  * Represents finite structues where for instance used first order logic as interpretations.
@@ -29,13 +31,13 @@ import edu.cs.ai.alchourron.tools.Pair;
  * @param <K> The type of function symbols
  * @param <S> The type of the signature
  */
-public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K> , V, S extends RelationLogicSignature<R, K>>
+public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends RelationLogicSignature<R, K>>
 		implements Interpretation<S> {
 
-	S interpretation;
+	S signature;
 	Set<U> universe;
 	EnumMap<R, Relation<U>> relations;
-	EnumMap<K, Relation<U>> functions;
+	EnumMap<K, Function<Tuple<U>, U>> functions;
 
 	/***
 	 * Constructs a new interpretation
@@ -44,17 +46,29 @@ public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K> , V, S exte
 	 * @param rel The interpretations of predicate symbols
 	 * @param func The interpretation of function symbols
 	 */
-	public FiniteStructure(S interpretation,Set<U> universe, Collection<Pair<R, Relation<U>>> rel, Collection<Pair<K, Relation<U>>> func ) {
-		this.interpretation = interpretation;
+	public FiniteStructure(S signature,Set<U> universe, Collection<Pair<R, Relation<U>>> rel, Collection<Pair<K, Function<Tuple<U>, U>>> func ) {
+		this.signature = signature;
 		this.universe = Collections.unmodifiableSet(universe);
 		
 		HashMap<R, Relation<U>> rmap = new HashMap<>();
 		rel.forEach(p -> rmap.put(p.getFirst(), p.getSecond()));
 		relations = new EnumMap<>(rmap);
 		
-		HashMap<K, Relation<U>> fmap = new HashMap<>();
+		HashMap<K, Function<Tuple<U>, U>> fmap = new HashMap<>();
 		func.forEach(p -> fmap.put(p.getFirst(), p.getSecond()));
 		functions = new EnumMap<>(fmap);
+	}
+	
+	public Set<U> getUniverse() {
+		return universe;
+	}
+	
+	public Relation<U> getRelation(R symb){
+		return relations.get(symb);
+	}
+	
+	public Function<Tuple<U>, U> getFunction(K symb){
+		return functions.get(symb);
 	}
 
 	/*
@@ -94,6 +108,6 @@ public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K> , V, S exte
 	@Override
 	public S getSignature() {
 		// TODO Auto-generated method stub
-		return null;
+		return signature;
 	}
 }

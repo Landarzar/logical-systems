@@ -4,6 +4,7 @@ import java.util.List;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.syntax.structure.RelationLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.VariableTermLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 
 /***
@@ -13,7 +14,7 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  * @param <R> The type for predicate symbols
  * @param <S> The signature type
  */
-public abstract class Predicate<R extends Enum<R>,F extends Enum<F>, V, S extends RelationLogicSignature<R,F>>  extends Formula<S> {
+public abstract class Predicate<R extends Enum<R>,F extends Enum<F>, V, S extends VariableTermLogicSignature<V> & RelationLogicSignature<R,F>>  extends Formula<S> {
 	
 	
 	/***
@@ -26,7 +27,7 @@ public abstract class Predicate<R extends Enum<R>,F extends Enum<F>, V, S extend
 	 * Returns the terms of this predicate
 	 * @author Kai Sauerwald
 	 */
-	public abstract List<Term<F>> getTerms();
+	public abstract List<Term<F,V>> getTerms();
 	
 	
 	/***

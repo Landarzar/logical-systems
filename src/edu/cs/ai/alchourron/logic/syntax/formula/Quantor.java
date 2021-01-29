@@ -7,9 +7,9 @@ import edu.cs.ai.alchourron.logic.syntax.structure.QuantificationLogicSignature;
  * 
  * @author Kai Sauerwald
  *
- * @param <K> The type which are bound by this quantifier (Variables, Relations, ...)
+ * @param <Q> The type which are bound by this quantifier (Variables, Relations, ...)
  */
-public abstract class Quantor<K extends Enum<K>,Q,V,S extends QuantificationLogicSignature<Q,V>> extends LogicalOperator<S> {
+public abstract class Quantor<Q,V,S extends QuantificationLogicSignature<Q,V>> extends LogicalOperator<S> {
 	
 	
 	/***

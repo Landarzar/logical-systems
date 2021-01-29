@@ -70,7 +70,7 @@ public interface ModelTheoreticLogic<I extends Interpretation<S>, F extends Form
 	 * Represents the (monotonic) logical entailment
 	 * 
 	 * @author Kai Sauerwald
-	 * @param interpretation
+	 * @param signature
 	 * @param f1             The first operand
 	 * @param f2             The second operand
 	 * @return

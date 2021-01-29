@@ -1,23 +1,24 @@
 package edu.cs.ai.alchourron.logic.syntax.terms;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import edu.cs.ai.alchourron.logic.SyntacticElement;
 
-public class FunctionSymbol<F extends Enum<F>>  implements Term<F> {
+public class FunctionTerm<F extends Enum<F>,V>  implements Term<F,V> {
 	
 	F symbol;
 	int arity;
-	List<Term<F>> children;
+	List<Term<F,V>> children;
 	
-	public FunctionSymbol(F symbol, int arity, Term<F>... args) {
+	public FunctionTerm(F symbol, int arity, Term<F,V>... args) {
 		this.symbol = symbol;
 		this.arity = arity;
 		this.children = List.of(args);
 	}
 	
-	public FunctionSymbol(F symbol, int arity, List<Term<F>> args) {
+	public FunctionTerm(F symbol, int arity, List<Term<F,V>> args) {
 		this.symbol = symbol;
 		this.arity = arity;
 		this.children = Collections.unmodifiableList(args);
@@ -59,10 +60,13 @@ public class FunctionSymbol<F extends Enum<F>>  implements Term<F> {
 		return symbol.toString();
 	}
 
+	public List<Term<F, V>> getSubTerms() {
+		return children;
+	}
 	
 	@Override
 	public List<SyntacticElement> getSyntacticChildren() {
-		return null;
+		return new ArrayList<SyntacticElement>(children);
 	}
 
 }

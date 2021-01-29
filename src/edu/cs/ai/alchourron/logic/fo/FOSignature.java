@@ -26,7 +26,7 @@ import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
  */
 public class FOSignature<R extends Enum<R>, K extends Enum<K>, V> implements Signature, VerumLogicSignature,
 		FalsumLogicSignature, TruthFunctionalLogicSignature, RelationLogicSignature<R, K>, VariableTermLogicSignature<V>,
-		QuantificationLogicSignature<IndividualQuantifier, V>, ImplicationLogicSignature, BiImplicationLogicSignature {
+		QuantificationLogicSignature<StandardQuantifier, V>, ImplicationLogicSignature, BiImplicationLogicSignature {
 
 	/***
 	 * The symbols of this signature
@@ -87,9 +87,10 @@ public class FOSignature<R extends Enum<R>, K extends Enum<K>, V> implements Sig
 	 * Constructs a new propositional signature
 	 * 
 	 * @author Kai Sauerwald
-	 * @param symbols The symbols of this signature
+	 * @param symbols The symbols of predicates
+	 * @param arity The arity of predicates
 	 */
-	public FOSignature(Collection<R> symbols) {
+	public FOSignature(List<R> symbols,List<Integer> arity) {
 		this.predicateSymbols = new ArrayList<>(symbols);
 	}
 
