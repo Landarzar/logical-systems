@@ -1,4 +1,4 @@
-package edu.cs.ai.alchourron.tools;
+package edu.cs.ai.math.setheory.objects;
 
 public interface SetOperations<SET> {
 	

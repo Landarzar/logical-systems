@@ -1,4 +1,4 @@
-package edu.cs.ai.alchourron.logic.fo;
+package edu.cs.ai.alchourron.logic.logics.predicatelogics;
 
 import java.security.InvalidParameterException;
 import java.util.Set;
@@ -19,7 +19,7 @@ import edu.cs.ai.alchourron.logic.syntax.formula.FormulaQuantification;
 import edu.cs.ai.alchourron.logic.syntax.terms.FunctionTerm;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
-import edu.cs.ai.alchourron.tools.Tuple;
+import edu.cs.ai.math.setheory.objects.Tuple;
 
 /***
  * Logical System representing propositional logic over symbol space of type
@@ -99,28 +99,27 @@ public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 		}
 		if (formula instanceof FormulaAND<?>) {
 			FormulaAND<FOSignature<R, K, V>> and = (FormulaAND<FOSignature<R, K, V>>) formula;
-			return and.getOperands().stream().allMatch(o -> satisfies(interpretation, o));
+			return and.getOperands().stream().allMatch(o -> eval(interpretation, o, valuation));
 		}
 		if (formula instanceof FormulaOR<?>) {
 			FormulaOR<FOSignature<R, K, V>> or = (FormulaOR<FOSignature<R, K, V>>) formula;
-			return or.getOperands().stream().anyMatch(o -> satisfies(interpretation, o));
+			return or.getOperands().stream().anyMatch(o -> eval(interpretation, o, valuation));
 		}
 		if (formula instanceof FormulaImplication<?>) {
 			FormulaImplication<FOSignature<R, K, V>> implication = (FormulaImplication<FOSignature<R, K, V>>) formula;
-			return !satisfies(interpretation, implication.getPremise())
-					|| satisfies(interpretation, implication.getConclusion());
+			return !eval(interpretation, implication.getPremise(), valuation)
+					|| eval(interpretation, implication.getConclusion(), valuation);
 		}
 
 		if (formula instanceof FormulaBiImplication<?>) {
 			FormulaBiImplication<FOSignature<R, K, V>> implication = (FormulaBiImplication<FOSignature<R, K, V>>) formula;
-			return (satisfies(interpretation, implication.getFirst())
-					&& satisfies(interpretation, implication.getSecond()))
-					|| (!satisfies(interpretation, implication.getFirst())
-							&& !satisfies(interpretation, implication.getSecond()));
+			boolean b1 = eval(interpretation, implication.getFirst(), valuation);
+			boolean b2 = eval(interpretation, implication.getSecond(), valuation);
+			return (b1 && b2) || (!b1 && !b2);
 		}
 		if (formula instanceof FormulaNeg<?>) {
 			FormulaNeg<FOSignature<R, K, V>> neg = (FormulaNeg<FOSignature<R, K, V>>) formula;
-			return !satisfies(interpretation, neg.getOperands().get(0));
+			return !eval(interpretation, neg.getOperands().get(0), valuation);
 		}
 		if (formula instanceof FormulaFalsum<?>) {
 			return false;

@@ -1,4 +1,4 @@
-package edu.cs.ai.alchourron.logic.propositional;
+package edu.cs.ai.alchourron.logic.logics.propositional;
 
 import java.util.Collection;
 import java.util.Collections;

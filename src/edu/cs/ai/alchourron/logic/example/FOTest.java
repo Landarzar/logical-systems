@@ -7,17 +7,17 @@ import java.util.List;
 import java.util.Set;
 
 import edu.cs.ai.alchourron.logic.Formula;
-import edu.cs.ai.alchourron.logic.fo.FOSignature;
-import edu.cs.ai.alchourron.logic.fo.FiniteStructure;
-import edu.cs.ai.alchourron.logic.fo.FirstOrderLogic;
-import edu.cs.ai.alchourron.logic.fo.StandardQuantifier;
+import edu.cs.ai.alchourron.logic.logics.predicatelogics.FOSignature;
+import edu.cs.ai.alchourron.logic.logics.predicatelogics.FiniteStructure;
+import edu.cs.ai.alchourron.logic.logics.predicatelogics.FirstOrderLogic;
+import edu.cs.ai.alchourron.logic.logics.predicatelogics.StandardQuantifier;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPredicate;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaQuantification;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
-import edu.cs.ai.alchourron.tools.Pair;
-import edu.cs.ai.alchourron.tools.Relation;
-import edu.cs.ai.alchourron.tools.RelationImpl;
-import edu.cs.ai.alchourron.tools.Tuple;
+import edu.cs.ai.math.setheory.objects.Pair;
+import edu.cs.ai.math.setheory.objects.Relation;
+import edu.cs.ai.math.setheory.objects.RelationImpl;
+import edu.cs.ai.math.setheory.objects.Tuple;
 
 /**
  * @author Kai Sauerwald

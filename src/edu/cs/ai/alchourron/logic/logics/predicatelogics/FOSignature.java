@@ -1,4 +1,4 @@
-package edu.cs.ai.alchourron.logic.fo;
+package edu.cs.ai.alchourron.logic.logics.predicatelogics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,35 +28,35 @@ public class FOSignature<R extends Enum<R>, K extends Enum<K>, V> implements Sig
 		QuantificationLogicSignature<StandardQuantifier, V>, ImplicationLogicSignature, BiImplicationLogicSignature {
 
 	/***
-	 * The symbols of this signature
+	 * The symbols of the predications
 	 * 
 	 * @author Kai Sauerwald
 	 */
 	ArrayList<R> predicateSymbols;
 
 	/***
-	 * The symbols of this signature
+	 * The arity of the predicates
 	 * 
 	 * @author Kai Sauerwald
 	 */
 	ArrayList<Integer> predicateArity;
 
 	/***
-	 * The symbols of this signature
+	 * The symbols of the functions
 	 * 
 	 * @author Kai Sauerwald
 	 */
 	ArrayList<K> functionSymbols;
 
 	/***
-	 * The symbols of this signature
+	 * The arity of the functions
 	 * 
 	 * @author Kai Sauerwald
 	 */
 	ArrayList<Integer> functionArity;
 
 	/***
-	 * Constructs a new propositional signature
+	 * Constructs a new signature
 	 * 
 	 * @author Kai Sauerwald
 	 * @param predicateSymbols The symbols of this signature
@@ -83,7 +83,7 @@ public class FOSignature<R extends Enum<R>, K extends Enum<K>, V> implements Sig
 	}
 
 	/***
-	 * Constructs a new propositional signature
+	 * Constructs a new signature
 	 * 
 	 * @author Kai Sauerwald
 	 * @param symbols The symbols of predicates
@@ -136,7 +136,7 @@ public class FOSignature<R extends Enum<R>, K extends Enum<K>, V> implements Sig
 	 */
 	@Override
 	public String toString() {
-		return predicateSymbols.toString();
+		return "<" + predicateSymbols.toString() + "," + functionSymbols + ">";
 	}
 
 	public String toLaTeX() {

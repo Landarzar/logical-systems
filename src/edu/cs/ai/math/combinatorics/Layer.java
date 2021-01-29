@@ -1,4 +1,4 @@
-package edu.cs.ai.combinatorics;
+package edu.cs.ai.math.combinatorics;
 
 import java.util.HashSet;
 import java.util.Set;

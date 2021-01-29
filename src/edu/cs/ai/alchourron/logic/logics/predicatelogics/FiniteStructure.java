@@ -1,4 +1,4 @@
-package edu.cs.ai.alchourron.logic.fo;
+package edu.cs.ai.alchourron.logic.logics.predicatelogics;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -9,9 +9,9 @@ import java.util.function.Function;
 
 import edu.cs.ai.alchourron.logic.Interpretation;
 import edu.cs.ai.alchourron.logic.syntax.structure.RelationLogicSignature;
-import edu.cs.ai.alchourron.tools.Pair;
-import edu.cs.ai.alchourron.tools.Relation;
-import edu.cs.ai.alchourron.tools.Tuple;
+import edu.cs.ai.math.setheory.objects.Pair;
+import edu.cs.ai.math.setheory.objects.Relation;
+import edu.cs.ai.math.setheory.objects.Tuple;
 
 /***
  * Represents finite structues where for instance used first order logic as interpretations.

@@ -1,4 +1,4 @@
-package edu.cs.ai.alchourron.tools;
+package edu.cs.ai.math.setheory.objects;
 
 import java.util.Collections;
 import java.util.HashSet;

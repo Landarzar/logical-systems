@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.cs.ai.combinatorics;
+package edu.cs.ai.math.combinatorics;
 
 import java.util.ArrayList;
 import java.util.Iterator;

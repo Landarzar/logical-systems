@@ -3,7 +3,7 @@
  */
 package edu.cs.ai.alchourron.logic.example;
 
-import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
+import edu.cs.ai.alchourron.logic.logics.propositional.PropositionalSignature;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaProposition;
 
 /**
