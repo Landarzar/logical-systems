@@ -38,5 +38,7 @@ public interface SyntacticElement {
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public String stringify();
+	public default String stringify() {
+		return toString();
+	}
 }

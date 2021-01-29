@@ -1,6 +1,7 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.cs.ai.alchourron.logic.Formula;
@@ -81,11 +82,24 @@ public class Predicate<R extends Enum<R>, F extends Enum<F>, V, S extends Variab
 	public boolean isAtom() {
 		return true;
 	}
-
+	
 	@Override
-	public String stringify() {
-		// TODO Auto-generated method stub
-		return null;
+	public String toString() {
+
+	        Iterator<Term<F, V>> it = this.getTerms().iterator();
+	        if (! it.hasNext())
+	            return this.symbol.toString();
+
+	        StringBuilder sb = new StringBuilder();
+	        sb.append(this.symbol);
+	        sb.append('(');
+	        for (;;) {
+	        	Term<F, V> e = it.next();
+	            sb.append(e == this ? "(this Collection)" : e);
+	            if (! it.hasNext())
+	                return sb.append(')').toString();
+	            sb.append(',').append(' ');
+	        }
 	}
 
 	@Override

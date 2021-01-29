@@ -56,13 +56,15 @@ public class FunctionTerm<F extends Enum<F>,V>  implements Term<F,V> {
 	}
 
 	@Override
-	public String stringify() {
-		return symbol.toString();
+	public String toString() {
+		return symbol.toString() + getSubTerms().toString();
 	}
 
 	public List<Term<F, V>> getSubTerms() {
 		return children;
 	}
+	
+	
 	
 	@Override
 	public List<SyntacticElement> getSyntacticChildren() {

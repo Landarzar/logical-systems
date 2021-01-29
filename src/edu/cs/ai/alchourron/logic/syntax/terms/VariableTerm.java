@@ -30,9 +30,8 @@ public class VariableTerm<F extends Enum<F>,V> implements Term<F,V> {
 	}
 
 	@Override
-	public String stringify() {
-		// TODO Auto-generated method stub
-		return null;
+	public String toString() {
+		return variable.toString();
 	}
 
 	

@@ -35,4 +35,8 @@ public class RelationImpl<U>  implements Relation<U> {
 		return arity;
 	}
 
+	@Override
+	public String toString() {
+		return tuples.toString();
+	}
 }

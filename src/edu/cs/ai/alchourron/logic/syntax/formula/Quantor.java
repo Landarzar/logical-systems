@@ -64,14 +64,13 @@ public class Quantor<Q,V,S extends QuantificationLogicSignature<Q,V>> extends Lo
 	}
 
 	@Override
-	public String stringify() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<Formula<S>> getOperands() {
 		// TODO Auto-generated method stub
 		return List.of(this.quantified);
+	}
+	
+	@Override
+	public String toString() {
+		return quantifiyer.toString() + " " + variable + ". " + quantified;
 	}
 }

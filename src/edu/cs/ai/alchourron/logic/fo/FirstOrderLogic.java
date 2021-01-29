@@ -78,7 +78,7 @@ public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 		if (formula instanceof Quantor<?,?,?>) {
 			Quantor<StandardQuantifier, V, FOSignature<R, K, V>> quantor = (Quantor<StandardQuantifier, V, FOSignature<R, K, V>>) formula;
 			if(quantor.getQuantifyer() == StandardQuantifier.FORALL) {
-				interpretation.getUniverse().stream().allMatch(u -> {
+				return interpretation.getUniverse().stream().allMatch(u -> {
 
 					Function<V, U> nval = var -> {
 						if(var.equals(quantor.getVariables()))
@@ -89,8 +89,8 @@ public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 					return eval(interpretation,quantor.getQuantified(),nval);
 				});
 			}
-			if(quantor.getQuantifyer() == StandardQuantifier.FORALL) {
-				interpretation.getUniverse().stream().anyMatch(u -> {
+			if(quantor.getQuantifyer() == StandardQuantifier.EXISTS) {
+				return interpretation.getUniverse().stream().anyMatch(u -> {
 
 					Function<V, U> nval = var -> {
 						if(var.equals(quantor.getVariables()))

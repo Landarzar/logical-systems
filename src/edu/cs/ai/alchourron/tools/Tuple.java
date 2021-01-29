@@ -2,6 +2,7 @@ package edu.cs.ai.alchourron.tools;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /***
  * Represents a tuple over a fixed type
@@ -53,6 +54,25 @@ public class Tuple<T> {
 		return implTuple.size();
 	}
 	
+	
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(implTuple);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Tuple))
+			return false;
+		Tuple<T> other = (Tuple<T>) obj;
+		return Objects.equals(implTuple, other.implTuple);
+	}
+
+
 	/***
 	 * Gets the element at index {@code i}
 	 * @param i The index

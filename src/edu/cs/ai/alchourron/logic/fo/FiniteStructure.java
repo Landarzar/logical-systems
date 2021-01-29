@@ -80,6 +80,23 @@ public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
+		
+		builder.append("<");
+		builder.append(universe.toString());
+		builder.append(",");
+		if(!relations.isEmpty()) {
+		relations.forEach((r,a) ->{
+			builder.append(r + ": ");
+			builder.append(a  + " ");
+		});
+		}
+
+		if(!functions.isEmpty()) {
+		functions.forEach((f,a) ->{
+			builder.append(f  + " ");
+		});
+		}
+		builder.append(">");
 
 		return builder.toString();
 	}
@@ -89,6 +106,15 @@ public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends 
 	 */
 	public String toLaTeX() {
 		StringBuilder builder = new StringBuilder();
+		
+		builder.append("<");
+		builder.append(universe.toString());
+		builder.append(",");
+		relations.forEach((r,a) ->{
+			builder.append(r);
+		});
+
+		builder.append(">");
 
 		return builder.toString();
 	}
