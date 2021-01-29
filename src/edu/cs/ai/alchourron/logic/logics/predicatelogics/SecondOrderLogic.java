@@ -2,6 +2,7 @@ package edu.cs.ai.alchourron.logic.logics.predicatelogics;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
@@ -17,9 +18,11 @@ import edu.cs.ai.alchourron.logic.syntax.formula.FormulaImplication;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaNeg;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaOR;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPredicate;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPredicateVariable;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaQuantification;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaSOQuantification;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaVerum;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
 import edu.cs.ai.alchourron.logic.syntax.terms.FunctionTerm;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
@@ -44,6 +47,95 @@ import edu.cs.ai.math.setheory.objects.Tuple;
 public class SecondOrderLogic<R extends Enum<R>, K extends Enum<K>, V, P> implements
 		ModelTheoreticLogic<FiniteStructure<?, R, K, SOSignature<R, K, V, P>>, Formula<SOSignature<R, K, V, P>>, Boolean, SOSignature<R, K, V, P>> {
 
+	public Set<Pair<P, Integer>> getFreeSOVariables(Formula<SOSignature<R, K, V, P>> formula) {
+		if (formula instanceof FormulaPredicate<?, ?, ?, ?>) {
+			return Set.of();
+		}
+		if (formula instanceof FormulaPredicateVariable<?, ?, ?, ?, ?>) {
+			FormulaPredicateVariable<R, K, V, P, SOSignature<R, K, V, P>> pred = (FormulaPredicateVariable<R, K, V, P, SOSignature<R, K, V, P>>) formula;
+
+			return Set.of(new Pair<>(pred.getSymbol(), pred.getArity()));
+		}
+
+		if (formula instanceof FormulaSOQuantification<?, ?, ?>) {
+			FormulaSOQuantification<StandardQuantifier, P, SOSignature<R, K, V, P>> quantor = (FormulaSOQuantification<StandardQuantifier, P, SOSignature<R, K, V, P>>) formula;
+
+			Set<Pair<P, Integer>> result = new HashSet<>(getFreeSOVariables(quantor.getQuantified()));
+			result.removeIf(p -> p.getFirst().equals(quantor.getVariables()));
+			return result;
+		}
+
+		if (formula instanceof LogicalOperator<?>) {
+			LogicalOperator<SOSignature<R, K, V, P>> operator = (LogicalOperator<SOSignature<R, K, V, P>>) formula;
+
+			Set<Pair<P, Integer>> result = new HashSet<>();
+			for (Formula<SOSignature<R, K, V, P>> op : operator.getOperands()) {
+				result.addAll(getFreeSOVariables(op));
+			}
+
+			return result;
+		}
+
+		throw new IllegalArgumentException("unexpected formula type");
+	}
+
+	public Set<V> getFreeVariables(Term<K, V> term) {
+		if (term instanceof FunctionTerm<?, ?>) {
+			FunctionTerm<K, V> new_name = (FunctionTerm<K, V>) term;
+
+			Set<V> result = new HashSet<V>();
+			new_name.getSubTerms().forEach(t -> result.addAll(getFreeVariables(t)));
+			return result;
+		}
+		if (term instanceof VariableTerm<?, ?>) {
+			VariableTerm<K, V> new_name = (VariableTerm<K, V>) term;
+			return Set.of(new_name.getVariable());
+		}
+		throw new IllegalArgumentException("unexpected term type");
+	}
+
+	public Set<V> getFreeVariables(Formula<SOSignature<R, K, V, P>> formula) {
+		if (formula instanceof FormulaPredicate<?, ?, ?, ?>) {
+			FormulaPredicate<R, K, V, SOSignature<R, K, V, P>> pred = (FormulaPredicate<R, K, V, SOSignature<R, K, V, P>>) formula;
+			Set<V> result = new HashSet<>();
+			for (Term<K, V> term : pred.getTerms()) {
+				result.addAll(getFreeVariables(term));
+			}
+
+			return result;
+		}
+		if (formula instanceof FormulaPredicateVariable<?, ?, ?, ?, ?>) {
+			FormulaPredicateVariable<R, K, V, P, SOSignature<R, K, V, P>> pred = (FormulaPredicateVariable<R, K, V, P, SOSignature<R, K, V, P>>) formula;
+
+			Set<V> result = new HashSet<>();
+			for (Term<K, V> term : pred.getTerms()) {
+				result.addAll(getFreeVariables(term));
+			}
+
+			return result;
+		}
+
+		if (formula instanceof FormulaQuantification<?, ?, ?>) {
+			FormulaQuantification<StandardQuantifier, V, SOSignature<R, K, V, P>> quantor = (FormulaQuantification<StandardQuantifier, V, SOSignature<R, K, V, P>>) formula;
+
+			Set<V> result = new HashSet<>(getFreeVariables(quantor.getQuantified()));
+			result.removeIf(v -> v.equals(quantor.getVariables()));
+			return result;
+		}
+
+		if (formula instanceof LogicalOperator<?>) {
+			LogicalOperator<SOSignature<R, K, V, P>> operator = (LogicalOperator<SOSignature<R, K, V, P>>) formula;
+
+			Set<V> result = new HashSet<>();
+			for (Formula<SOSignature<R, K, V, P>> op : operator.getOperands()) {
+				result.addAll(getFreeVariables(op));
+			}
+			return result;
+		}
+
+		throw new IllegalArgumentException("unexpected formula type");
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -58,14 +150,6 @@ public class SecondOrderLogic<R extends Enum<R>, K extends Enum<K>, V, P> implem
 			return eval(interpretation, formula, var -> null, pvar -> null);
 		}
 		throw new UnsupportedOperationException("Not implemeted yed");
-	}
-
-	public Set<Pair<P, Integer>> getFreeSOVariables(Formula<SOSignature<R, K, V, P>> form) {
-		return Set.of();
-	}
-
-	public Set<V> getFreeVariables(Formula<SOSignature<R, K, V, P>> form) {
-		return Set.of();
 	}
 
 	/***
@@ -84,6 +168,12 @@ public class SecondOrderLogic<R extends Enum<R>, K extends Enum<K>, V, P> implem
 			Tuple<U> tuple = new Tuple<>(pred.getTerms().stream().sorted().map(t -> eval(interpretation, t, valuation))
 					.collect(Collectors.toUnmodifiableList()));
 			return interpretation.getRelation(pred.getSymbol()).contains(tuple);
+		}
+		if (formula instanceof FormulaPredicateVariable<?, ?, ?, ?, ?>) {
+			FormulaPredicateVariable<R, K, V, P, SOSignature<R, K, V, P>> pred = (FormulaPredicateVariable<R, K, V, P, SOSignature<R, K, V, P>>) formula;
+			Tuple<U> tuple = new Tuple<>(pred.getTerms().stream().sorted().map(t -> eval(interpretation, t, valuation))
+					.collect(Collectors.toUnmodifiableList()));
+			return SOvaluation.apply(pred.getSymbol()).contains(tuple);
 		}
 		if (formula instanceof FormulaQuantification<?, ?, ?>) {
 			FormulaQuantification<StandardQuantifier, V, SOSignature<R, K, V, P>> quantor = (FormulaQuantification<StandardQuantifier, V, SOSignature<R, K, V, P>>) formula;
@@ -115,7 +205,7 @@ public class SecondOrderLogic<R extends Enum<R>, K extends Enum<K>, V, P> implem
 
 		if (formula instanceof FormulaSOQuantification<?, ?, ?>) {
 			FormulaSOQuantification<StandardQuantifier, P, SOSignature<R, K, V, P>> quantor = (FormulaSOQuantification<StandardQuantifier, P, SOSignature<R, K, V, P>>) formula;
-			Optional<Pair<P, Integer>> findFirst = getFreeSOVariables(formula).stream()
+			Optional<Pair<P, Integer>> findFirst = getFreeSOVariables(quantor.getQuantified()).stream()
 					.filter(p -> p.getFirst().equals(quantor.getVariables())).findFirst();
 
 			if (findFirst.isEmpty())

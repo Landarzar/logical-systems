@@ -18,10 +18,10 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  * @param <R> The type for predicate symbols
  * @param <S> The signature type
  */
-public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, S extends SecondOrderQuantificationLogic<V> & RelationLogicSignature<R, K>>
+public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, P, S extends SecondOrderQuantificationLogic<P> & RelationLogicSignature<R, K>>
 		extends Formula<S> {
 
-	protected V variable;
+	protected P variable;
 	protected List<Term<K, V>> terms;
 
 	/***
@@ -31,9 +31,9 @@ public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, S
 	 * @param symbol
 	 * @param terms
 	 */
-	public FormulaPredicateVariable(S signature, V symbol, List<Term<K, V>> terms) {
+	public FormulaPredicateVariable(S signature, P symbol, List<Term<K, V>> terms) {
 		super(signature);
-		this.variable = variable;
+		this.variable = symbol;
 		this.terms = Collections.unmodifiableList(terms);
 	}
 
@@ -42,7 +42,7 @@ public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, S
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public V getVariable() {
+	public P getVariable() {
 		return variable;
 	}
 
@@ -51,7 +51,7 @@ public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, S
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public V getSymbol() {
+	public P getSymbol() {
 		return variable;
 	}
 

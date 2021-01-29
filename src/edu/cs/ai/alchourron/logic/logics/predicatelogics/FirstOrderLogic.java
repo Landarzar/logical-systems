@@ -1,6 +1,7 @@
 package edu.cs.ai.alchourron.logic.logics.predicatelogics;
 
 import java.security.InvalidParameterException;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import edu.cs.ai.alchourron.logic.syntax.formula.FormulaOR;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPredicate;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaQuantification;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaVerum;
+import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
 import edu.cs.ai.alchourron.logic.syntax.terms.FunctionTerm;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
@@ -34,6 +36,53 @@ import edu.cs.ai.math.setheory.objects.Tuple;
 public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 		ModelTheoreticLogic<FiniteStructure<?, R, K, FOSignature<R, K, V>>, Formula<FOSignature<R, K, V>>, Boolean, FOSignature<R, K, V>> {
 
+	public Set<V> getFreeVariables(Term<K, V> term) {
+		if (term instanceof FunctionTerm<?, ?>) {
+			FunctionTerm<K, V> new_name = (FunctionTerm<K, V>) term;
+
+			Set<V> result = new HashSet<V>();
+			new_name.getSubTerms().forEach(t -> result.addAll(getFreeVariables(t)));
+			return result;
+		}
+		if (term instanceof VariableTerm<?, ?>) {
+			VariableTerm<K, V> new_name = (VariableTerm<K, V>) term;
+			return Set.of(new_name.getVariable());
+		}
+		throw new IllegalArgumentException("unexpected term type");
+	}
+
+	public Set<V> getFreeVariables(Formula<FOSignature<R, K, V>> formula) {
+		if (formula instanceof FormulaPredicate<?, ?, ?, ?>) {
+			FormulaPredicate<R, K, V, FOSignature<R, K, V>> pred = (FormulaPredicate<R, K, V, FOSignature<R, K, V>>) formula;
+			Set<V> result = new HashSet<>();
+			for (Term<K, V> term : pred.getTerms()) {
+				result.addAll(getFreeVariables(term));
+			}
+
+			return result;
+		}
+
+		if (formula instanceof FormulaQuantification<?, ?, ?>) {
+			FormulaQuantification<StandardQuantifier, V, FOSignature<R, K, V>> quantor = (FormulaQuantification<StandardQuantifier, V, FOSignature<R, K, V>>) formula;
+
+			Set<V> result = new HashSet<>(getFreeVariables(quantor.getQuantified()));
+			result.removeIf(v -> v.equals(quantor.getVariables()));
+			return result;
+		}
+
+		if (formula instanceof LogicalOperator<?>) {
+			LogicalOperator<FOSignature<R, K, V>> operator = (LogicalOperator<FOSignature<R, K, V>>) formula;
+
+			Set<V> result = new HashSet<>();
+			for (Formula<FOSignature<R, K, V>> op : operator.getOperands()) {
+				result.addAll(getFreeVariables(op));
+			}
+			return result;
+		}
+
+		throw new IllegalArgumentException("unexpected formula type");
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -48,10 +97,6 @@ public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 			return eval(interpretation, formula, var -> null);
 		}
 		throw new UnsupportedOperationException("Not implemeted yed");
-	}
-
-	public Set<V> getFreeVariables(Formula<FOSignature<R, K, V>> form) {
-		return Set.of();
 	}
 
 	/***
