@@ -1,21 +1,17 @@
 package edu.cs.ai.alchourron.logic.semantics.interpretations;
 
 import java.util.AbstractCollection;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import edu.cs.ai.alchourron.tools.Pair;
 
 public class RankingFunction<T> extends AbstractCollection<Pair<T, Integer>> {
 
-	private HashSet<Pair<T, Integer>> elements = new HashSet();
+	private HashSet<Pair<T, Integer>> elements = new HashSet<>();
 
 	public RankingFunction() {
 	}

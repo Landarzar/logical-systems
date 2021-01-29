@@ -11,10 +11,8 @@ import edu.cs.ai.alchourron.logic.fo.FOSignature;
 import edu.cs.ai.alchourron.logic.fo.FiniteStructure;
 import edu.cs.ai.alchourron.logic.fo.FirstOrderLogic;
 import edu.cs.ai.alchourron.logic.fo.StandardQuantifier;
-import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
-import edu.cs.ai.alchourron.logic.syntax.formula.Predicate;
-import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
-import edu.cs.ai.alchourron.logic.syntax.formula.Quantor;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPredicate;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaQuantification;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
 import edu.cs.ai.alchourron.tools.Pair;
 import edu.cs.ai.alchourron.tools.Relation;
@@ -69,9 +67,9 @@ public class FOTest {
 				signature, Set.of(0, 1, 2, 3, 4, 5),
 				List.of(new Pair<>(ABPredicates.IsA, IsAIntp), new Pair<>(ABPredicates.IsB, IsBIntp), new Pair<>(ABPredicates.SUCC,SuccIntp)), List.of());
 
-		Formula<FOSignature<ABPredicates, Empty, Character>> myform = new Quantor<>(signature,
+		Formula<FOSignature<ABPredicates, Empty, Character>> myform = new FormulaQuantification<>(signature,
 				StandardQuantifier.EXISTS, 'x',
-				new Predicate<>(signature, ABPredicates.IsA, List.of(new VariableTerm<>('x'))));
+				new FormulaPredicate<>(signature, ABPredicates.IsA, List.of(new VariableTerm<>('x'))));
 
 		FirstOrderLogic<ABPredicates, Empty, Character> fo = new FirstOrderLogic<>();
 		System.out.println(structure + " |= " + myform +" ? " + fo.satisfies(structure, myform));

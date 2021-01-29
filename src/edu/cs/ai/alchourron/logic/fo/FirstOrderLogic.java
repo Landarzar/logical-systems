@@ -1,26 +1,21 @@
 package edu.cs.ai.alchourron.logic.fo;
 
 import java.security.InvalidParameterException;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.ModelTheoreticLogic;
-import edu.cs.ai.alchourron.logic.SyntacticElement;
-import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalBiImplication;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalFalsum;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalImplication;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalNEG;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOR;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalVerum;
-import edu.cs.ai.alchourron.logic.syntax.formula.Predicate;
-import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
-import edu.cs.ai.alchourron.logic.syntax.formula.Quantor;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaAND;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaBiImplication;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaFalsum;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaImplication;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaNeg;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaOR;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaVerum;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPredicate;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaQuantification;
 import edu.cs.ai.alchourron.logic.syntax.terms.FunctionTerm;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
@@ -70,13 +65,13 @@ public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 	public <U> Boolean eval(FiniteStructure<U, R, K, FOSignature<R, K, V>> interpretation,
 			Formula<FOSignature<R, K, V>> formula, Function<V, U> valuation) {
 
-		if (formula instanceof Predicate<?, ?, ?, ?>) {
-			Predicate<R, K, V, FOSignature<R, K, V>> pred = (Predicate<R, K, V, FOSignature<R, K, V>>) formula;
+		if (formula instanceof FormulaPredicate<?, ?, ?, ?>) {
+			FormulaPredicate<R, K, V, FOSignature<R, K, V>> pred = (FormulaPredicate<R, K, V, FOSignature<R, K, V>>) formula;
 			Tuple<U> tuple = new Tuple<>(pred.getTerms().stream().sorted().map(t -> eval(interpretation,t,valuation)).collect(Collectors.toUnmodifiableList()));
 			return interpretation.getRelation(pred.getSymbol()).contains(tuple);
 		}
-		if (formula instanceof Quantor<?,?,?>) {
-			Quantor<StandardQuantifier, V, FOSignature<R, K, V>> quantor = (Quantor<StandardQuantifier, V, FOSignature<R, K, V>>) formula;
+		if (formula instanceof FormulaQuantification<?,?,?>) {
+			FormulaQuantification<StandardQuantifier, V, FOSignature<R, K, V>> quantor = (FormulaQuantification<StandardQuantifier, V, FOSignature<R, K, V>>) formula;
 			if(quantor.getQuantifyer() == StandardQuantifier.FORALL) {
 				return interpretation.getUniverse().stream().allMatch(u -> {
 
@@ -102,35 +97,35 @@ public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 				});
 			}
 		}
-		if (formula instanceof LogicalAND<?>) {
-			LogicalAND<FOSignature<R, K, V>> and = (LogicalAND<FOSignature<R, K, V>>) formula;
+		if (formula instanceof FormulaAND<?>) {
+			FormulaAND<FOSignature<R, K, V>> and = (FormulaAND<FOSignature<R, K, V>>) formula;
 			return and.getOperands().stream().allMatch(o -> satisfies(interpretation, o));
 		}
-		if (formula instanceof LogicalOR<?>) {
-			LogicalOR<FOSignature<R, K, V>> or = (LogicalOR<FOSignature<R, K, V>>) formula;
+		if (formula instanceof FormulaOR<?>) {
+			FormulaOR<FOSignature<R, K, V>> or = (FormulaOR<FOSignature<R, K, V>>) formula;
 			return or.getOperands().stream().anyMatch(o -> satisfies(interpretation, o));
 		}
-		if (formula instanceof LogicalImplication<?>) {
-			LogicalImplication<FOSignature<R, K, V>> implication = (LogicalImplication<FOSignature<R, K, V>>) formula;
+		if (formula instanceof FormulaImplication<?>) {
+			FormulaImplication<FOSignature<R, K, V>> implication = (FormulaImplication<FOSignature<R, K, V>>) formula;
 			return !satisfies(interpretation, implication.getPremise())
 					|| satisfies(interpretation, implication.getConclusion());
 		}
 
-		if (formula instanceof LogicalBiImplication<?>) {
-			LogicalBiImplication<FOSignature<R, K, V>> implication = (LogicalBiImplication<FOSignature<R, K, V>>) formula;
+		if (formula instanceof FormulaBiImplication<?>) {
+			FormulaBiImplication<FOSignature<R, K, V>> implication = (FormulaBiImplication<FOSignature<R, K, V>>) formula;
 			return (satisfies(interpretation, implication.getFirst())
 					&& satisfies(interpretation, implication.getSecond()))
 					|| (!satisfies(interpretation, implication.getFirst())
 							&& !satisfies(interpretation, implication.getSecond()));
 		}
-		if (formula instanceof LogicalNEG<?>) {
-			LogicalNEG<FOSignature<R, K, V>> neg = (LogicalNEG<FOSignature<R, K, V>>) formula;
+		if (formula instanceof FormulaNeg<?>) {
+			FormulaNeg<FOSignature<R, K, V>> neg = (FormulaNeg<FOSignature<R, K, V>>) formula;
 			return !satisfies(interpretation, neg.getOperands().get(0));
 		}
-		if (formula instanceof LogicalFalsum<?>) {
+		if (formula instanceof FormulaFalsum<?>) {
 			return false;
 		}
-		if (formula instanceof LogicalVerum<?>) {
+		if (formula instanceof FormulaVerum<?>) {
 			return true;
 		}
 

@@ -14,11 +14,11 @@ import edu.cs.ai.alchourron.logic.SyntacticElement;
  * @param <S> Signature Type
  * @param <B> Formulas of the base logic
  */
-public class Conditional<S extends Signature, B extends Formula<S>> extends Formula<S> {
+public class FormulaConditional<S extends Signature, B extends Formula<S>> extends Formula<S> {
 	private B antecendence;
 	private B consequence;
 
-	public Conditional(S signature, B antecendence, B consequence) {
+	public FormulaConditional(S signature, B antecendence, B consequence) {
 		super(signature);
 		this.antecendence = antecendence;
 		this.consequence = consequence;
@@ -52,10 +52,10 @@ public class Conditional<S extends Signature, B extends Formula<S>> extends Form
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!(obj instanceof Conditional))
+		if (!(obj instanceof FormulaConditional))
 			return false;
 		@SuppressWarnings("unchecked")
-		Conditional<S,B> other = (Conditional<S,B>) obj;
+		FormulaConditional<S,B> other = (FormulaConditional<S,B>) obj;
 		return Objects.equals(antecendence, other.antecendence) && Objects.equals(consequence, other.consequence);
 	}
 	

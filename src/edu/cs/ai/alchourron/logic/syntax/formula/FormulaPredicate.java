@@ -18,7 +18,7 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  * @param <R> The type for predicate symbols
  * @param <S> The signature type
  */
-public class Predicate<R extends Enum<R>, F extends Enum<F>, V, S extends VariableTermLogicSignature<V> & RelationLogicSignature<R, F>>
+public class FormulaPredicate<R extends Enum<R>, F extends Enum<F>, V, S extends VariableTermLogicSignature<V> & RelationLogicSignature<R, F>>
 		extends Formula<S> {
 	
 	protected R symbol;
@@ -30,7 +30,7 @@ public class Predicate<R extends Enum<R>, F extends Enum<F>, V, S extends Variab
 	 * @param symbol
 	 * @param terms
 	 */
-	public Predicate(S signature, R symbol, List<Term<F, V>> terms) {
+	public FormulaPredicate(S signature, R symbol, List<Term<F, V>> terms) {
 		super(signature);
 		this.symbol = symbol;
 		this.terms = Collections.unmodifiableList(terms);

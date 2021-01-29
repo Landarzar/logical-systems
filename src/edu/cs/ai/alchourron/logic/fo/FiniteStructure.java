@@ -2,21 +2,12 @@ package edu.cs.ai.alchourron.logic.fo;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 
-import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.Interpretation;
-import edu.cs.ai.alchourron.logic.Signature;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalNEG;
-import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
 import edu.cs.ai.alchourron.logic.syntax.structure.RelationLogicSignature;
 import edu.cs.ai.alchourron.tools.Pair;
 import edu.cs.ai.alchourron.tools.Relation;

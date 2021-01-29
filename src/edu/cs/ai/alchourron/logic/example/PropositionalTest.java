@@ -4,7 +4,7 @@
 package edu.cs.ai.alchourron.logic.example;
 
 import edu.cs.ai.alchourron.logic.propositional.PropositionalSignature;
-import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaProposition;
 
 /**
  * @author Kai Sauerwald
@@ -19,9 +19,9 @@ public class PropositionalTest {
 		
 		PropositionalSignature<Character> signature = new PropositionalSignature<Character>('a','b');
 		
-		Proposition<Character,PropositionalSignature<Character>> prop = new Proposition<>(signature, 'a');
+		FormulaProposition<Character,PropositionalSignature<Character>> prop = new FormulaProposition<>(signature, 'a');
 		
-		
+		System.out.println(prop);
 		
 	}
 

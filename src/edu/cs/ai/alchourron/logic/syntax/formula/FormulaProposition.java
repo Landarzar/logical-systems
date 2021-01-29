@@ -1,9 +1,6 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
-import java.util.List;
-
 import edu.cs.ai.alchourron.logic.Formula;
-import edu.cs.ai.alchourron.logic.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.structure.PropositionLogicSignature;
 
 /***
@@ -15,11 +12,11 @@ import edu.cs.ai.alchourron.logic.syntax.structure.PropositionLogicSignature;
  * @param <PSym> The type for predicate symbols
  * @param <S>    The signature type
  */
-public class Proposition<PSym, S extends PropositionLogicSignature<PSym>> extends Formula<S> {
+public class FormulaProposition<PSym, S extends PropositionLogicSignature<PSym>> extends Formula<S> {
 
 	protected PSym symbol;
 
-	public Proposition(S signature, PSym symbol) {
+	public FormulaProposition(S signature, PSym symbol) {
 		super(signature);
 		this.symbol = symbol;
 	}

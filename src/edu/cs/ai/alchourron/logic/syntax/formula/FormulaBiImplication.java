@@ -3,26 +3,24 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 import java.util.List;
 
 import edu.cs.ai.alchourron.logic.Formula;
-import edu.cs.ai.alchourron.logic.Signature;
-import edu.cs.ai.alchourron.logic.syntax.structure.ImplicationLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.BiImplicationLogicSignature;
 
-public class LogicalImplication<S extends ImplicationLogicSignature> extends LogicalOperator<S> {
+public class FormulaBiImplication<S extends BiImplicationLogicSignature> extends LogicalOperator<S> {
+	Formula<S> implicant1;
+	Formula<S> implicant2;
 
-	Formula<S> premise;
-	Formula<S> conclusion;
-
-	public LogicalImplication(S signature, Formula<S> premise, Formula<S> conclusion) {
+	public FormulaBiImplication(S signature, Formula<S> implicant1, Formula<S> implicant2) {
 		super(signature);
-		this.premise = premise;
-		this.conclusion = conclusion;
+		this.implicant1 = implicant1;
+		this.implicant2 = implicant2;
 	}
 
-	public Formula<S> getPremise() {
-		return premise;
+	public Formula<S> getFirst() {
+		return implicant1;
 	}
 
-	public Formula<S> getConclusion() {
-		return conclusion;
+	public Formula<S> getSecond() {
+		return implicant2;
 	}
 
 	/*
@@ -43,7 +41,7 @@ public class LogicalImplication<S extends ImplicationLogicSignature> extends Log
 
 	@Override
 	public List<Formula<S>> getOperands() {
-		return List.of(premise, conclusion);
+		return List.of(implicant1, implicant2);
 	}
 	
 	@Override

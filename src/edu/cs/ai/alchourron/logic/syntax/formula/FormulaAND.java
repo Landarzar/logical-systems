@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.Formula;
-import edu.cs.ai.alchourron.logic.Signature;
-import edu.cs.ai.alchourron.logic.SyntacticElement;
-import edu.cs.ai.alchourron.logic.syntax.structure.DisjunctionLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.ConjunctionLogicSignature;
 
 /***
  * 
@@ -17,16 +15,16 @@ import edu.cs.ai.alchourron.logic.syntax.structure.DisjunctionLogicSignature;
  *
  * @param <S> The Signature
  */
-public class LogicalOR<S extends DisjunctionLogicSignature>  extends LogicalOperator<S> {
-	protected ArrayList<Formula<S>> operands;
-	
+public class FormulaAND<S extends ConjunctionLogicSignature>  extends LogicalOperator<S> {
+
+	ArrayList<Formula<S>> operands;
 
 	/**
 	 * Constructs a new instance of this class
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public LogicalOR(S signature,
+	public FormulaAND(S signature,
 			Collection<Formula<S>> operands) {
 		super(signature);
 		this.operands = new ArrayList<>(operands);
@@ -38,22 +36,12 @@ public class LogicalOR<S extends DisjunctionLogicSignature>  extends LogicalOper
 	 * @author Kai Sauerwald
 	 */
 	@SafeVarargs
-	public LogicalOR(S signature, Formula<S>... operands) {
+	public FormulaAND(S signature, Formula<S>... operands) {
 		super(signature);
 		this.operands = new ArrayList<>();
 		for (Formula<S> op : operands) {
 			this.operands.add(op);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.Formula#getSignature()
-	 */
-	@Override
-	public S getSignature() {
-		return signature;
 	}
 
 	/*
@@ -85,9 +73,10 @@ public class LogicalOR<S extends DisjunctionLogicSignature>  extends LogicalOper
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!(obj instanceof LogicalAND<?>))
+		if (!(obj instanceof FormulaAND<?>))
 			return false;
-		LogicalOR<S> other = (LogicalOR<S>) obj;
+		@SuppressWarnings("unchecked")
+		FormulaAND<S> other = (FormulaAND<S>) obj;
 		return Objects.equals(operands, other.operands) && Objects.equals(signature, other.signature);
 	}
 
@@ -109,7 +98,7 @@ public class LogicalOR<S extends DisjunctionLogicSignature>  extends LogicalOper
 				first = false;
 				continue;
 			}
-			builder.append(" OR ");
+			builder.append(" AND ");
 			builder.append(propositionalFormula.toString());
 		}
 

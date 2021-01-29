@@ -3,16 +3,13 @@ package edu.cs.ai.alchourron.logic.propositional;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Objects;
 import java.util.Set;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.Interpretation;
-import edu.cs.ai.alchourron.logic.Signature;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalNEG;
-import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaAND;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaNeg;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaProposition;
 
 /***
  * Represents propositional interpretations.
@@ -152,14 +149,14 @@ public class PropositionalInterpretation<P, S extends PropositionalSignature<P>>
 		for (P pSym : signature.getSymbols()) {
 			Formula<PropositionalSignature<P>>  tmp;
 			if(isTrue(pSym))
-				tmp = new Proposition<>(signature, pSym);
+				tmp = new FormulaProposition<>(signature, pSym);
 			else
-				tmp = new LogicalNEG<>(signature, new Proposition<>(signature, pSym));
+				tmp = new FormulaNeg<>(signature, new FormulaProposition<>(signature, pSym));
 			
 			if(result == null)
 				result = tmp;
 			else
-				result= new LogicalAND<>(signature, tmp);
+				result= new FormulaAND<>(signature, tmp);
 		}
 		return result;
 	}

@@ -11,14 +11,14 @@ import edu.cs.ai.alchourron.logic.syntax.structure.QuantificationLogicSignature;
  *
  * @param <Q> The type which are bound by this quantifier (Variables, Relations, ...)
  */
-public class Quantor<Q,V,S extends QuantificationLogicSignature<Q,V>> extends LogicalOperator<S> {
+public class FormulaQuantification<Q,V,S extends QuantificationLogicSignature<Q,V>> extends LogicalOperator<S> {
 	
 	
 	private Q quantifiyer;
 	private V variable;
 	private Formula<S> quantified;
 
-	public Quantor(S signature, Q quantifiyer, V variable, Formula quantified) {
+	public FormulaQuantification(S signature, Q quantifiyer, V variable, Formula<S> quantified) {
 		super(signature);
 		this.quantifiyer = quantifiyer;
 		this.variable = variable;

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.Formula;
-import edu.cs.ai.alchourron.logic.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.structure.NegationLogicSignature;
 
 /***
@@ -13,7 +12,7 @@ import edu.cs.ai.alchourron.logic.syntax.structure.NegationLogicSignature;
  *
  * @param <S> The Signature
  */
-public class LogicalNEG<S extends NegationLogicSignature> extends LogicalOperator<S> {
+public class FormulaNeg<S extends NegationLogicSignature> extends LogicalOperator<S> {
 	
 	protected Formula<S> operand;
 
@@ -22,7 +21,7 @@ public class LogicalNEG<S extends NegationLogicSignature> extends LogicalOperato
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public LogicalNEG(S signature, Formula<S> operand) {
+	public FormulaNeg(S signature, Formula<S> operand) {
 		super(signature);
 		this.operand = operand;
 	}
@@ -67,10 +66,10 @@ public class LogicalNEG<S extends NegationLogicSignature> extends LogicalOperato
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!(obj instanceof LogicalNEG))
+		if (!(obj instanceof FormulaNeg))
 			return false;
 		@SuppressWarnings("unchecked")
-		LogicalNEG<S> other = (LogicalNEG<S>) obj;
+		FormulaNeg<S> other = (FormulaNeg<S>) obj;
 		return Objects.equals(operand, other.operand) && Objects.equals(signature, other.signature);
 	}
 

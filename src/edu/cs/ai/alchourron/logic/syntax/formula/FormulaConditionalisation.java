@@ -12,9 +12,9 @@ import edu.cs.ai.alchourron.logic.Signature;
  * @author Kai Sauerwald
  *
  */
-public class Conditionalisation<S extends Signature> extends LogicalOperator<S> {
+public class FormulaConditionalisation<S extends Signature> extends LogicalOperator<S> {
 	
-	public Conditionalisation(S signature) {
+	public FormulaConditionalisation(S signature) {
 		super(signature);
 	}
 

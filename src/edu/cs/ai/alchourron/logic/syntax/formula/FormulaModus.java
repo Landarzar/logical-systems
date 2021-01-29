@@ -12,11 +12,11 @@ import edu.cs.ai.alchourron.logic.syntax.structure.ModalLogicSignature;
  * @param <S> The signature
  * @param <M> The type of modi
  */
-public class Modus<M,S extends ModalLogicSignature<M>> extends LogicalOperator<S> {
+public class FormulaModus<M,S extends ModalLogicSignature<M>> extends LogicalOperator<S> {
 	
 	M modus;
 	
-	public Modus(S signature, M modus) {
+	public FormulaModus(S signature, M modus) {
 		super(signature);
 		this.modus = modus;
 	}

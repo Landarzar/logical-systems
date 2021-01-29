@@ -1,7 +1,5 @@
 package edu.cs.ai.alchourron.logic;
 
-import java.util.List;
-
 import edu.cs.ai.alchourron.LaTeX;
 
 /***

@@ -1,22 +1,20 @@
 package edu.cs.ai.alchourron.logic.propositional;
 
 import java.security.InvalidParameterException;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.ModelTheoreticLogic;
-import edu.cs.ai.alchourron.logic.SyntacticElement;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalAND;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalBiImplication;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalFalsum;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalImplication;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalNEG;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOR;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaAND;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaBiImplication;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaFalsum;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaImplication;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaNeg;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaOR;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
-import edu.cs.ai.alchourron.logic.syntax.formula.LogicalVerum;
-import edu.cs.ai.alchourron.logic.syntax.formula.Proposition;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaVerum;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaProposition;
 
 /***
  * Logical System representing propositional logic over symbol space of type
@@ -53,12 +51,12 @@ public class PropositionalLogic<P> implements
 	@SuppressWarnings("unchecked")
 	protected boolean validSyntaxTree(Formula<PropositionalSignature<P>> syntacton,
 			PropositionalSignature<P> sig) {
-		if (syntacton instanceof LogicalAND<?> || syntacton instanceof LogicalOR<?>
-				|| syntacton instanceof LogicalNEG<?>) {
+		if (syntacton instanceof FormulaAND<?> || syntacton instanceof FormulaOR<?>
+				|| syntacton instanceof FormulaNeg<?>) {
 			LogicalOperator<PropositionalSignature<P>> le = (LogicalOperator<PropositionalSignature<P>>) syntacton;
 			return le.getOperands().stream().allMatch(se -> validSyntaxTree(se, sig));
-		} else if (syntacton instanceof Proposition<?, ?>) {
-			Proposition<P, PropositionalSignature<P>> atom = (Proposition<P, PropositionalSignature<P>>) syntacton;
+		} else if (syntacton instanceof FormulaProposition<?, ?>) {
+			FormulaProposition<P, PropositionalSignature<P>> atom = (FormulaProposition<P, PropositionalSignature<P>>) syntacton;
 			if (!sig.getSymbols().contains(atom.getSymbol()))
 				return false;
 			return true;
@@ -77,7 +75,7 @@ public class PropositionalLogic<P> implements
 	 */
 	public Formula<PropositionalSignature<P>> getCharacterisingFormula(PropositionalSignature<P> sig, Set<PropositionalInterpretation<P, PropositionalSignature<P>>> set){
 		if(set.isEmpty())
-			return new LogicalVerum<>(sig);
+			return new FormulaVerum<>(sig);
 		if(set.size() == 1)
 			return set.stream().findFirst().get().getCharacterizingFormula();
 		
@@ -87,7 +85,7 @@ public class PropositionalLogic<P> implements
 			if(formula == null)
 				formula = i.getCharacterizingFormula();
 			else
-				formula = new LogicalOR<PropositionalSignature<P>>(sig, formula, i.getCharacterizingFormula()) ;
+				formula = new FormulaOR<PropositionalSignature<P>>(sig, formula, i.getCharacterizingFormula()) ;
 		}
 		
 		return formula;
@@ -131,37 +129,37 @@ public class PropositionalLogic<P> implements
 			Formula<PropositionalSignature<P>> formula) {
 //		assert this.validFormula(formula) : "the given formula ist not valid";
 
-		if (formula instanceof Proposition<?,?>) {
-			Proposition<P,PropositionalSignature<P>> atom = (Proposition<P,PropositionalSignature<P>>) formula;
+		if (formula instanceof FormulaProposition<?,?>) {
+			FormulaProposition<P,PropositionalSignature<P>> atom = (FormulaProposition<P,PropositionalSignature<P>>) formula;
 			return interpretation.isTrue(atom.getSymbol());
 		}
-		if (formula instanceof LogicalAND<?>) {
-			LogicalAND<PropositionalSignature<P>> and = (LogicalAND<PropositionalSignature<P>>) formula;
+		if (formula instanceof FormulaAND<?>) {
+			FormulaAND<PropositionalSignature<P>> and = (FormulaAND<PropositionalSignature<P>>) formula;
 			return and.getOperands().stream().allMatch(o -> satisfies(interpretation, o));
 		}
-		if (formula instanceof LogicalOR<?>) {
-			LogicalOR<PropositionalSignature<P>> or = (LogicalOR<PropositionalSignature<P>>) formula;
+		if (formula instanceof FormulaOR<?>) {
+			FormulaOR<PropositionalSignature<P>> or = (FormulaOR<PropositionalSignature<P>>) formula;
 			return or.getOperands().stream().anyMatch(o -> satisfies(interpretation, o));
 		}
-		if (formula instanceof LogicalImplication<?>) {
-			LogicalImplication<PropositionalSignature<P>> implication = (LogicalImplication<PropositionalSignature<P>>) formula;
+		if (formula instanceof FormulaImplication<?>) {
+			FormulaImplication<PropositionalSignature<P>> implication = (FormulaImplication<PropositionalSignature<P>>) formula;
 			return  !satisfies(interpretation, implication.getPremise()) || satisfies(interpretation, implication.getConclusion());
 		}
 
-		if (formula instanceof LogicalBiImplication<?>) {
-			LogicalBiImplication<PropositionalSignature<P>> implication = (LogicalBiImplication<PropositionalSignature<P>>) formula;
+		if (formula instanceof FormulaBiImplication<?>) {
+			FormulaBiImplication<PropositionalSignature<P>> implication = (FormulaBiImplication<PropositionalSignature<P>>) formula;
 			return  (satisfies(interpretation, implication.getFirst()) && satisfies(interpretation, implication.getSecond()))
 					|| (!satisfies(interpretation, implication.getFirst())
 							&& !satisfies(interpretation, implication.getSecond()));
 		}
-		if (formula instanceof LogicalNEG<?>) {
-			LogicalNEG<PropositionalSignature<P>> neg = (LogicalNEG<PropositionalSignature<P>>) formula;
+		if (formula instanceof FormulaNeg<?>) {
+			FormulaNeg<PropositionalSignature<P>> neg = (FormulaNeg<PropositionalSignature<P>>) formula;
 			return !satisfies(interpretation, neg.getOperands().get(0));
 		}
-		if (formula instanceof LogicalFalsum<?>) {
+		if (formula instanceof FormulaFalsum<?>) {
 			return false;
 		}
-		if (formula instanceof LogicalVerum<?>) {
+		if (formula instanceof FormulaVerum<?>) {
 			return true;
 		}
 

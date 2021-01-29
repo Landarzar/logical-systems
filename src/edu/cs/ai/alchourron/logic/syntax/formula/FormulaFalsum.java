@@ -1,22 +1,18 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
-import java.util.List;
-
 import edu.cs.ai.alchourron.logic.Formula;
-import edu.cs.ai.alchourron.logic.syntax.structure.PropositionLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.terms.Term;
+import edu.cs.ai.alchourron.logic.syntax.structure.FalsumLogicSignature;
 
 /***
- * Represents tautologies
+ * Represents bottom
  * @author Kai Sauerwald
  *
  * @param <S> The signature type
  */
-public class LogicalVerum<S extends VerumLogicSignature> extends Formula<S> {
+public class FormulaFalsum<S extends FalsumLogicSignature>  extends Formula<S> {
 
 	
-	public LogicalVerum(S signature) {
+	public FormulaFalsum(S signature) {
 		super(signature);
 	}
 	
@@ -40,12 +36,6 @@ public class LogicalVerum<S extends VerumLogicSignature> extends Formula<S> {
 
 	@Override
 	public String stringify() {
-		return "TOP";
-	}
-
-	@Override
-	public S getSignature() {
-		// TODO Auto-generated method stub
-		return signature;
+		return "BOT";
 	}
 }
