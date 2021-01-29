@@ -42,8 +42,8 @@ public class FOTest {
 		FOSignature<ABPredicates, Empty, Character> signature = new FOSignature<>(
 				List.of(ABPredicates.IsA, ABPredicates.IsB, ABPredicates.SUCC), List.of(1, 1, 2));
 
-		Relation<Integer> IsAIntp = new RelationImpl(1, Set.of(new Tuple<>(0), new Tuple<>(2), new Tuple<>(4)));
-		Relation<Integer> IsBIntp = new RelationImpl(1, Set.of(new Tuple<>(1), new Tuple<>(3), new Tuple<>(5)));
+		Relation<Integer> IsAIntp = new RelationImpl<>(1, Set.of(new Tuple<>(0), new Tuple<>(2), new Tuple<>(4)));
+		Relation<Integer> IsBIntp = new RelationImpl<>(1, Set.of(new Tuple<>(1), new Tuple<>(3), new Tuple<>(5)));
 		Relation<Integer> SuccIntp = new Relation<Integer>() {
 
 			@Override
