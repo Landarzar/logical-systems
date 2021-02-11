@@ -17,7 +17,7 @@ import edu.cs.ai.alchourron.logic.syntax.structure.BiImplicationLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.FalsumLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.ImplicationLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.PropositionLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.TruthFunctionalLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.ClassicalConnectivesLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
 
 /***
@@ -29,8 +29,8 @@ import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
  * @param <PSym> The type of the symbols
  */
 public class PropositionalSignature<PSym> implements Signature, VerumLogicSignature, FalsumLogicSignature,
-		TruthFunctionalLogicSignature, PropositionLogicSignature<PSym>, ImplicationLogicSignature,
-		BiImplicationLogicSignature, Iterable<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> {
+		ClassicalConnectivesLogicSignature, PropositionLogicSignature<PSym>, ImplicationLogicSignature,
+		BiImplicationLogicSignature, Iterable<PropositionalInterpretation<PSym>> {
 
 	/***
 	 * The symbols of this signature
@@ -77,7 +77,7 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 	 * 
 	 * @author Kai Sauerwald.
 	 */
-	public Stream<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> stream() {
+	public Stream<PropositionalInterpretation<PSym>> stream() {
 		return StreamSupport.stream(Spliterators.spliterator(iterator(), /* initial size */ 0L, Spliterator.IMMUTABLE),
 				false);
 	}
@@ -90,7 +90,7 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 	 * @see java.lang.Iterable#iterator()
 	 */
 	@Override
-	public Iterator<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>> iterator() {
+	public Iterator<PropositionalInterpretation<PSym>> iterator() {
 		String cmp = "";
 		for (int i = 0; i < symbols.size(); i++) {
 			cmp += "1";
@@ -98,7 +98,7 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 		final String cmp2 = cmp;
 
 		PropositionalSignature<PSym> sig = this;
-		return new Iterator<PropositionalInterpretation<PSym, PropositionalSignature<PSym>>>() {
+		return new Iterator<PropositionalInterpretation<PSym>>() {
 
 			BigInteger bigint = BigInteger.ZERO;
 			String max = cmp2;
@@ -119,7 +119,7 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 			 * @see java.util.Iterator#next()
 			 */
 			@Override
-			public PropositionalInterpretation<PSym, PropositionalSignature<PSym>> next() {
+			public PropositionalInterpretation<PSym> next() {
 				LinkedList<PSym> temp = new LinkedList<>();
 				for (int i = 0; i < symbols.size(); i++) {
 					if (bigint.testBit(i))
@@ -127,7 +127,7 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 				}
 
 				bigint = bigint.add(BigInteger.ONE);
-				return new PropositionalInterpretation<PSym, PropositionalSignature<PSym>>(sig, temp);
+				return new PropositionalInterpretation<PSym>(sig, temp);
 			}
 
 		};

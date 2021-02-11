@@ -1,6 +1,7 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.syntax.structure.AtomLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
 
 /***
@@ -10,7 +11,7 @@ import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
  *
  * @param <S> The signature type
  */
-public class FormulaVerum<S extends VerumLogicSignature> extends Formula<S> {
+public class FormulaVerum<S extends VerumLogicSignature> extends FormulaAtom<S> {
 
 	public FormulaVerum(S signature) {
 		super(signature);

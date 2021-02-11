@@ -19,9 +19,9 @@ import edu.cs.ai.alchourron.logic.syntax.formula.FormulaProposition;
  * @param <P> The type of symbols used in the signature
  * @param <S> The type of the signature
  */
-public class PropositionalInterpretation<P, S extends PropositionalSignature<P>> implements Interpretation<S> {
+public class PropositionalInterpretation<P> implements Interpretation<PropositionalSignature<P>> {
 
-	S signature;
+	PropositionalSignature<P> signature;
 	Set<P> trueValued;
 
 	/***
@@ -30,7 +30,7 @@ public class PropositionalInterpretation<P, S extends PropositionalSignature<P>>
 	 * @param sig        The signature over which the interpretation is defined
 	 * @param trueValued The elements which are considered to be true
 	 */
-	public PropositionalInterpretation(S sig, P... trueValued) {
+	public PropositionalInterpretation(PropositionalSignature<P> sig, P... trueValued) {
 		this.signature = sig;
 		this.trueValued = new HashSet<>();
 		for (int i = 0; i < trueValued.length; i++) {
@@ -45,7 +45,7 @@ public class PropositionalInterpretation<P, S extends PropositionalSignature<P>>
 	 * @param sig        The signature over which the interpretation is defined
 	 * @param trueValued The elements which are considered to be true
 	 */
-	public PropositionalInterpretation(S sig, Collection<P> trueValued) {
+	public PropositionalInterpretation(PropositionalSignature<P> sig, Collection<P> trueValued) {
 		this.signature = sig;
 		this.trueValued = new HashSet<>(trueValued);
 	}
@@ -96,7 +96,7 @@ public class PropositionalInterpretation<P, S extends PropositionalSignature<P>>
 	 * @see cs.ai.logic.Interpretation#getSignature()
 	 */
 	@Override
-	public S getSignature() {
+	public PropositionalSignature<P> getSignature() {
 		return signature;
 	}
 
@@ -145,7 +145,7 @@ public class PropositionalInterpretation<P, S extends PropositionalSignature<P>>
 			if (isTrue(pSym))
 				tmp = new FormulaProposition<>(signature, pSym);
 			else
-				tmp = new FormulaNeg<>(signature, new FormulaProposition<>(signature, pSym));
+				tmp = new FormulaNeg<>(new FormulaProposition<>(signature, pSym));
 
 			if (result == null)
 				result = tmp;
@@ -159,7 +159,7 @@ public class PropositionalInterpretation<P, S extends PropositionalSignature<P>>
 	public boolean equals(Object obj) {
 		if (!(obj instanceof PropositionalInterpretation))
 			return false;
-		PropositionalInterpretation<P, PropositionalSignature<P>> pi = (PropositionalInterpretation<P, PropositionalSignature<P>>) obj;
+		PropositionalInterpretation<P> pi = (PropositionalInterpretation<P>) obj;
 		if (!pi.getSignature().equals(this.getSignature()))
 			return false;
 		for (P pSym : getSignature().symbols) {
@@ -175,7 +175,7 @@ public class PropositionalInterpretation<P, S extends PropositionalSignature<P>>
 	}
 
 	@Override
-	public boolean isMatchingSignature(S signature) {
+	public boolean isMatchingSignature(PropositionalSignature<P> signature) {
 		// TODO Auto-generated method stub
 		return false;
 	}

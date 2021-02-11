@@ -10,7 +10,7 @@ import edu.cs.ai.alchourron.logic.syntax.structure.FalsumLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.ImplicationLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.QuantificationLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.RelationLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.TruthFunctionalLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.ClassicalConnectivesLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.VariableTermLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
 
@@ -24,7 +24,7 @@ import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
  * @param <K> Function Symbols
  */
 public class FOSignature<R extends Enum<R>, K extends Enum<K>, V>
-		implements Signature, VerumLogicSignature, FalsumLogicSignature, TruthFunctionalLogicSignature,
+		implements Signature, VerumLogicSignature, FalsumLogicSignature, ClassicalConnectivesLogicSignature,
 		RelationLogicSignature<R, K>, VariableTermLogicSignature<V>,
 		QuantificationLogicSignature<StandardQuantifier, V>, ImplicationLogicSignature, BiImplicationLogicSignature {
 

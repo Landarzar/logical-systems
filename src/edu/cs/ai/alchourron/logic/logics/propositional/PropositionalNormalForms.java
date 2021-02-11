@@ -1,325 +1,327 @@
+
 package edu.cs.ai.alchourron.logic.logics.propositional;
 
-//package edu.cs.ai.alchourron.logic.propositional;
-//
-//import java.security.InvalidParameterException;
-//import java.util.ArrayList;
-//import java.util.HashSet;
-//import java.util.Iterator;
-//import java.util.Set;
-//import java.util.stream.Collectors;
-//
-//import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAND;
-//import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalAtom;
-//import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalFalsum;
-//import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalNEG;
-//import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalOR;
-//import edu.cs.ai.alchourron.logic.propositional.formula.PropositionalVerum;
-//import edu.cs.ai.alchourron.logic.syntax.SyntacticElement;
-//import edu.cs.ai.combinatorics.PowerSet;
-//
-//public class PropositionalNormalForms<PSym> {
-//
-//	/*******************************************************************
-//	 * Test Horn
-//	 ******************************************************************/
-//
-//	/**
-//	 * Tests where the given input CNF-Formula is horn. The correctness of this
-//	 * function is not garuanteed if cnf is not in conjunctive normal form.
-//	 * 
-//	 * @param cnf
-//	 */
-//	public boolean isHorn(PropositionalFormula<PSym> cnf) {
-//
-//		if (cnf instanceof PropositionalAND<?>) {
-//			PropositionalAND<PSym> and = (PropositionalAND<PSym>) cnf;
-//			for (PropositionalFormula<PSym> iterable_element : and.getOperands()) {
-//				if (iterable_element instanceof PropositionalOR<?>) {
-//					PropositionalOR<PSym> or = (PropositionalOR<PSym>) iterable_element;
-//
-//					int number_of_positive_literals = 0;
-//					for (PropositionalFormula<PSym> literal : or.getOperands()) {
-//						if (!(literal instanceof PropositionalNEG<?>))
-//							number_of_positive_literals += 1;
-//						if (number_of_positive_literals > 1)
-//							return false;
-//					}
-//				}
-//			}
-//		}
-//		if (cnf instanceof PropositionalOR<?>) {
-//			PropositionalOR<PSym> or = (PropositionalOR<PSym>) cnf;
-//			int number_of_positive_literals = 0;
-//			for (PropositionalFormula<PSym> literal : or.getOperands()) {
-//				if (!(literal instanceof PropositionalNEG<?>))
-//					number_of_positive_literals += 1;
-//				if (number_of_positive_literals > 1)
-//					return false;
-//			}
-//		}
-//
-//		return true;
-//	}
-//
-//	public boolean isHornDefinable(PropositionalFormula<PSym> phi) {
-//		// We use the characterization by Makowsky (1987): A formula is horndefinable
-//		// if for any extension by positive atoms there exists a generic assignment.
-//
-//		// Signature
-//		PropositionalSignature<PSym> signature = phi.getSignature();
-//
-//		return PowerSet.stream(signature.getSymbols()).allMatch(set -> {
-//			// Build formula:
-//			PropositionalFormula<PSym> formula = phi;
-//			for (PSym psym : set) {
-//				formula = formula.And(new PropositionalAtom<>(signature, psym));
-//			}
-//
-//			// i hate java.....
-//			final PropositionalFormula<PSym> tmp = formula;
-//			final PropositionalLogic<PSym> logic = new PropositionalLogic<>();
-//
-//			// search for a generic interpretation
-//			return  signature.stream().noneMatch(intp -> logic.satisfies(intp, tmp)) || signature.stream().anyMatch(intp -> isGeneric(intp, tmp));
-//		});
-//	}
-//
-//	/***
-//	 * Test where a pair $(\omega,\phi)$ is generic. "generic" is defined by
-//	 * Makowsky in 1987: (1) $\omega \models \phi$ (2) $\omega\models\sigma$ iff
-//	 * $\phi\models\sigma$ for all $\sigma\in\Sigma$ where \Sigma is the signature.
-//	 * 
-//	 * @param intp    The interpretation $\omega$
-//	 * @param formula The formula $\phi$
-//	 */
-//	public boolean isGeneric(PropositionalInterpretation<PSym, PropositionalSignature<PSym>> intp,
-//			PropositionalFormula<PSym> formula) {
-//		PropositionalLogic<PSym> logic = new PropositionalLogic<>();
-//		if (!logic.satisfies(intp, formula))
-//			return false;
-//
-//		return formula.getSignature().getSymbols().stream().allMatch(sigma -> {
-//			return logic.satisfies(intp, new PropositionalAtom<>(formula.getSignature(), sigma)) == logic
-//					.entails(formula, new PropositionalAtom<>(formula.getSignature(), sigma));
-//		});
-//	}
-//
-//	/*******************************************************************
-//	 * Clear Tree
-//	 ******************************************************************/
-//
-//	/***
-//	 * Clean up the Syntaxtree
-//	 * 
-//	 * @author Kai Sauerwald
-//	 * @param phi
-//	 * @return
-//	 */
-//	public PropositionalFormula<PSym> clearTree(PropositionalFormula<PSym> phi) {
-//		if (phi instanceof PropositionalAtom<?> || phi instanceof PropositionalVerum<?>
-//				|| phi instanceof PropositionalFalsum<?>)
-//			return phi;
-//		if (phi instanceof PropositionalAND<?>)
-//			return _clearTree((PropositionalAND<PSym>) phi);
-//		if (phi instanceof PropositionalOR<?>)
-//			return _clearTree((PropositionalOR<PSym>) phi);
-//		if (phi instanceof PropositionalNEG<?>)
-//			return _clearTree((PropositionalNEG<PSym>) phi);
-//		return phi;
-//	}
-//
-//	private PropositionalFormula<PSym> _clearTree(PropositionalNEG<PSym> phi) {
-//		@SuppressWarnings("unchecked")
-//		PropositionalFormula<PSym> param = (PropositionalFormula<PSym>) phi.getOperands().get(0);
-//		return clearTree(param).Neg();
-//	}
-//
-//	private PropositionalFormula<PSym> _clearTree(PropositionalAND<PSym> phi) {
-//		if (phi.getOperands().isEmpty())
-//			return new PropositionalVerum<PSym>(phi.getSignature());
-//		if (phi.getOperands().size() == 1)
-//			return clearTree((PropositionalFormula<PSym>) phi.getOperands().get(0));
-//
-//		HashSet<PropositionalFormula<PSym>> set = new HashSet<PropositionalFormula<PSym>>(phi.getOperands().size());
-//
-//		for (PropositionalFormula<PSym> form : phi.getOperands()) {
-//			set.add(clearTree(form));
-//		}
-//
-//		HashSet<PropositionalFormula<PSym>> set2 = new HashSet<PropositionalFormula<PSym>>(set.size());
-//		for (PropositionalFormula<PSym> form : set) {
-//			if (form instanceof PropositionalAND<?>) {
-//				set2.addAll(((PropositionalAND<PSym>) form).getOperands().stream()
-//						.map(a -> (PropositionalFormula<PSym>) a).collect(Collectors.toList()));
-//			} else if (form instanceof PropositionalVerum<?>)
-//				continue;
-//			else if (form instanceof PropositionalFalsum<?>)
-//				return form;
-//			else
-//				set2.add(form);
-//		}
-//
-//		if (set2.size() == 0)
-//			return new PropositionalVerum<PSym>(phi.getSignature());
-//		if (set2.size() == 1)
-//			return set2.stream().findFirst().get();
-//
-//		return new PropositionalAND<PSym>(phi.getSignature(), set2);
-//	}
-//
-//	private PropositionalFormula<PSym> _clearTree(PropositionalOR<PSym> phi) {
-//		if (phi.getOperands().isEmpty())
-//			return new PropositionalVerum<PSym>(phi.getSignature());
-//		if (phi.getOperands().size() == 1)
-//			return clearTree((PropositionalFormula<PSym>) phi.getOperands().get(0));
-//
-//		HashSet<PropositionalFormula<PSym>> set = new HashSet<PropositionalFormula<PSym>>(phi.getOperands().size());
-//
-//		for (PropositionalFormula<PSym> form : phi.getOperands()) {
-//			set.add(clearTree(form));
-//		}
-//
-//		HashSet<PropositionalFormula<PSym>> set2 = new HashSet<PropositionalFormula<PSym>>(set.size());
-//		for (PropositionalFormula<PSym> form : set) {
-//			if (form instanceof PropositionalOR<?>) {
-//				set2.addAll(((PropositionalOR<PSym>) form).getOperands().stream()
-//						.map(a -> (PropositionalFormula<PSym>) a).collect(Collectors.toList()));
-//			} else if (form instanceof PropositionalFalsum<?>)
-//				continue;
-//			else if (form instanceof PropositionalVerum<?>)
-//				return form;
-//			else
-//				set2.add(form);
-//		}
-//
-//		if (set2.size() == 0)
-//			return new PropositionalVerum<PSym>(phi.getSignature());
-//		if (set2.size() == 1)
-//			return set2.stream().findFirst().get();
-//
-//		return new PropositionalOR<PSym>(phi.getSignature(), set2);
-//	}
-//
-//	/*******************************************************************
-//	 * Conjunctive Normal Form
-//	 ******************************************************************/
-//
-//	public PropositionalFormula<PSym> formulaToCNF(PropositionalFormula<PSym> phi) {
-//		return clearTree(_formulaToCNF(formulaToNegationNormalForm(phi)));
-//	}
-//
-//	private PropositionalFormula<PSym> _formulaToCNF(PropositionalFormula<PSym> phi) {
-//		if (phi instanceof PropositionalAtom<?> || phi instanceof PropositionalVerum<?>
-//				|| phi instanceof PropositionalFalsum<?> || phi instanceof PropositionalNEG<?>)
-//			return phi;
-//		if (phi instanceof PropositionalAND<?>)
-//			return __formulaToCNF((PropositionalAND<PSym>) phi);
-//		if (phi instanceof PropositionalOR<?>)
-//			return __formulaToCNF((PropositionalOR<PSym>) phi);
-//
-//		throw new InvalidParameterException();
-//	}
-//
-//	private PropositionalFormula<PSym> __formulaToCNF(PropositionalAND<PSym> phi) {
-//		ArrayList<PropositionalFormula<PSym>> list = new ArrayList<PropositionalFormula<PSym>>(
-//				phi.getOperands().size());
-//		for (SyntacticElement<PropositionalSignature<PSym>> iterable_element : phi.getOperands()) {
-//			PropositionalFormula<PSym> form = (PropositionalFormula<PSym>) iterable_element;
-//			list.add(formulaToCNF(form));
-//		}
-//
-//		return new PropositionalAND<PSym>(phi.getSignature(), list);
-//	}
-//
-//	private PropositionalFormula<PSym> __formulaToCNF(PropositionalOR<PSym> phi) {
-//		for (PropositionalFormula<PSym> form : phi.getOperands()) {
-//			if (form instanceof PropositionalAND<?>) {
-//				PropositionalAND<PSym> and = (PropositionalAND<PSym>) form;
-//				PropositionalOR<PSym> theRestOR = new PropositionalOR<PSym>(phi.getSignature(),
-//						phi.getOperands().stream().filter(a -> a != form).collect(Collectors.toList()));
-//				return new PropositionalAND<PSym>(phi.getSignature(), and.getOperands().stream()
-//						.map(a -> formulaToCNF(a.Or(theRestOR))).collect(Collectors.toList()));
-//			}
-//		}
-//
-//		return phi;
-//
-//	}
-//
-//	/*******************************************************************
-//	 * Negation Normal Form
-//	 ******************************************************************/
-//
-//	public PropositionalFormula<PSym> formulaToNegationNormalForm(PropositionalFormula<PSym> phi) {
-//		return _formulaToNegationNormalForm(clearTree(phi));
-//	}
-//
-//	private PropositionalFormula<PSym> _formulaToNegationNormalForm(PropositionalFormula<PSym> phi) {
-//		if (phi instanceof PropositionalAtom<?> || phi instanceof PropositionalVerum<?>
-//				|| phi instanceof PropositionalFalsum<?>)
-//			return phi;
-//		if (phi instanceof PropositionalAND<?>)
-//			return __formulaToNegationNormalForm((PropositionalAND<PSym>) phi);
-//		if (phi instanceof PropositionalOR<?>)
-//			return __formulaToNegationNormalForm((PropositionalOR<PSym>) phi);
-//		if (phi instanceof PropositionalNEG<?>)
-//			return __formulaToNegationNormalForm((PropositionalNEG<PSym>) phi);
-//
-//		throw new InvalidParameterException();
-//	}
-//
-//	@SuppressWarnings("unchecked")
-//	private PropositionalFormula<PSym> __formulaToNegationNormalForm(PropositionalNEG<PSym> phi) {
-//		PropositionalFormula<PSym> param = (PropositionalFormula<PSym>) phi.getOperands().get(0);
-//		if (param instanceof PropositionalNEG<?>)
-//			return (PropositionalFormula<PSym>) ((PropositionalNEG<PSym>) param).getOperands().get(0);
-//		if (param instanceof PropositionalAtom<?>)
-//			return phi;
-//		if (param instanceof PropositionalFalsum<?>)
-//			return new PropositionalVerum<PSym>(phi.getSignature());
-//		if (param instanceof PropositionalVerum<?>)
-//			return new PropositionalFalsum<PSym>(phi.getSignature());
-//		if (param instanceof PropositionalAND<?>) {
-//			PropositionalAND<PSym> and = (PropositionalAND<PSym>) param;
-//			ArrayList<PropositionalFormula<PSym>> list = new ArrayList<PropositionalFormula<PSym>>(
-//					and.getOperands().size());
-//			for (SyntacticElement<PropositionalSignature<PSym>> iterable_element : and.getOperands()) {
-//				PropositionalFormula<PSym> form = (PropositionalFormula<PSym>) iterable_element;
-//				list.add(_formulaToNegationNormalForm(form.Neg()));
-//			}
-//			return new PropositionalOR<PSym>(phi.getSignature(), list);
-//		}
-//		if (param instanceof PropositionalOR<?>) {
-//			PropositionalOR<PSym> or = (PropositionalOR<PSym>) param;
-//			ArrayList<PropositionalFormula<PSym>> list = new ArrayList<PropositionalFormula<PSym>>(
-//					or.getOperands().size());
-//			for (SyntacticElement<PropositionalSignature<PSym>> iterable_element : or.getOperands()) {
-//				PropositionalFormula<PSym> form = (PropositionalFormula<PSym>) iterable_element;
-//				list.add(_formulaToNegationNormalForm(form.Neg()));
-//			}
-//			return new PropositionalAND<PSym>(phi.getSignature(), list);
-//		}
-//		throw new InvalidParameterException();
-//	}
-//
-//	@SuppressWarnings("unchecked")
-//	private PropositionalFormula<PSym> __formulaToNegationNormalForm(PropositionalAND<PSym> phi) {
-//		ArrayList<PropositionalFormula<PSym>> list = new ArrayList<PropositionalFormula<PSym>>(
-//				phi.getOperands().size());
-//		for (int i = 0; i < phi.getOperands().size(); i++) {
-//			list.add(_formulaToNegationNormalForm((PropositionalFormula<PSym>) phi.getOperands().get(i)));
-//		}
-//		return new PropositionalAND<PSym>(phi.getSignature(), list);
-//	}
-//
-//	@SuppressWarnings("unchecked")
-//	private PropositionalFormula<PSym> __formulaToNegationNormalForm(PropositionalOR<PSym> phi) {
-//		ArrayList<PropositionalFormula<PSym>> list = new ArrayList<PropositionalFormula<PSym>>(
-//				phi.getOperands().size());
-//		for (int i = 0; i < phi.getOperands().size(); i++) {
-//			list.add(_formulaToNegationNormalForm((PropositionalFormula<PSym>) phi.getOperands().get(i)));
-//		}
-//		return new PropositionalOR<PSym>(phi.getSignature(), list);
-//	}
-//}
+import java.security.InvalidAlgorithmParameterException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.syntax.formula.*;
+import edu.cs.ai.alchourron.logic.syntax.structure.ClassicalConnectivesLogicSignature;
+import edu.cs.ai.math.combinatorics.PowerSet;
+
+/***
+ * 
+ * @author Kai Sauerwald
+ *
+ * @param <P> Type of atoms
+ */
+public class PropositionalNormalForms<P> {
+
+	/*******************************************************************
+	 * Test Horn
+	 ******************************************************************/
+
+	/**
+	 * Tests where the given input CNF-Formula is horn. The correctness of this
+	 * function is not garuanteed if cnf is not in conjunctive normal form.
+	 * 
+	 * @param cnf
+	 */
+	public boolean isHorn(Formula<PropositionalSignature<P>> cnf) {
+
+		if (cnf instanceof FormulaAND<?>) {
+			FormulaAND<PropositionalSignature<P>> and = (FormulaAND<PropositionalSignature<P>>) cnf;
+			for (Formula<PropositionalSignature<P>> iterable_element : and.getOperands()) {
+				if (iterable_element instanceof FormulaOR<?>) {
+					FormulaOR<PropositionalSignature<P>> or = (FormulaOR<PropositionalSignature<P>>) iterable_element;
+
+					int number_of_positive_literals = 0;
+					for (Formula<PropositionalSignature<P>> literal : or.getOperands()) {
+						if (!(literal instanceof FormulaNeg<?>))
+							number_of_positive_literals += 1;
+						if (number_of_positive_literals > 1)
+							return false;
+					}
+				}
+			}
+		}
+		if (cnf instanceof FormulaOR<?>) {
+			FormulaOR<PropositionalSignature<P>> or = (FormulaOR<PropositionalSignature<P>>) cnf;
+			int number_of_positive_literals = 0;
+			for (Formula<PropositionalSignature<P>> literal : or.getOperands()) {
+				if (!(literal instanceof FormulaNeg<?>))
+					number_of_positive_literals += 1;
+				if (number_of_positive_literals > 1)
+					return false;
+			}
+		}
+
+		return true;
+	}
+
+	public boolean isHornDefinable(Formula<PropositionalSignature<P>> phi) {
+		// We use the characterization by Makowsky (1987): A formula is horndefinable
+		// if for any extension by positive atoms there exists a generic assignment.
+
+		// Signature
+		PropositionalSignature<P> signature = phi.getSignature();
+
+		return PowerSet.stream(signature.getSymbols()).allMatch(set -> {
+			// Build formula:
+			Formula<PropositionalSignature<P>> formula = phi;
+			for (P p : set) {
+				formula = new FormulaAND<>(formula.getSignature(), formula, new FormulaProposition<>(signature, p));
+			}
+
+			// i hate java.....
+			final Formula<PropositionalSignature<P>> tmp = formula;
+			final PropositionalLogic<P> logic = new PropositionalLogic<>();
+
+			// search for a generic interpretation
+			return signature.stream().noneMatch(intp -> logic.satisfies(intp, tmp))
+					|| signature.stream().anyMatch(intp -> isGeneric(intp, tmp));
+		});
+	}
+
+	/***
+	 * Test where a pair $(\omega,\phi)$ is generic. "generic" is defined by
+	 * Makowsky in 1987: (1) $\omega \models \phi$ (2) $\omega\models\sigma$ iff
+	 * $\phi\models\sigma$ for all $\sigma\in\Sigma$ where \Sigma is the signature.
+	 * 
+	 * @param intp    The interpretation $\omega$
+	 * @param formula The formula $\phi$
+	 */
+	public boolean isGeneric(PropositionalInterpretation<P> intp, Formula<PropositionalSignature<P>> formula) {
+		PropositionalLogic<P> logic = new PropositionalLogic<>();
+		if (!logic.satisfies(intp, formula))
+			return false;
+
+		return formula.getSignature().getSymbols().stream().allMatch(sigma -> {
+			return logic.satisfies(intp, new FormulaProposition<>(formula.getSignature(), sigma)) == logic.entails(formula,
+					new FormulaProposition<>(formula.getSignature(), sigma));
+		});
+	}
+
+	/*******************************************************************
+	 * Clear Tree
+	 ******************************************************************/
+
+	/***
+	 * Clean up the Syntaxtree
+	 * 
+	 * @author Kai Sauerwald
+	 * @param phi
+	 * @return
+	 */
+	public Formula<PropositionalSignature<P>> clearTree(Formula<PropositionalSignature<P>> phi) {
+		if (phi instanceof FormulaAtom<?>)
+			return phi;
+		if (phi instanceof FormulaAND<?>)
+			return _clearTree((FormulaAND<PropositionalSignature<P>>) phi);
+		if (phi instanceof FormulaOR<?>)
+			return _clearTree((FormulaOR<PropositionalSignature<P>>) phi);
+		if (phi instanceof FormulaNeg<?>)
+			return _clearTree((FormulaNeg<PropositionalSignature<P>>) phi);
+		return phi;
+	}
+
+	private Formula<PropositionalSignature<P>> _clearTree(FormulaNeg<PropositionalSignature<P>> phi) {
+		@SuppressWarnings("unchecked")
+		Formula<PropositionalSignature<P>> param = (Formula<PropositionalSignature<P>>) phi.getOperands().get(0);
+		return new FormulaNeg<PropositionalSignature<P>>(clearTree(param));
+	}
+
+	private Formula<PropositionalSignature<P>> _clearTree(FormulaAND<PropositionalSignature<P>> phi) {
+		if (phi.getOperands().isEmpty())
+			throw new IllegalArgumentException();
+//			return new FormulaVerum<PropositionalSignature<P>>(phi.getSignature());
+		if (phi.getOperands().size() == 1)
+			return clearTree((Formula<PropositionalSignature<P>>) phi.getOperands().get(0));
+
+		HashSet<Formula<PropositionalSignature<P>>> set = new HashSet<Formula<PropositionalSignature<P>>>(
+				phi.getOperands().size());
+
+		for (Formula<PropositionalSignature<P>> form : phi.getOperands()) {
+			set.add(clearTree(form));
+		}
+
+		HashSet<Formula<PropositionalSignature<P>>> set2 = new HashSet<Formula<PropositionalSignature<P>>>(set.size());
+		for (Formula<PropositionalSignature<P>> form : set) {
+			if (form instanceof FormulaAND<?>) {
+				set2.addAll(((FormulaAND<PropositionalSignature<P>>) form).getOperands().stream()
+						.map(a -> (Formula<PropositionalSignature<P>>) a).collect(Collectors.toList()));
+			} else if (form instanceof FormulaVerum<?>)
+				continue;
+			else if (form instanceof FormulaFalsum<?>)
+				return form;
+			else
+				set2.add(form);
+		}
+
+		if (set2.size() == 0)
+			return new FormulaVerum<PropositionalSignature<P>>(phi.getSignature());
+		if (set2.size() == 1)
+			return set2.stream().findFirst().get();
+
+		return new FormulaAND<PropositionalSignature<P>>(phi.getSignature(), set2);
+	}
+
+	private Formula<PropositionalSignature<P>> _clearTree(FormulaOR<PropositionalSignature<P>> phi) {
+		if (phi.getOperands().isEmpty())
+			return new FormulaVerum<PropositionalSignature<P>>(phi.getSignature());
+		if (phi.getOperands().size() == 1)
+			return clearTree((Formula<PropositionalSignature<P>>) phi.getOperands().get(0));
+
+		HashSet<Formula<PropositionalSignature<P>>> set = new HashSet<Formula<PropositionalSignature<P>>>(
+				phi.getOperands().size());
+
+		for (Formula<PropositionalSignature<P>> form : phi.getOperands()) {
+			set.add(clearTree(form));
+		}
+
+		HashSet<Formula<PropositionalSignature<P>>> set2 = new HashSet<Formula<PropositionalSignature<P>>>(set.size());
+		for (Formula<PropositionalSignature<P>> form : set) {
+			if (form instanceof FormulaOR<?>) {
+				set2.addAll(((FormulaOR<PropositionalSignature<P>>) form).getOperands().stream()
+						.map(a -> (Formula<PropositionalSignature<P>>) a).collect(Collectors.toList()));
+			} else if (form instanceof FormulaFalsum<?>)
+				continue;
+			else if (form instanceof FormulaVerum<?>)
+				return form;
+			else
+				set2.add(form);
+		}
+
+		if (set2.size() == 0)
+			return new FormulaVerum<PropositionalSignature<P>>(phi.getSignature());
+		if (set2.size() == 1)
+			return set2.stream().findFirst().get();
+
+		return new FormulaOR<PropositionalSignature<P>>(phi.getSignature(), set2);
+	}
+
+	/*******************************************************************
+	 * Conjunctive Normal Form
+	 ******************************************************************/
+
+	public Formula<PropositionalSignature<P>> formulaToCNF(Formula<PropositionalSignature<P>> phi) {
+		return clearTree(_formulaToCNF(formulaToNegationNormalForm(phi)));
+	}
+
+	private Formula<PropositionalSignature<P>> _formulaToCNF(Formula<PropositionalSignature<P>> phi) {
+		if (phi instanceof FormulaAtom<?> || phi instanceof FormulaNeg<?>)
+			return phi;
+		if (phi instanceof FormulaAND<?>)
+			return __formulaToCNF((FormulaAND<PropositionalSignature<P>>) phi);
+		if (phi instanceof FormulaOR<?>)
+			return __formulaToCNF((FormulaOR<PropositionalSignature<P>>) phi);
+
+		throw new IllegalArgumentException();
+	}
+
+	private Formula<PropositionalSignature<P>> __formulaToCNF(FormulaAND<PropositionalSignature<P>> phi) {
+		ArrayList<Formula<PropositionalSignature<P>>> list = new ArrayList<Formula<PropositionalSignature<P>>>(
+				phi.getOperands().size());
+		for (Formula<PropositionalSignature<P>> iterable_element : phi.getOperands()) {
+			Formula<PropositionalSignature<P>> form = (Formula<PropositionalSignature<P>>) iterable_element;
+			list.add(formulaToCNF(form));
+		}
+
+		return new FormulaAND<PropositionalSignature<P>>(phi.getSignature(), list);
+	}
+
+	private Formula<PropositionalSignature<P>> __formulaToCNF(FormulaOR<PropositionalSignature<P>> phi) {
+		for (Formula<PropositionalSignature<P>> form : phi.getOperands()) {
+			if (form instanceof FormulaAND<?>) {
+				FormulaAND<PropositionalSignature<P>> and = (FormulaAND<PropositionalSignature<P>>) form;
+				FormulaOR<PropositionalSignature<P>> theRestOR = new FormulaOR<PropositionalSignature<P>>(
+						phi.getSignature(),
+						phi.getOperands().stream().filter(a -> a != form).collect(Collectors.toList()));
+				return new FormulaAND<PropositionalSignature<P>>(phi.getSignature(), and.getOperands().stream().map(
+						a -> formulaToCNF(new FormulaOR<PropositionalSignature<P>>(a.getSignature(), a, theRestOR)))
+						.collect(Collectors.toList()));
+			}
+		}
+
+		return phi;
+
+	}
+
+	/*******************************************************************
+	 * Negation Normal Form
+	 ******************************************************************/
+
+	public Formula<PropositionalSignature<P>> formulaToNegationNormalForm(Formula<PropositionalSignature<P>> phi) {
+		return _formulaToNegationNormalForm(clearTree(phi));
+	}
+
+	private Formula<PropositionalSignature<P>> _formulaToNegationNormalForm(Formula<PropositionalSignature<P>> phi) {
+		if (phi instanceof FormulaAtom<?>)
+			return phi;
+		if (phi instanceof FormulaAND<?>)
+			return __formulaToNegationNormalForm((FormulaAND<PropositionalSignature<P>>) phi);
+		if (phi instanceof FormulaOR<?>)
+			return __formulaToNegationNormalForm((FormulaOR<PropositionalSignature<P>>) phi);
+		if (phi instanceof FormulaNeg<?>)
+			return __formulaToNegationNormalForm((FormulaNeg<PropositionalSignature<P>>) phi);
+
+		throw new IllegalArgumentException();
+	}
+
+	@SuppressWarnings("unchecked")
+	private Formula<PropositionalSignature<P>> __formulaToNegationNormalForm(
+			FormulaNeg<PropositionalSignature<P>> phi) {
+		Formula<PropositionalSignature<P>> param = (Formula<PropositionalSignature<P>>) phi.getOperands().get(0);
+		if (param instanceof FormulaNeg<?>)
+			return (Formula<PropositionalSignature<P>>) ((FormulaNeg<PropositionalSignature<P>>) param).getOperands()
+					.get(0);
+		if (param instanceof FormulaAtom<?>)
+			return phi;
+		if (param instanceof FormulaAND<?>) {
+			FormulaAND<PropositionalSignature<P>> and = (FormulaAND<PropositionalSignature<P>>) param;
+			ArrayList<Formula<PropositionalSignature<P>>> list = new ArrayList<Formula<PropositionalSignature<P>>>(
+					and.getOperands().size());
+			for (Formula<PropositionalSignature<P>> iterable_element : and.getOperands()) {
+				Formula<PropositionalSignature<P>> form = (Formula<PropositionalSignature<P>>) iterable_element;
+				list.add(_formulaToNegationNormalForm(new FormulaNeg<PropositionalSignature<P>>(form)));
+			}
+			return new FormulaOR<PropositionalSignature<P>>(phi.getSignature(), list);
+		}
+		if (param instanceof FormulaOR<?>) {
+			FormulaOR<PropositionalSignature<P>> or = (FormulaOR<PropositionalSignature<P>>) param;
+			ArrayList<Formula<PropositionalSignature<P>>> list = new ArrayList<Formula<PropositionalSignature<P>>>(
+					or.getOperands().size());
+			for (Formula<PropositionalSignature<P>> iterable_element : or.getOperands()) {
+				Formula<PropositionalSignature<P>> form = (Formula<PropositionalSignature<P>>) iterable_element;
+				list.add(_formulaToNegationNormalForm(new FormulaNeg<>(form)));
+			}
+			return new FormulaAND<PropositionalSignature<P>>(phi.getSignature(), list);
+		}
+		throw new IllegalArgumentException();
+	}
+
+	@SuppressWarnings("unchecked")
+	private Formula<PropositionalSignature<P>> __formulaToNegationNormalForm(
+			FormulaAND<PropositionalSignature<P>> phi) {
+		ArrayList<Formula<PropositionalSignature<P>>> list = new ArrayList<Formula<PropositionalSignature<P>>>(
+				phi.getOperands().size());
+		for (int i = 0; i < phi.getOperands().size(); i++) {
+			list.add(_formulaToNegationNormalForm((Formula<PropositionalSignature<P>>) phi.getOperands().get(i)));
+		}
+		return new FormulaAND<PropositionalSignature<P>>(phi.getSignature(), list);
+	}
+
+	@SuppressWarnings("unchecked")
+	private Formula<PropositionalSignature<P>> __formulaToNegationNormalForm(FormulaOR<PropositionalSignature<P>> phi) {
+		ArrayList<Formula<PropositionalSignature<P>>> list = new ArrayList<Formula<PropositionalSignature<P>>>(
+				phi.getOperands().size());
+		for (int i = 0; i < phi.getOperands().size(); i++) {
+			list.add(_formulaToNegationNormalForm((Formula<PropositionalSignature<P>>) phi.getOperands().get(i)));
+		}
+		return new FormulaOR<PropositionalSignature<P>>(phi.getSignature(), list);
+	}
+}

@@ -7,6 +7,6 @@ import edu.cs.ai.alchourron.logic.Signature;
  * 
  * @author Kai Sauerwald
  */
-public interface VerumLogicSignature extends Signature {
+public interface VerumLogicSignature extends AtomLogicSignature {
 
 }

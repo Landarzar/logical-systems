@@ -7,6 +7,6 @@ import edu.cs.ai.alchourron.logic.Signature;
  * 
  * @author Kai Sauerwald
  */
-public interface FalsumLogicSignature extends Signature {
+public interface FalsumLogicSignature extends AtomLogicSignature {
 
 }

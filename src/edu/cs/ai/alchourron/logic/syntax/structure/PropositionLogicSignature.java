@@ -1,7 +1,5 @@
 package edu.cs.ai.alchourron.logic.syntax.structure;
 
-import edu.cs.ai.alchourron.logic.Signature;
-
 /**
  * Describes logics, where there propositions as elements of the language
  * 
@@ -9,6 +7,6 @@ import edu.cs.ai.alchourron.logic.Signature;
  *
  * @param <P> The objects which propositionals are represented by.
  */
-public interface PropositionLogicSignature<P> extends Signature {
+public interface PropositionLogicSignature<P> extends AtomLogicSignature {
 
 }

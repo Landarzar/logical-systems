@@ -26,7 +26,7 @@ import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
  * @param <F> The type for formula
  */
 public class PropositionalLogic<P> implements
-		ModelTheoreticLogic<PropositionalInterpretation<P, PropositionalSignature<P>>, Formula<PropositionalSignature<P>>, Boolean, PropositionalSignature<P>> {
+		ModelTheoreticLogic<PropositionalInterpretation<P>, Formula<PropositionalSignature<P>>, Boolean, PropositionalSignature<P>> {
 
 	/*
 	 * (non-Javadoc)
@@ -70,7 +70,7 @@ public class PropositionalLogic<P> implements
 	 * @param set The set of models.
 	 */
 	public Formula<PropositionalSignature<P>> getCharacterisingFormula(PropositionalSignature<P> sig,
-			Set<PropositionalInterpretation<P, PropositionalSignature<P>>> set) {
+			Set<PropositionalInterpretation<P>> set) {
 		if (set.isEmpty())
 			return new FormulaVerum<>(sig);
 		if (set.size() == 1)
@@ -78,7 +78,7 @@ public class PropositionalLogic<P> implements
 
 		Formula<PropositionalSignature<P>> formula = null;
 
-		for (PropositionalInterpretation<P, PropositionalSignature<P>> i : set) {
+		for (PropositionalInterpretation<P> i : set) {
 			if (formula == null)
 				formula = i.getCharacterizingFormula();
 			else
@@ -96,7 +96,7 @@ public class PropositionalLogic<P> implements
 	 * Formula)
 	 */
 	@Override
-	public Set<PropositionalInterpretation<P, PropositionalSignature<P>>> modelsOf(
+	public Set<PropositionalInterpretation<P>> modelsOf(
 			Formula<PropositionalSignature<P>> formula) {
 //		assert this.validFormula(formula) : "given formula ist not (syntactically) valid";
 		return formula.getSignature().stream().filter(i -> satisfies(i, formula)).collect(Collectors.toSet());
@@ -110,7 +110,7 @@ public class PropositionalLogic<P> implements
 	 * Interpretation, edu.cs.ai.alchourron.logic.Formula)
 	 */
 	@Override
-	public Boolean eval(PropositionalInterpretation<P, PropositionalSignature<P>> interpretation,
+	public Boolean eval(PropositionalInterpretation<P> interpretation,
 			Formula<PropositionalSignature<P>> formula) {
 		return satisfies(interpretation, formula);
 	}
@@ -123,7 +123,7 @@ public class PropositionalLogic<P> implements
 	 * Interpretation, edu.cs.ai.alchourron.logic.Formula)
 	 */
 	@Override
-	public boolean satisfies(PropositionalInterpretation<P, PropositionalSignature<P>> interpretation,
+	public boolean satisfies(PropositionalInterpretation<P> interpretation,
 			Formula<PropositionalSignature<P>> formula) {
 //		assert this.validFormula(formula) : "the given formula ist not valid";
 

@@ -12,7 +12,7 @@ import edu.cs.ai.alchourron.logic.syntax.structure.PropositionLogicSignature;
  * @param <PSym> The type for predicate symbols
  * @param <S>    The signature type
  */
-public class FormulaProposition<PSym, S extends PropositionLogicSignature<PSym>> extends Formula<S> {
+public class FormulaProposition<PSym, S extends PropositionLogicSignature<PSym>> extends FormulaAtom<S> {
 
 	protected PSym symbol;
 
@@ -28,26 +28,6 @@ public class FormulaProposition<PSym, S extends PropositionLogicSignature<PSym>>
 	 */
 	public PSym getSymbol() {
 		return symbol;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
-	 */
-	@Override
-	public boolean isLogical() {
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
-	 */
-	@Override
-	public boolean isAtom() {
-		return true;
 	}
 
 	@Override

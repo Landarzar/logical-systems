@@ -19,7 +19,7 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  * @param <S> The signature type
  */
 public class FormulaPredicate<R extends Enum<R>, F extends Enum<F>, V, S extends VariableTermLogicSignature<V> & RelationLogicSignature<R, F>>
-		extends Formula<S> {
+		extends FormulaAtom<S> {
 
 	protected R symbol;
 	protected List<Term<F, V>> terms;
@@ -62,26 +62,6 @@ public class FormulaPredicate<R extends Enum<R>, F extends Enum<F>, V, S extends
 	 */
 	public int getArity() {
 		return terms.size();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
-	 */
-	@Override
-	public boolean isLogical() {
-		return false;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
-	 */
-	@Override
-	public boolean isAtom() {
-		return true;
 	}
 
 	@Override

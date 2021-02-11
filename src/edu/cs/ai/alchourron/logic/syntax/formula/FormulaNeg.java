@@ -15,7 +15,7 @@ import edu.cs.ai.alchourron.logic.syntax.structure.NegationLogicSignature;
 public class FormulaNeg<S extends NegationLogicSignature> extends LogicalOperator<S> {
 
 	protected Formula<S> operand;
-
+	
 	/**
 	 * Constructs a new instance of this class
 	 * 
@@ -23,6 +23,16 @@ public class FormulaNeg<S extends NegationLogicSignature> extends LogicalOperato
 	 */
 	public FormulaNeg(S signature, Formula<S> operand) {
 		super(signature);
+		this.operand = operand;
+	}
+
+	/**
+	 * Constructs a new instance of this class
+	 * 
+	 * @author Kai Sauerwald
+	 */
+	public FormulaNeg(Formula<S> operand) {
+		super(operand.getSignature());
 		this.operand = operand;
 	}
 
