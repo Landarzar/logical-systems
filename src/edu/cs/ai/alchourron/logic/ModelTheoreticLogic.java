@@ -31,7 +31,7 @@ public interface ModelTheoreticLogic<I extends Interpretation<S>, F extends Form
 	 * @return
 	 * @throws UnsupportedOperationException Maybe:
 	 *                                       <ol>
-	 *                                       <li>There is no finite way to represent
+	 *                                       <li>There is no (suitable) way to represent
 	 *                                       the set of all models of the formula,
 	 *                                       or</li>
 	 *                                       <li>there is no notion of model,</li>
