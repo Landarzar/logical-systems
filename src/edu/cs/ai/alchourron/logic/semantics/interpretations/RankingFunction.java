@@ -3,12 +3,25 @@ package edu.cs.ai.alchourron.logic.semantics.interpretations;
 import java.util.AbstractCollection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import edu.cs.ai.math.settheory.objects.Pair;
+import edu.cs.ai.math.settheory.Pair;
+import edu.cs.ai.math.settheory.Tuple;
+import edu.cs.ai.math.settheory.relation.RelationStatus;
+import edu.cs.ai.math.settheory.relation.TotalPreorder;
+import edu.cs.ai.math.settheory.relation.implementation.AbstractTotalPreorderImpl;
 
+/***
+ * 
+ * TODO: Review this class!
+ * @author Kai Sauerwald
+ *
+ * @param <T>
+ */
 public class RankingFunction<T> extends AbstractCollection<Pair<T, Integer>> {
 
 	private HashSet<Pair<T, Integer>> elements = new HashSet<>();
@@ -67,8 +80,27 @@ public class RankingFunction<T> extends AbstractCollection<Pair<T, Integer>> {
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return elements.size();
+	}
+	
+	public TotalPreorder<T> getTotalPreorder(){
+		return new AbstractTotalPreorderImpl<T>() {
+
+			@Override
+			public List<Set<T>> getLayers() {
+				int max = getMaxRank();
+				
+				LinkedList<Set<T>> result = new LinkedList<>();
+				
+				for (int i = 0; i <= max; i++) {
+					Set<T> l = getByRank(i);
+					if(l != null && !l.isEmpty())
+						result.add(l);
+				}
+				
+				return result;
+			}
+		};
 	}
 
 }

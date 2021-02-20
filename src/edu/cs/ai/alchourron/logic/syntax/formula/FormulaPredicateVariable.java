@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.cs.ai.alchourron.logic.Formula;
-import edu.cs.ai.alchourron.logic.syntax.structure.RelationLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.PredicateLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.SecondOrderQuantificationLogic;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 
@@ -18,7 +18,7 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  * @param <R> The type for predicate symbols
  * @param <S> The signature type
  */
-public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, P, S extends SecondOrderQuantificationLogic<P> & RelationLogicSignature<R, K>>
+public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, P, S extends SecondOrderQuantificationLogic<P> & PredicateLogicSignature<R, K>>
 		extends Formula<S> {
 
 	protected P variable;

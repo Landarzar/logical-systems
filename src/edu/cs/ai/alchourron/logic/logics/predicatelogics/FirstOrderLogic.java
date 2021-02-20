@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.ModelTheoreticLogic;
+import edu.cs.ai.alchourron.logic.semantics.interpretations.FiniteStructure;
+import edu.cs.ai.alchourron.logic.syntax.formula.ClassicalQuantifier;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaAND;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaBiImplication;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaFalsum;
@@ -21,7 +23,7 @@ import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
 import edu.cs.ai.alchourron.logic.syntax.terms.FunctionTerm;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
-import edu.cs.ai.math.settheory.objects.Tuple;
+import edu.cs.ai.math.settheory.Tuple;
 
 /***
  * Logical System representing propositional logic over symbol space of type
@@ -63,7 +65,7 @@ public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 		}
 
 		if (formula instanceof FormulaQuantification<?, ?, ?>) {
-			FormulaQuantification<StandardQuantifier, V, FOSignature<R, K, V>> quantor = (FormulaQuantification<StandardQuantifier, V, FOSignature<R, K, V>>) formula;
+			FormulaQuantification<ClassicalQuantifier, V, FOSignature<R, K, V>> quantor = (FormulaQuantification<ClassicalQuantifier, V, FOSignature<R, K, V>>) formula;
 
 			Set<V> result = new HashSet<>(getFreeVariables(quantor.getQuantified()));
 			result.removeIf(v -> v.equals(quantor.getVariables()));
@@ -117,8 +119,8 @@ public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 			return interpretation.getRelation(pred.getSymbol()).contains(tuple);
 		}
 		if (formula instanceof FormulaQuantification<?, ?, ?>) {
-			FormulaQuantification<StandardQuantifier, V, FOSignature<R, K, V>> quantor = (FormulaQuantification<StandardQuantifier, V, FOSignature<R, K, V>>) formula;
-			if (quantor.getQuantifyer() == StandardQuantifier.FORALL) {
+			FormulaQuantification<ClassicalQuantifier, V, FOSignature<R, K, V>> quantor = (FormulaQuantification<ClassicalQuantifier, V, FOSignature<R, K, V>>) formula;
+			if (quantor.getQuantifyer() == ClassicalQuantifier.FORALL) {
 				return interpretation.getUniverse().stream().allMatch(u -> {
 
 					Function<V, U> nval = var -> {
@@ -130,7 +132,7 @@ public class FirstOrderLogic<R extends Enum<R>, K extends Enum<K>, V> implements
 					return eval(interpretation, quantor.getQuantified(), nval);
 				});
 			}
-			if (quantor.getQuantifyer() == StandardQuantifier.EXISTS) {
+			if (quantor.getQuantifyer() == ClassicalQuantifier.EXISTS) {
 				return interpretation.getUniverse().stream().anyMatch(u -> {
 
 					Function<V, U> nval = var -> {

@@ -14,7 +14,7 @@ import edu.cs.ai.alchourron.logic.syntax.formula.FormulaProposition;
  * @author Kai Sauerwald
  *
  */
-public class PropositionalTest {
+public class PLTest {
 
 	/**
 	 * @param args

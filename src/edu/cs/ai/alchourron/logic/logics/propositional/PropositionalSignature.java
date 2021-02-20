@@ -4,15 +4,18 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.semantics.interpretations.PropositionalInterpretation;
 import edu.cs.ai.alchourron.logic.syntax.structure.BiImplicationLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.FalsumLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.ImplicationLogicSignature;
@@ -63,12 +66,23 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 		this.symbols = new ArrayList<>(symbols);
 	}
 
+//	/***
+//	 * Returns the set of the symbols of this signature
+//	 * 
+//	 * @author Kai Sauerwald
+//	 */
+//	public List<PSym> getSymbols() {
+//		return Collections.unmodifiableList(symbols);
+//	}
+	
 	/***
 	 * Returns the set of the symbols of this signature
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public List<PSym> getSymbols() {
+	@Override
+	public List<PSym> getPropositions() {
+		// TODO Auto-generated method stub
 		return Collections.unmodifiableList(symbols);
 	}
 

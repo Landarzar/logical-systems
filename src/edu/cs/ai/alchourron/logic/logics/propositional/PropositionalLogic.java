@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.ModelTheoreticLogic;
+import edu.cs.ai.alchourron.logic.semantics.interpretations.PropositionalInterpretation;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaAND;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaBiImplication;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaFalsum;
@@ -55,7 +56,7 @@ public class PropositionalLogic<P> implements
 			return le.getOperands().stream().allMatch(se -> validSyntaxTree(se, sig));
 		} else if (syntacton instanceof FormulaProposition<?, ?>) {
 			FormulaProposition<P, PropositionalSignature<P>> atom = (FormulaProposition<P, PropositionalSignature<P>>) syntacton;
-			if (!sig.getSymbols().contains(atom.getSymbol()))
+			if (!sig.getPropositions().contains(atom.getSymbol()))
 				return false;
 			return true;
 		}
@@ -96,8 +97,7 @@ public class PropositionalLogic<P> implements
 	 * Formula)
 	 */
 	@Override
-	public Set<PropositionalInterpretation<P>> modelsOf(
-			Formula<PropositionalSignature<P>> formula) {
+	public Set<PropositionalInterpretation<P>> modelsOf(Formula<PropositionalSignature<P>> formula) {
 //		assert this.validFormula(formula) : "given formula ist not (syntactically) valid";
 		return formula.getSignature().stream().filter(i -> satisfies(i, formula)).collect(Collectors.toSet());
 	}
@@ -110,8 +110,7 @@ public class PropositionalLogic<P> implements
 	 * Interpretation, edu.cs.ai.alchourron.logic.Formula)
 	 */
 	@Override
-	public Boolean eval(PropositionalInterpretation<P> interpretation,
-			Formula<PropositionalSignature<P>> formula) {
+	public Boolean eval(PropositionalInterpretation<P> interpretation, Formula<PropositionalSignature<P>> formula) {
 		return satisfies(interpretation, formula);
 	}
 
@@ -125,45 +124,59 @@ public class PropositionalLogic<P> implements
 	@Override
 	public boolean satisfies(PropositionalInterpretation<P> interpretation,
 			Formula<PropositionalSignature<P>> formula) {
-//		assert this.validFormula(formula) : "the given formula ist not valid";
 
-		if (formula instanceof FormulaProposition<?, ?>) {
-			FormulaProposition<P, PropositionalSignature<P>> atom = (FormulaProposition<P, PropositionalSignature<P>>) formula;
-			return interpretation.isTrue(atom.getSymbol());
-		}
-		if (formula instanceof FormulaAND<?>) {
-			FormulaAND<PropositionalSignature<P>> and = (FormulaAND<PropositionalSignature<P>>) formula;
-			return and.getOperands().stream().allMatch(o -> satisfies(interpretation, o));
-		}
-		if (formula instanceof FormulaOR<?>) {
-			FormulaOR<PropositionalSignature<P>> or = (FormulaOR<PropositionalSignature<P>>) formula;
-			return or.getOperands().stream().anyMatch(o -> satisfies(interpretation, o));
-		}
-		if (formula instanceof FormulaImplication<?>) {
-			FormulaImplication<PropositionalSignature<P>> implication = (FormulaImplication<PropositionalSignature<P>>) formula;
-			return !satisfies(interpretation, implication.getPremise())
-					|| satisfies(interpretation, implication.getConclusion());
-		}
-
-		if (formula instanceof FormulaBiImplication<?>) {
-			FormulaBiImplication<PropositionalSignature<P>> implication = (FormulaBiImplication<PropositionalSignature<P>>) formula;
-			return (satisfies(interpretation, implication.getFirst())
-					&& satisfies(interpretation, implication.getSecond()))
-					|| (!satisfies(interpretation, implication.getFirst())
-							&& !satisfies(interpretation, implication.getSecond()));
-		}
-		if (formula instanceof FormulaNeg<?>) {
-			FormulaNeg<PropositionalSignature<P>> neg = (FormulaNeg<PropositionalSignature<P>>) formula;
-			return !satisfies(interpretation, neg.getOperands().get(0));
-		}
-		if (formula instanceof FormulaFalsum<?>) {
-			return false;
-		}
-		if (formula instanceof FormulaVerum<?>) {
-			return true;
-		}
-
+		// This happens if none of the special cases matches
 		throw new InvalidParameterException("The given formula object is not a valid propositional formula");
+	}
+
+	/***
+	 * Test satisfaction
+	 * @param interpretation
+	 * @param formula
+	 * @return
+	 */
+	public boolean satisfies(PropositionalInterpretation<P> interpretation,
+			FormulaProposition<P, PropositionalSignature<P>> formula) {
+		return interpretation.isTrue(formula.getSymbol());
+	}
+	
+	public boolean satisfies(PropositionalInterpretation<P> interpretation,
+			FormulaAND<PropositionalSignature<P>> formula) {
+		return formula.getOperands().stream().allMatch(o -> satisfies(interpretation, o));
+	}
+	
+	public boolean satisfies(PropositionalInterpretation<P> interpretation,
+			FormulaOR<PropositionalSignature<P>> formula) {
+		return formula.getOperands().stream().anyMatch(o -> satisfies(interpretation, o));
+	}
+	
+	public boolean satisfies(PropositionalInterpretation<P> interpretation,
+			FormulaImplication<PropositionalSignature<P>> formula) {
+		return !satisfies(interpretation, formula.getPremise())
+				|| satisfies(interpretation, formula.getConclusion());
+	}
+	
+	public boolean satisfies(PropositionalInterpretation<P> interpretation,
+			FormulaBiImplication<PropositionalSignature<P>> formula) {
+		return (satisfies(interpretation, formula.getFirst())
+				&& satisfies(interpretation, formula.getSecond()))
+				|| (!satisfies(interpretation, formula.getFirst())
+						&& !satisfies(interpretation, formula.getSecond()));
+	}
+	
+	public boolean satisfies(PropositionalInterpretation<P> interpretation,
+			FormulaNeg<PropositionalSignature<P>> formula) {
+		return !satisfies(interpretation, formula.getOperands().get(0));
+	}
+	
+	public boolean satisfies(PropositionalInterpretation<P> interpretation,
+			FormulaFalsum<PropositionalSignature<P>> formula) {
+		return false;
+	}
+	
+	public boolean satisfies(PropositionalInterpretation<P> interpretation,
+			FormulaVerum<PropositionalSignature<P>> formula) {
+		return true;
 	}
 
 }

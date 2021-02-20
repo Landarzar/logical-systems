@@ -1,4 +1,4 @@
-package edu.cs.ai.alchourron.logic.logics.propositional;
+package edu.cs.ai.alchourron.logic.semantics.interpretations;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -7,6 +7,7 @@ import java.util.Set;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.Interpretation;
+import edu.cs.ai.alchourron.logic.logics.propositional.PropositionalSignature;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaAND;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaNeg;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaProposition;
@@ -85,7 +86,7 @@ public class PropositionalInterpretation<P> implements Interpretation<Propositio
 	 * @author Kai Sauerwald
 	 */
 	public Set<P> getAllFalse() {
-		HashSet<P> set = new HashSet<>(signature.getSymbols());
+		HashSet<P> set = new HashSet<>(signature.getPropositions());
 		set.removeAll(trueValued);
 		return Collections.unmodifiableSet(set);
 	}
@@ -108,7 +109,7 @@ public class PropositionalInterpretation<P> implements Interpretation<Propositio
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		for (P pSym : signature.symbols) {
+		for (P pSym : signature.getPropositions()) {
 			if (trueValued.contains(pSym))
 				builder.append(pSym);
 			else
@@ -123,7 +124,7 @@ public class PropositionalInterpretation<P> implements Interpretation<Propositio
 	@Override
 	public String toLaTeX() {
 		StringBuilder builder = new StringBuilder();
-		for (P pSym : signature.symbols) {
+		for (P pSym : signature.getPropositions()) {
 			if (trueValued.contains(pSym))
 				builder.append(pSym);
 			else
@@ -140,7 +141,7 @@ public class PropositionalInterpretation<P> implements Interpretation<Propositio
 	public Formula<PropositionalSignature<P>> getCharacterizingFormula() {
 		Formula<PropositionalSignature<P>> result = null;
 
-		for (P pSym : signature.getSymbols()) {
+		for (P pSym : signature.getPropositions()) {
 			Formula<PropositionalSignature<P>> tmp;
 			if (isTrue(pSym))
 				tmp = new FormulaProposition<>(signature, pSym);
@@ -162,7 +163,7 @@ public class PropositionalInterpretation<P> implements Interpretation<Propositio
 		PropositionalInterpretation<P> pi = (PropositionalInterpretation<P>) obj;
 		if (!pi.getSignature().equals(this.getSignature()))
 			return false;
-		for (P pSym : getSignature().symbols) {
+		for (P pSym : getSignature().getPropositions()) {
 			if (pi.isTrue(pSym) != this.isTrue(pSym))
 				return false;
 		}

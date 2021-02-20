@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import edu.cs.ai.alchourron.logic.Formula;
+import edu.cs.ai.alchourron.logic.semantics.interpretations.PropositionalInterpretation;
 import edu.cs.ai.alchourron.logic.syntax.formula.*;
 import edu.cs.ai.alchourron.logic.syntax.structure.ClassicalConnectivesLogicSignature;
 import edu.cs.ai.math.combinatorics.PowerSet;
@@ -70,7 +71,7 @@ public class PropositionalNormalForms<P> {
 		// Signature
 		PropositionalSignature<P> signature = phi.getSignature();
 
-		return PowerSet.stream(signature.getSymbols()).allMatch(set -> {
+		return PowerSet.stream(signature.getPropositions()).allMatch(set -> {
 			// Build formula:
 			Formula<PropositionalSignature<P>> formula = phi;
 			for (P p : set) {
@@ -100,7 +101,7 @@ public class PropositionalNormalForms<P> {
 		if (!logic.satisfies(intp, formula))
 			return false;
 
-		return formula.getSignature().getSymbols().stream().allMatch(sigma -> {
+		return formula.getSignature().getPropositions().stream().allMatch(sigma -> {
 			return logic.satisfies(intp, new FormulaProposition<>(formula.getSignature(), sigma)) == logic.entails(formula,
 					new FormulaProposition<>(formula.getSignature(), sigma));
 		});

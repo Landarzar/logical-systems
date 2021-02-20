@@ -1,6 +1,7 @@
 package edu.cs.ai.alchourron.logic;
 
 import java.util.Set;
+import java.util.function.Function;
 
 /***
  * 
@@ -59,12 +60,14 @@ public interface ModelTheoreticLogic<I extends Interpretation<S>, F extends Form
 	 * Checks where {@link I} entails {@link formula}. This must map the (possible)
 	 * many valuedness of the logic to a binary decision.
 	 * 
+	 * The version for closed formula.
+	 * 
 	 * @author Kai Sauerwald
-	 * @param interpretation The interpretation
+	 * @param interpretation The interpretation {@link I}
 	 * @param formula        The formula
 	 * @return {@literal true} if the interpretation {@link I} entails
-	 *         {@link formula}, otherwise it returns {@literal false}. It has no
-	 *         value, if this model theory may provides no satisfaction relation.
+	 *         {@link formula}, otherwise it returns {@literal false}. 
+	 * @throws UnsupportedOperationException If this model theory may provides no satisfaction relation.
 	 */
 	public boolean satisfies(I interpretation, F formula);
 

@@ -1,4 +1,4 @@
-package edu.cs.ai.alchourron.logic.logics.predicatelogics;
+package edu.cs.ai.alchourron.logic.semantics.interpretations;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -8,10 +8,10 @@ import java.util.Set;
 import java.util.function.Function;
 
 import edu.cs.ai.alchourron.logic.Interpretation;
-import edu.cs.ai.alchourron.logic.syntax.structure.RelationLogicSignature;
-import edu.cs.ai.math.settheory.objects.Pair;
-import edu.cs.ai.math.settheory.objects.Relation;
-import edu.cs.ai.math.settheory.objects.Tuple;
+import edu.cs.ai.alchourron.logic.syntax.structure.PredicateLogicSignature;
+import edu.cs.ai.math.settheory.Pair;
+import edu.cs.ai.math.settheory.Tuple;
+import edu.cs.ai.math.settheory.relation.Relation;
 
 /***
  * Represents finite structues where for instance used first order logic as
@@ -24,7 +24,7 @@ import edu.cs.ai.math.settheory.objects.Tuple;
  * @param <K> The type of function symbols
  * @param <S> The type of the signature
  */
-public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends RelationLogicSignature<R, K>>
+public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends PredicateLogicSignature<R, K>>
 		implements Interpretation<S> {
 
 	S signature;

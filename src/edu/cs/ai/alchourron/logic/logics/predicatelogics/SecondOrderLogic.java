@@ -11,6 +11,8 @@ import java.util.stream.Stream;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.ModelTheoreticLogic;
+import edu.cs.ai.alchourron.logic.semantics.interpretations.FiniteStructure;
+import edu.cs.ai.alchourron.logic.syntax.formula.ClassicalQuantifier;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaAND;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaBiImplication;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaFalsum;
@@ -28,10 +30,10 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
 import edu.cs.ai.math.combinatorics.KTupleEnumeration;
 import edu.cs.ai.math.combinatorics.PowerSetLexicographic;
-import edu.cs.ai.math.settheory.objects.Pair;
-import edu.cs.ai.math.settheory.objects.Relation;
-import edu.cs.ai.math.settheory.objects.RelationImpl;
-import edu.cs.ai.math.settheory.objects.Tuple;
+import edu.cs.ai.math.settheory.Pair;
+import edu.cs.ai.math.settheory.Tuple;
+import edu.cs.ai.math.settheory.relation.Relation;
+import edu.cs.ai.math.settheory.relation.implementation.RelationGeneralImpl;
 
 /***
  * Logical System representing propositional logic over symbol space of type
@@ -58,7 +60,7 @@ public class SecondOrderLogic<R extends Enum<R>, K extends Enum<K>, V, P> implem
 		}
 
 		if (formula instanceof FormulaSOQuantification<?, ?, ?>) {
-			FormulaSOQuantification<StandardQuantifier, P, SOSignature<R, K, V, P>> quantor = (FormulaSOQuantification<StandardQuantifier, P, SOSignature<R, K, V, P>>) formula;
+			FormulaSOQuantification<ClassicalQuantifier, P, SOSignature<R, K, V, P>> quantor = (FormulaSOQuantification<ClassicalQuantifier, P, SOSignature<R, K, V, P>>) formula;
 
 			Set<Pair<P, Integer>> result = new HashSet<>(getFreeSOVariables(quantor.getQuantified()));
 			result.removeIf(p -> p.getFirst().equals(quantor.getVariables()));
@@ -116,7 +118,7 @@ public class SecondOrderLogic<R extends Enum<R>, K extends Enum<K>, V, P> implem
 		}
 
 		if (formula instanceof FormulaQuantification<?, ?, ?>) {
-			FormulaQuantification<StandardQuantifier, V, SOSignature<R, K, V, P>> quantor = (FormulaQuantification<StandardQuantifier, V, SOSignature<R, K, V, P>>) formula;
+			FormulaQuantification<ClassicalQuantifier, V, SOSignature<R, K, V, P>> quantor = (FormulaQuantification<ClassicalQuantifier, V, SOSignature<R, K, V, P>>) formula;
 
 			Set<V> result = new HashSet<>(getFreeVariables(quantor.getQuantified()));
 			result.removeIf(v -> v.equals(quantor.getVariables()));
@@ -176,8 +178,8 @@ public class SecondOrderLogic<R extends Enum<R>, K extends Enum<K>, V, P> implem
 			return SOvaluation.apply(pred.getSymbol()).contains(tuple);
 		}
 		if (formula instanceof FormulaQuantification<?, ?, ?>) {
-			FormulaQuantification<StandardQuantifier, V, SOSignature<R, K, V, P>> quantor = (FormulaQuantification<StandardQuantifier, V, SOSignature<R, K, V, P>>) formula;
-			if (quantor.getQuantifyer() == StandardQuantifier.FORALL) {
+			FormulaQuantification<ClassicalQuantifier, V, SOSignature<R, K, V, P>> quantor = (FormulaQuantification<ClassicalQuantifier, V, SOSignature<R, K, V, P>>) formula;
+			if (quantor.getQuantifyer() == ClassicalQuantifier.FORALL) {
 				return interpretation.getUniverse().stream().allMatch(u -> {
 
 					Function<V, U> nval = var -> {
@@ -189,7 +191,7 @@ public class SecondOrderLogic<R extends Enum<R>, K extends Enum<K>, V, P> implem
 					return eval(interpretation, quantor.getQuantified(), nval, SOvaluation);
 				});
 			}
-			if (quantor.getQuantifyer() == StandardQuantifier.EXISTS) {
+			if (quantor.getQuantifyer() == ClassicalQuantifier.EXISTS) {
 				return interpretation.getUniverse().stream().anyMatch(u -> {
 
 					Function<V, U> nval = var -> {
@@ -204,7 +206,7 @@ public class SecondOrderLogic<R extends Enum<R>, K extends Enum<K>, V, P> implem
 		}
 
 		if (formula instanceof FormulaSOQuantification<?, ?, ?>) {
-			FormulaSOQuantification<StandardQuantifier, P, SOSignature<R, K, V, P>> quantor = (FormulaSOQuantification<StandardQuantifier, P, SOSignature<R, K, V, P>>) formula;
+			FormulaSOQuantification<ClassicalQuantifier, P, SOSignature<R, K, V, P>> quantor = (FormulaSOQuantification<ClassicalQuantifier, P, SOSignature<R, K, V, P>>) formula;
 			Optional<Pair<P, Integer>> findFirst = getFreeSOVariables(quantor.getQuantified()).stream()
 					.filter(p -> p.getFirst().equals(quantor.getVariables())).findFirst();
 
@@ -215,9 +217,9 @@ public class SecondOrderLogic<R extends Enum<R>, K extends Enum<K>, V, P> implem
 			Stream<Relation<U>> relationStream = PowerSetLexicographic
 					.stream(KTupleEnumeration.stream(new ArrayList<>(interpretation.getUniverse()), tuplearity)
 							.collect(Collectors.toUnmodifiableList()))
-					.map(s -> new RelationImpl<>(tuplearity, s));
+					.map(s -> new RelationGeneralImpl<>(tuplearity, s));
 
-			if (quantor.getQuantifyer() == StandardQuantifier.FORALL) {
+			if (quantor.getQuantifyer() == ClassicalQuantifier.FORALL) {
 				return relationStream.allMatch(r -> {
 					Function<P, Relation<U>> nval = var -> {
 						if (var.equals(quantor.getVariables()))
@@ -227,7 +229,7 @@ public class SecondOrderLogic<R extends Enum<R>, K extends Enum<K>, V, P> implem
 					return eval(interpretation, quantor.getQuantified(), valuation, nval);
 				});
 			}
-			if (quantor.getQuantifyer() == StandardQuantifier.EXISTS) {
+			if (quantor.getQuantifyer() == ClassicalQuantifier.EXISTS) {
 				return relationStream.anyMatch(r -> {
 					Function<P, Relation<U>> nval = var -> {
 						if (var.equals(quantor.getVariables()))

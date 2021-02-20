@@ -8,16 +8,16 @@ import java.util.Set;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.logics.predicatelogics.FOSignature;
-import edu.cs.ai.alchourron.logic.logics.predicatelogics.FiniteStructure;
 import edu.cs.ai.alchourron.logic.logics.predicatelogics.FirstOrderLogic;
-import edu.cs.ai.alchourron.logic.logics.predicatelogics.StandardQuantifier;
+import edu.cs.ai.alchourron.logic.semantics.interpretations.FiniteStructure;
+import edu.cs.ai.alchourron.logic.syntax.formula.ClassicalQuantifier;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPredicate;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaQuantification;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
-import edu.cs.ai.math.settheory.objects.Pair;
-import edu.cs.ai.math.settheory.objects.Relation;
-import edu.cs.ai.math.settheory.objects.RelationImpl;
-import edu.cs.ai.math.settheory.objects.Tuple;
+import edu.cs.ai.math.settheory.Pair;
+import edu.cs.ai.math.settheory.Tuple;
+import edu.cs.ai.math.settheory.relation.Relation;
+import edu.cs.ai.math.settheory.relation.implementation.RelationGeneralImpl;
 
 /**
  * @author Kai Sauerwald
@@ -40,8 +40,8 @@ public class FOTest {
 		FOSignature<ABPredicates, Empty, Character> signature = new FOSignature<>(
 				List.of(ABPredicates.IsA, ABPredicates.IsB, ABPredicates.SUCC), List.of(1, 1, 2));
 
-		Relation<Integer> IsAIntp = new RelationImpl<>(1, Set.of(new Tuple<>(0), new Tuple<>(2), new Tuple<>(4)));
-		Relation<Integer> IsBIntp = new RelationImpl<>(1, Set.of(new Tuple<>(1), new Tuple<>(3), new Tuple<>(5)));
+		Relation<Integer> IsAIntp = new RelationGeneralImpl<>(1, Set.of(new Tuple<>(0), new Tuple<>(2), new Tuple<>(4)));
+		Relation<Integer> IsBIntp = new RelationGeneralImpl<>(1, Set.of(new Tuple<>(1), new Tuple<>(3), new Tuple<>(5)));
 		Relation<Integer> SuccIntp = new Relation<Integer>() {
 
 			@Override
@@ -69,7 +69,7 @@ public class FOTest {
 				List.of());
 
 		Formula<FOSignature<ABPredicates, Empty, Character>> myform = new FormulaQuantification<>(signature,
-				StandardQuantifier.EXISTS, 'x',
+				ClassicalQuantifier.EXISTS, 'x',
 				new FormulaPredicate<>(signature, ABPredicates.IsA, List.of(new VariableTerm<>('x'))));
 
 		FirstOrderLogic<ABPredicates, Empty, Character> fo = new FirstOrderLogic<>();

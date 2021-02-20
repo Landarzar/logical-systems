@@ -89,10 +89,4 @@ public class FormulaConditional<S extends Signature, B extends Formula<S>> exten
 //	public List<Formula<S>> getSyntaxTree() throws UnsupportedOperationException {
 //		return List.of(this.getAntecendence(),this.getConsequence());
 //	}
-
-	@Override
-	public S getSignature() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
