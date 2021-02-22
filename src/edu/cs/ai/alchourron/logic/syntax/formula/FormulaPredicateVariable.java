@@ -3,6 +3,7 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.syntax.structure.PredicateLogicSignature;
@@ -114,5 +115,20 @@ public class FormulaPredicateVariable<QSO, P, S extends SecondOrderQuantificatio
 	@Override
 	public boolean isSignatureMatching(S signature) throws UnsupportedOperationException {
 		return Formula.super.isSignatureMatching(signature);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(terms, variable);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof FormulaPredicateVariable))
+			return false;
+		FormulaPredicateVariable other = (FormulaPredicateVariable) obj;
+		return Objects.equals(terms, other.terms) && Objects.equals(variable, other.variable);
 	}
 }

@@ -78,6 +78,12 @@ public class SOTest {
 		Formula<SOSignature<ABPredicates, Empty, Character, SOVars>> myform = new FormulaSOQuantification<>(
 				ClassicalQuantifier.FORALL, SOVars.P, new FormulaQuantification<>(ClassicalQuantifier.FORALL, 'x',
 						new FormulaPredicateVariable<>(SOVars.P, List.of(new VariableTerm<>('x')))));
+		
+		Formula<SOSignature<ABPredicates, Empty, Character, SOVars>> myform2 = new FormulaSOQuantification<>(
+				ClassicalQuantifier.FORALL, SOVars.P, new FormulaQuantification<>(ClassicalQuantifier.FORALL, 'x',
+						new FormulaPredicateVariable<>(SOVars.P, List.of(new VariableTerm<>('x')))));
+		
+		System.out.println("Form1 equivalent to Form2: " + myform.equals(myform2));
 
 		SecondOrderLogic<ABPredicates, Empty, Character, SOVars> so = new SecondOrderLogic<>();
 		System.out.println(structure + " |= " + myform + " ? " + so.satisfies(structure, myform));

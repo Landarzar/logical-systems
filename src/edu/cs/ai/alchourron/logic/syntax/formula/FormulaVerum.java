@@ -34,7 +34,7 @@ public class FormulaVerum<S extends VerumLogicSignature> extends FormulaAtom<S> 
 	}
 
 	@Override
-	public String stringify() {
+	public String toString() {
 		return "TOP";
 	}
 	

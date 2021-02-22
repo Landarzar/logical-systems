@@ -3,6 +3,7 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.syntax.structure.PredicateLogicSignature;
@@ -80,5 +81,20 @@ public class FormulaPredicate<R, S extends PredicateLogicSignature<R>>
 				return sb.append(')').toString();
 			sb.append(',').append(' ');
 		}
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(symbol, terms);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof FormulaPredicate))
+			return false;
+		FormulaPredicate other = (FormulaPredicate) obj;
+		return Objects.equals(symbol, other.symbol) && Objects.equals(terms, other.terms);
 	}
 }

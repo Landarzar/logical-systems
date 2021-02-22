@@ -1,6 +1,7 @@
 package edu.cs.ai.alchourron.logic.syntax.terms;
 
 import java.util.List;
+import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.SyntacticElement;
 import edu.cs.ai.alchourron.logic.syntax.structure.FunctionTermLogicSignature;
@@ -45,5 +46,20 @@ public class VariableTerm<V, S extends VariableTermLogicSignature<V>> implements
 	public boolean isSignatureMatching(
 			S signature) {
 		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(variable);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof VariableTerm))
+			return false;
+		VariableTerm other = (VariableTerm) obj;
+		return Objects.equals(variable, other.variable);
 	}
 }

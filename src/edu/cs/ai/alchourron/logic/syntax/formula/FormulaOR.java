@@ -60,21 +60,6 @@ public class FormulaOR<S extends DisjunctionLogicSignature> extends LogicalOpera
 		return false;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(operands);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!(obj instanceof FormulaAND<?>))
-			return false;
-		FormulaOR<S> other = (FormulaOR<S>) obj;
-		return Objects.equals(operands, other.operands);
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -135,5 +120,20 @@ public class FormulaOR<S extends DisjunctionLogicSignature> extends LogicalOpera
 	@Override
 	public String stringify() {
 		return toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(operands);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof FormulaOR))
+			return false;
+		FormulaOR other = (FormulaOR) obj;
+		return Objects.equals(operands, other.operands);
 	}
 }

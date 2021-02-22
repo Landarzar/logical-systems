@@ -1,6 +1,7 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.List;
+import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.syntax.structure.BiImplicationLogicSignature;
@@ -45,7 +46,21 @@ public class FormulaBiImplication<S extends BiImplicationLogicSignature> extends
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return stringify();
+		return implicant1.toLaTeX() + " <=> " + implicant2.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(implicant1, implicant2);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof FormulaBiImplication))
+			return false;
+		FormulaBiImplication other = (FormulaBiImplication) obj;
+		return Objects.equals(implicant1, other.implicant1) && Objects.equals(implicant2, other.implicant2);
 	}
 }

@@ -2,6 +2,7 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.Signature;

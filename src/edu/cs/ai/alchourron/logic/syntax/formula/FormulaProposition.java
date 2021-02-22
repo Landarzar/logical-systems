@@ -1,15 +1,16 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
+import java.util.Objects;
+
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.syntax.structure.PropositionLogicSignature;
 
 /***
- * Represents predicates, for instance relations in first order logic or
- * propositional atoms.
+ * Represents a proposition
  * 
  * @author Kai Sauerwald
  *
- * @param <PSym> The type for predicate symbols
+ * @param <PSym> The type for symbols
  * @param <S>    The signature type
  */
 public class FormulaProposition<PSym, S extends PropositionLogicSignature<PSym>> extends FormulaAtom<S> {
@@ -30,12 +31,27 @@ public class FormulaProposition<PSym, S extends PropositionLogicSignature<PSym>>
 	}
 
 	@Override
-	public String stringify() {
+	public String toString() {
 		return symbol.toString();
 	}
 	
 	@Override
 	public boolean isSignatureMatching(S signature) throws UnsupportedOperationException {
 		return signature.getPropositions().contains(symbol);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(symbol);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof FormulaProposition))
+			return false;
+		FormulaProposition other = (FormulaProposition) obj;
+		return Objects.equals(symbol, other.symbol);
 	}
 }

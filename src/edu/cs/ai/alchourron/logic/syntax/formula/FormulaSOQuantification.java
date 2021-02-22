@@ -1,6 +1,7 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.List;
+import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.syntax.structure.SecondOrderQuantificationLogic;
@@ -70,5 +71,22 @@ public class FormulaSOQuantification<QSO, P, S extends SecondOrderQuantification
 	@Override
 	public boolean isSignatureMatching(S signature) throws UnsupportedOperationException {
 		return signature.getSOQuantifier().contains(quantifiyer) && super.isSignatureMatching(signature);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(quantified, quantifiyer, variable);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof FormulaSOQuantification))
+			return false;
+		FormulaSOQuantification other = (FormulaSOQuantification) obj;
+		return Objects.equals(quantified, other.quantified) 
+				&& Objects.equals(quantifiyer, other.quantifiyer)
+				&& Objects.equals(variable, other.variable);
 	}
 }

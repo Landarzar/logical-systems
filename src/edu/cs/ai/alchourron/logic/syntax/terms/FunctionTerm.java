@@ -3,6 +3,7 @@ package edu.cs.ai.alchourron.logic.syntax.terms;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.Signature;
 import edu.cs.ai.alchourron.logic.SyntacticElement;
@@ -80,4 +81,19 @@ public class FunctionTerm<K,S extends FunctionTermLogicSignature<K>> implements 
 		return signature.getFunctionSymbols().contains(this.getSymbol()) && signature.getFunctionArity(getSymbol()) == getArity();
 	}
 
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(arity, children, symbol);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof FunctionTerm))
+			return false;
+		FunctionTerm other = (FunctionTerm) obj;
+		return arity == other.arity && Objects.equals(children, other.children) && Objects.equals(symbol, other.symbol);
+	}
 }

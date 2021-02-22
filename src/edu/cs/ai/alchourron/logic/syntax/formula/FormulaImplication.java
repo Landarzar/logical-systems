@@ -1,6 +1,7 @@
 package edu.cs.ai.alchourron.logic.syntax.formula;
 
 import java.util.List;
+import java.util.Objects;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.syntax.structure.ImplicationLogicSignature;
@@ -46,7 +47,21 @@ public class FormulaImplication<S extends ImplicationLogicSignature> extends Log
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return stringify();
+		return premise.toLaTeX() + " => " + conclusion.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(conclusion, premise);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!(obj instanceof FormulaImplication))
+			return false;
+		FormulaImplication other = (FormulaImplication) obj;
+		return Objects.equals(conclusion, other.conclusion) && Objects.equals(premise, other.premise);
 	}
 }
