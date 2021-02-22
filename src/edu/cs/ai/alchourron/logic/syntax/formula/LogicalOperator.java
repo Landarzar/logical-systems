@@ -14,11 +14,8 @@ import edu.cs.ai.alchourron.logic.SyntacticElement;
  *
  * @param <S> The Signature
  */
-public abstract class LogicalOperator<S extends Signature> extends Formula<S> implements SyntacticElement {
+public abstract class LogicalOperator<S extends Signature> implements Formula<S> {
 
-	public LogicalOperator(S signature) {
-		super(signature);
-	}
 
 	/***
 	 * Returns the operands of this logical connective.
@@ -49,4 +46,8 @@ public abstract class LogicalOperator<S extends Signature> extends Formula<S> im
 		return result;
 	}
 
+	@Override
+	public boolean isSignatureMatching(S signature) throws UnsupportedOperationException {
+		return getOperands().stream().allMatch(f -> isSignatureMatching(signature));
+	}
 }

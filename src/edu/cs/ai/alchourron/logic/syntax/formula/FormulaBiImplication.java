@@ -9,8 +9,7 @@ public class FormulaBiImplication<S extends BiImplicationLogicSignature> extends
 	Formula<S> implicant1;
 	Formula<S> implicant2;
 
-	public FormulaBiImplication(S signature, Formula<S> implicant1, Formula<S> implicant2) {
-		super(signature);
+	public FormulaBiImplication(Formula<S> implicant1, Formula<S> implicant2) {
 		this.implicant1 = implicant1;
 		this.implicant2 = implicant2;
 	}

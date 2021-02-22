@@ -14,12 +14,11 @@ import edu.cs.ai.alchourron.logic.SyntacticElement;
  * @param <S> Signature Type
  * @param <B> Formulas of the base logic
  */
-public class FormulaConditional<S extends Signature, B extends Formula<S>> extends Formula<S> {
+public class FormulaConditional<S extends Signature, B extends Formula<S>> implements Formula<S> {
 	private B antecendence;
 	private B consequence;
 
-	public FormulaConditional(S signature, B antecendence, B consequence) {
-		super(signature);
+	public FormulaConditional(B antecendence, B consequence) {
 		this.antecendence = antecendence;
 		this.consequence = consequence;
 	}

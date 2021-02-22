@@ -9,17 +9,15 @@ import edu.cs.ai.alchourron.logic.syntax.structure.SecondOrderQuantificationLogi
  * 
  * @author Kai Sauerwald
  *
- * @param <Q> The type which are bound by this quantifier (Variables, Relations,
- *            ...)
+ * @param <Q> The type of quantifiers
  */
-public class FormulaSOQuantification<Q, P, S extends SecondOrderQuantificationLogic<P>> extends LogicalOperator<S> {
+public class FormulaSOQuantification<QSO, P, S extends SecondOrderQuantificationLogic<P, QSO>> extends LogicalOperator<S> {
 
-	private Q quantifiyer;
+	private QSO quantifiyer;
 	private P variable;
 	private Formula<S> quantified;
 
-	public FormulaSOQuantification(S signature, Q quantifiyer, P variable, Formula<S> quantified) {
-		super(signature);
+	public FormulaSOQuantification(QSO quantifiyer, P variable, Formula<S> quantified) {
 		this.quantifiyer = quantifiyer;
 		this.variable = variable;
 		this.quantified = quantified;
@@ -28,7 +26,7 @@ public class FormulaSOQuantification<Q, P, S extends SecondOrderQuantificationLo
 	/***
 	 * Gets the parameters of this quantifier
 	 */
-	public Q getQuantifyer() {
+	public QSO getQuantifyer() {
 		return quantifiyer;
 	}
 
@@ -48,20 +46,13 @@ public class FormulaSOQuantification<Q, P, S extends SecondOrderQuantificationLo
 		return quantified;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.syntax.SyntacticElement#isLogical()
-	 */
 	@Override
 	public boolean isLogical() {
-
 		return true;
 	}
 
 	@Override
 	public boolean isAtom() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -74,5 +65,10 @@ public class FormulaSOQuantification<Q, P, S extends SecondOrderQuantificationLo
 	@Override
 	public String toString() {
 		return quantifiyer.toString() + " " + variable + ". " + quantified;
+	}
+	
+	@Override
+	public boolean isSignatureMatching(S signature) throws UnsupportedOperationException {
+		return signature.getSOQuantifier().contains(quantifiyer) && super.isSignatureMatching(signature);
 	}
 }

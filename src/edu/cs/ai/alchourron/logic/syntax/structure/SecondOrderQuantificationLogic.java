@@ -1,5 +1,7 @@
 package edu.cs.ai.alchourron.logic.syntax.structure;
 
+import java.util.Set;
+
 import edu.cs.ai.alchourron.logic.Signature;
 
 /***
@@ -8,8 +10,9 @@ import edu.cs.ai.alchourron.logic.Signature;
  * 
  * @author Kai Sauerwald
  *
- * @param <V> The type for predicate variables
+ * @param <P> The type for predicate variables
  */
-public interface SecondOrderQuantificationLogic<V> extends Signature {
+public interface SecondOrderQuantificationLogic<P, QSO> extends Signature {
 
+	public Set<QSO> getSOQuantifier();
 }

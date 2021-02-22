@@ -3,8 +3,10 @@ package edu.cs.ai.alchourron.logic.syntax.terms;
 import java.util.List;
 
 import edu.cs.ai.alchourron.logic.SyntacticElement;
+import edu.cs.ai.alchourron.logic.syntax.structure.FunctionTermLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.VariableTermLogicSignature;
 
-public class VariableTerm<F extends Enum<F>, V> implements Term<F, V> {
+public class VariableTerm<V, S extends VariableTermLogicSignature<V>> implements Term<S> {
 
 	V variable;
 
@@ -36,8 +38,12 @@ public class VariableTerm<F extends Enum<F>, V> implements Term<F, V> {
 
 	@Override
 	public List<SyntacticElement> getSyntacticChildren() {
-		// TODO Auto-generated method stub
-		return null;
+		return List.of();
 	}
 
+	@Override
+	public boolean isSignatureMatching(
+			S signature) {
+		return true;
+	}
 }

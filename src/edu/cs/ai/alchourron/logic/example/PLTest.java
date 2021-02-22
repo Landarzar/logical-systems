@@ -22,9 +22,9 @@ public class PLTest {
 	public static void main(String[] args) {
 
 		PropositionalSignature<Character> signature = new PropositionalSignature<Character>('a', 'b', 'c');
-		Formula<PropositionalSignature<Character>> prop1 = new FormulaAND<>(signature, new FormulaProposition<>(signature, 'b'), new FormulaProposition<>(signature, 'c'));
-		Formula<PropositionalSignature<Character>> prop = new FormulaOR<>(signature,
-				prop1,new FormulaProposition<>(signature, 'a'));
+		Formula<PropositionalSignature<Character>> prop1 = new FormulaAND<>(new FormulaProposition<>('b'),
+				new FormulaProposition<>('c'));
+		Formula<PropositionalSignature<Character>> prop = new FormulaOR<>(prop1, new FormulaProposition<>('a'));
 
 		PropositionalNormalForms<Character> nf = new PropositionalNormalForms<>();
 

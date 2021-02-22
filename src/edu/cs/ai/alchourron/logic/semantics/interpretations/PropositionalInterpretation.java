@@ -91,12 +91,10 @@ public class PropositionalInterpretation<P> implements Interpretation<Propositio
 		return Collections.unmodifiableSet(set);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see cs.ai.logic.Interpretation#getSignature()
+	/*****
+	 * Provides the signature of this propositional interpretation
+	 *@author Kai Sauerwald
 	 */
-	@Override
 	public PropositionalSignature<P> getSignature() {
 		return signature;
 	}
@@ -144,14 +142,14 @@ public class PropositionalInterpretation<P> implements Interpretation<Propositio
 		for (P pSym : signature.getPropositions()) {
 			Formula<PropositionalSignature<P>> tmp;
 			if (isTrue(pSym))
-				tmp = new FormulaProposition<>(signature, pSym);
+				tmp = new FormulaProposition<>(pSym);
 			else
-				tmp = new FormulaNeg<>(new FormulaProposition<>(signature, pSym));
+				tmp = new FormulaNeg<>(new FormulaProposition<>(pSym));
 
 			if (result == null)
 				result = tmp;
 			else
-				result = new FormulaAND<>(signature, tmp);
+				result = new FormulaAND<>(tmp);
 		}
 		return result;
 	}
@@ -177,7 +175,6 @@ public class PropositionalInterpretation<P> implements Interpretation<Propositio
 
 	@Override
 	public boolean isMatchingSignature(PropositionalSignature<P> signature) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.signature.equals(signature);
 	}
 }

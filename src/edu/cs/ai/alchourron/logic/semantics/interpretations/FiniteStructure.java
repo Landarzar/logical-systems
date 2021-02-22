@@ -24,10 +24,9 @@ import edu.cs.ai.math.settheory.relation.Relation;
  * @param <K> The type of function symbols
  * @param <S> The type of the signature
  */
-public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends PredicateLogicSignature<R, K>>
+public class FiniteStructure<U, R, K, S extends PredicateLogicSignature<R>>
 		implements Interpretation<S> {
 
-	S signature;
 	Set<U> universe;
 	Map<R, Relation<U>> relations;
 	Map<K, Function<Tuple<U>, U>> functions;
@@ -40,9 +39,8 @@ public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends 
 	 * @param rel      The interpretations of predicate symbols
 	 * @param func     The interpretation of function symbols
 	 */
-	public FiniteStructure(S signature, Set<U> universe, Collection<Pair<R, Relation<U>>> rel,
+	public FiniteStructure(Set<U> universe, Collection<Pair<R, Relation<U>>> rel,
 			Collection<Pair<K, Function<Tuple<U>, U>>> func) {
-		this.signature = signature;
 		this.universe = Collections.unmodifiableSet(universe);
 
 		HashMap<R, Relation<U>> rmap = new HashMap<>();
@@ -125,11 +123,5 @@ public class FiniteStructure<U, R extends Enum<R>, K extends Enum<K>, S extends 
 	public boolean isMatchingSignature(S signature) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public S getSignature() {
-		// TODO Auto-generated method stub
-		return signature;
 	}
 }

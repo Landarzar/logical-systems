@@ -14,10 +14,6 @@ import edu.cs.ai.alchourron.logic.Signature;
  */
 public class FormulaConditionalisation<S extends Signature> extends LogicalOperator<S> {
 
-	public FormulaConditionalisation(S signature) {
-		super(signature);
-	}
-
 	@Override
 	public boolean isAtom() {
 		// TODO Auto-generated method stub
@@ -32,12 +28,6 @@ public class FormulaConditionalisation<S extends Signature> extends LogicalOpera
 
 	@Override
 	public List<Formula<S>> getOperands() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public S getSignature() {
 		// TODO Auto-generated method stub
 		return null;
 	}

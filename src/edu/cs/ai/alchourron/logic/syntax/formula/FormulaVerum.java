@@ -13,10 +13,6 @@ import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
  */
 public class FormulaVerum<S extends VerumLogicSignature> extends FormulaAtom<S> {
 
-	public FormulaVerum(S signature) {
-		super(signature);
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -41,10 +37,9 @@ public class FormulaVerum<S extends VerumLogicSignature> extends FormulaAtom<S> 
 	public String stringify() {
 		return "TOP";
 	}
-
+	
 	@Override
-	public S getSignature() {
-		// TODO Auto-generated method stub
-		return signature;
+	public boolean isSignatureMatching(S signature) throws UnsupportedOperationException {
+		return true;
 	}
 }

@@ -1,6 +1,7 @@
 package edu.cs.ai.alchourron.logic.syntax.structure;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Describes logics, where there propositions as elements of the language
@@ -15,6 +16,6 @@ public interface PropositionLogicSignature<P> extends AtomLogicSignature {
 	 * Provides a set of Propositions of that signature.
 	 * @author Kai Sauerwald
 	 */
-	public List<P> getPropositions();
+	public Set<P> getPropositions();
 
 }

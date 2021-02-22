@@ -81,9 +81,8 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 	 * @author Kai Sauerwald
 	 */
 	@Override
-	public List<PSym> getPropositions() {
-		// TODO Auto-generated method stub
-		return Collections.unmodifiableList(symbols);
+	public Set<PSym> getPropositions() {
+		return Collections.unmodifiableSet(new HashSet<>(symbols));
 	}
 
 	/**

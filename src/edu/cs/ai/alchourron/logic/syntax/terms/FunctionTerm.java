@@ -4,21 +4,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import edu.cs.ai.alchourron.logic.Signature;
 import edu.cs.ai.alchourron.logic.SyntacticElement;
+import edu.cs.ai.alchourron.logic.syntax.structure.FunctionTermLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.structure.VariableTermLogicSignature;
 
-public class FunctionTerm<F extends Enum<F>, V> implements Term<F, V> {
+public class FunctionTerm<K,S extends FunctionTermLogicSignature<K>> implements Term<S> {
 
-	F symbol;
+	K symbol;
 	int arity;
-	List<Term<F, V>> children;
+	List<Term<S>> children;
 
-	public FunctionTerm(F symbol, int arity, Term<F, V>... args) {
+	public FunctionTerm(K symbol, int arity, Term<S>... args) {
 		this.symbol = symbol;
 		this.arity = arity;
 		this.children = List.of(args);
 	}
 
-	public FunctionTerm(F symbol, int arity, List<Term<F, V>> args) {
+	public FunctionTerm(K symbol, int arity, List<Term<S>> args) {
 		this.symbol = symbol;
 		this.arity = arity;
 		this.children = Collections.unmodifiableList(args);
@@ -29,7 +32,7 @@ public class FunctionTerm<F extends Enum<F>, V> implements Term<F, V> {
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public F getSymbol() {
+	public K getSymbol() {
 		return symbol;
 	}
 
@@ -62,13 +65,19 @@ public class FunctionTerm<F extends Enum<F>, V> implements Term<F, V> {
 		return symbol.toString() + getSubTerms().toString();
 	}
 
-	public List<Term<F, V>> getSubTerms() {
+	public List<Term<S>> getSubTerms() {
 		return children;
 	}
 
 	@Override
 	public List<SyntacticElement> getSyntacticChildren() {
 		return new ArrayList<SyntacticElement>(children);
+	}
+	
+	@Override
+	public boolean isSignatureMatching(
+			S signature) {
+		return signature.getFunctionSymbols().contains(this.getSymbol()) && signature.getFunctionArity(getSymbol()) == getArity();
 	}
 
 }

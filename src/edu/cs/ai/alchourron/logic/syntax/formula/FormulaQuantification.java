@@ -9,8 +9,8 @@ import edu.cs.ai.alchourron.logic.syntax.structure.QuantificationLogicSignature;
  * 
  * @author Kai Sauerwald
  *
- * @param <Q> The type which are bound by this quantifier (Variables, Relations,
- *            ...)
+ * @param <Q> The possible quantifies
+ * @param <V> The variable type
  */
 public class FormulaQuantification<Q, V, S extends QuantificationLogicSignature<Q, V>> extends LogicalOperator<S> {
 
@@ -18,8 +18,7 @@ public class FormulaQuantification<Q, V, S extends QuantificationLogicSignature<
 	private V variable;
 	private Formula<S> quantified;
 
-	public FormulaQuantification(S signature, Q quantifiyer, V variable, Formula<S> quantified) {
-		super(signature);
+	public FormulaQuantification(Q quantifiyer, V variable, Formula<S> quantified) {
 		this.quantifiyer = quantifiyer;
 		this.variable = variable;
 		this.quantified = quantified;
@@ -74,5 +73,10 @@ public class FormulaQuantification<Q, V, S extends QuantificationLogicSignature<
 	@Override
 	public String toString() {
 		return quantifiyer.toString() + " " + variable + ". " + quantified;
+	}
+	
+	@Override
+	public boolean isSignatureMatching(S signature) throws UnsupportedOperationException {
+		return signature.getQuantifier().contains(quantifiyer) && super.isSignatureMatching(signature);
 	}
 }

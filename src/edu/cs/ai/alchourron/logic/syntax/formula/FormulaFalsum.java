@@ -12,10 +12,6 @@ import edu.cs.ai.alchourron.logic.syntax.structure.FalsumLogicSignature;
  */
 public class FormulaFalsum<S extends FalsumLogicSignature> extends FormulaAtom<S> {
 
-	public FormulaFalsum(S signature) {
-		super(signature);
-	}
-
 	@Override
 	public String stringify() {
 		return "BOT";

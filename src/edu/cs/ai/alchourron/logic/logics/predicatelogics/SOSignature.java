@@ -1,56 +1,41 @@
+/**
+ * 
+ */
 package edu.cs.ai.alchourron.logic.logics.predicatelogics;
 
 import java.util.List;
+import java.util.Set;
 
-import edu.cs.ai.alchourron.logic.syntax.structure.SecondOrderQuantificationLogic;
+import edu.cs.ai.alchourron.logic.syntax.formula.ClassicalQuantifier;
 
-/***
- * Represents a propositional signature, which uses Elements of the type Psym as
- * symbol supply.
- * 
+/**
  * @author Kai Sauerwald
  *
- * @param <R> Relation Symbols
- * @param <K> Function Symbols
- * @param <V> Type for first-order variables
- * @param <P> Type for second-order variables
  */
-public class SOSignature<R extends Enum<R>, K extends Enum<K>, V, P> extends FOSignature<R, K, V>
-		implements SecondOrderQuantificationLogic<P> {
+public class SOSignature<R, K, V, P> extends GeneralizedSOSignature<R, K, V, ClassicalQuantifier, P, ClassicalQuantifier> {
 
-	/***
-	 * Constructs a new signature
-	 * 
-	 * @author Kai Sauerwald
-	 * @param predicateSymbols The symbols of this signature
+	/**
+	 * @param quantifieres
+	 * @param symbR
+	 * @param arityR
+	 * @param symbF
+	 * @param arityF
+	 * @param soquantifiers
 	 */
 	public SOSignature(R[] symbR, Integer[] arityR, K[] symbF, Integer[] arityF) {
-		super(symbR, arityR, symbF, arityF);
+		super(Set.of(ClassicalQuantifier.values()), symbR, arityR, symbF, arityF, Set.of(ClassicalQuantifier.values()));
+		// TODO Auto-generated constructor stub
 	}
 
-	/***
-	 * Constructs a new signature
-	 * 
-	 * @author Kai Sauerwald
-	 * @param symbols The symbols of predicates
-	 * @param arity   The arity of predicates
+	/**
+	 * @param quantifieres
+	 * @param symbols
+	 * @param arity
+	 * @param soquantifiers
 	 */
 	public SOSignature(List<R> symbols, List<Integer> arity) {
-		super(symbols, arity);
+		super(Set.of(ClassicalQuantifier.values()), symbols, arity, Set.of(ClassicalQuantifier.values()));
+		// TODO Auto-generated constructor stub
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "<" + predicateSymbols.toString() + "," + functionSymbols + ">";
-	}
-
-	@Override
-	public String toLaTeX() {
-		return predicateSymbols.toString();
-	}
 }

@@ -18,11 +18,11 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  * @param <R> The type for predicate symbols
  * @param <S> The signature type
  */
-public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, P, S extends SecondOrderQuantificationLogic<P> & PredicateLogicSignature<R, K>>
-		extends Formula<S> {
+public class FormulaPredicateVariable<QSO, P, S extends SecondOrderQuantificationLogic<P, QSO>>
+		implements Formula<S> {
 
 	protected P variable;
-	protected List<Term<K, V>> terms;
+	protected List<Term<S>> terms;
 
 	/***
 	 * Constructs a new atomar predicate
@@ -31,8 +31,7 @@ public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, P
 	 * @param symbol
 	 * @param terms
 	 */
-	public FormulaPredicateVariable(S signature, P symbol, List<Term<K, V>> terms) {
-		super(signature);
+	public FormulaPredicateVariable(P symbol, List<Term<S>> terms) {
 		this.variable = symbol;
 		this.terms = Collections.unmodifiableList(terms);
 	}
@@ -60,7 +59,7 @@ public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, P
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public List<Term<K, V>> getTerms() {
+	public List<Term<S>> getTerms() {
 		return terms;
 	}
 
@@ -96,7 +95,7 @@ public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, P
 	@Override
 	public String toString() {
 
-		Iterator<Term<K, V>> it = this.getTerms().iterator();
+		Iterator<Term<S>> it = this.getTerms().iterator();
 		if (!it.hasNext())
 			return this.variable.toString();
 
@@ -104,16 +103,16 @@ public class FormulaPredicateVariable<R extends Enum<R>, K extends Enum<K>, V, P
 		sb.append(this.variable);
 		sb.append('(');
 		for (;;) {
-			Term<K, V> e = it.next();
+			Term<S> e = it.next();
 			sb.append(e == this ? "(this Collection)" : e);
 			if (!it.hasNext())
 				return sb.append(')').toString();
 			sb.append(',').append(' ');
 		}
 	}
-
+	
 	@Override
-	public S getSignature() {
-		return signature;
+	public boolean isSignatureMatching(S signature) throws UnsupportedOperationException {
+		return Formula.super.isSignatureMatching(signature);
 	}
 }

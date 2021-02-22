@@ -16,8 +16,7 @@ public class FormulaProposition<PSym, S extends PropositionLogicSignature<PSym>>
 
 	protected PSym symbol;
 
-	public FormulaProposition(S signature, PSym symbol) {
-		super(signature);
+	public FormulaProposition(PSym symbol) {
 		this.symbol = symbol;
 	}
 
@@ -34,15 +33,9 @@ public class FormulaProposition<PSym, S extends PropositionLogicSignature<PSym>>
 	public String stringify() {
 		return symbol.toString();
 	}
-
+	
 	@Override
-	public S getSignature() {
-		return signature;
-	}
-
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return stringify();
+	public boolean isSignatureMatching(S signature) throws UnsupportedOperationException {
+		return signature.getPropositions().contains(symbol);
 	}
 }

@@ -21,29 +21,8 @@ public class FormulaNeg<S extends NegationLogicSignature> extends LogicalOperato
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public FormulaNeg(S signature, Formula<S> operand) {
-		super(signature);
-		this.operand = operand;
-	}
-
-	/**
-	 * Constructs a new instance of this class
-	 * 
-	 * @author Kai Sauerwald
-	 */
 	public FormulaNeg(Formula<S> operand) {
-		super(operand.getSignature());
 		this.operand = operand;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.Formula#getSignature()
-	 */
-	@Override
-	public S getSignature() {
-		return signature;
 	}
 
 	/*
@@ -68,7 +47,7 @@ public class FormulaNeg<S extends NegationLogicSignature> extends LogicalOperato
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(operand, signature);
+		return Objects.hash(operand);
 	}
 
 	@Override
@@ -79,7 +58,7 @@ public class FormulaNeg<S extends NegationLogicSignature> extends LogicalOperato
 			return false;
 		@SuppressWarnings("unchecked")
 		FormulaNeg<S> other = (FormulaNeg<S>) obj;
-		return Objects.equals(operand, other.operand) && Objects.equals(signature, other.signature);
+		return Objects.equals(operand, other.operand);
 	}
 
 	/*

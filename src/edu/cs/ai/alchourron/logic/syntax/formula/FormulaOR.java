@@ -23,8 +23,7 @@ public class FormulaOR<S extends DisjunctionLogicSignature> extends LogicalOpera
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public FormulaOR(S signature, Collection<Formula<S>> operands) {
-		super(signature);
+	public FormulaOR(Collection<Formula<S>> operands) {
 		this.operands = new ArrayList<>(operands);
 	}
 
@@ -34,22 +33,11 @@ public class FormulaOR<S extends DisjunctionLogicSignature> extends LogicalOpera
 	 * @author Kai Sauerwald
 	 */
 	@SafeVarargs
-	public FormulaOR(S signature, Formula<S>... operands) {
-		super(signature);
+	public FormulaOR(Formula<S>... operands) {
 		this.operands = new ArrayList<>();
 		for (Formula<S> op : operands) {
 			this.operands.add(op);
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see edu.cs.ai.alchourron.logic.Formula#getSignature()
-	 */
-	@Override
-	public S getSignature() {
-		return signature;
 	}
 
 	/*
@@ -74,7 +62,7 @@ public class FormulaOR<S extends DisjunctionLogicSignature> extends LogicalOpera
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(operands, signature);
+		return Objects.hash(operands);
 	}
 
 	@Override
@@ -84,7 +72,7 @@ public class FormulaOR<S extends DisjunctionLogicSignature> extends LogicalOpera
 		if (!(obj instanceof FormulaAND<?>))
 			return false;
 		FormulaOR<S> other = (FormulaOR<S>) obj;
-		return Objects.equals(operands, other.operands) && Objects.equals(signature, other.signature);
+		return Objects.equals(operands, other.operands);
 	}
 
 	/*

@@ -28,6 +28,24 @@ import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
  */
 public class PropositionalLogic<P> implements
 		ModelTheoreticLogic<PropositionalInterpretation<P>, Formula<PropositionalSignature<P>>, Boolean, PropositionalSignature<P>> {
+	
+	private PropositionalSignature<P> signature;
+	
+	/***
+	 * Returns the signature
+	 * @author Kai Sauerwald
+	 */
+	public PropositionalSignature<P> getSignature(){
+		return this.signature;
+	}
+	
+	/**
+	 * Generats a new propositional logic over the given signature.
+	 * @author Kai Sauerwald
+	 */
+	public PropositionalLogic(PropositionalSignature<P> signature) {
+		this.signature = signature;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -70,10 +88,10 @@ public class PropositionalLogic<P> implements
 	 * 
 	 * @param set The set of models.
 	 */
-	public Formula<PropositionalSignature<P>> getCharacterisingFormula(PropositionalSignature<P> sig,
+	public Formula<PropositionalSignature<P>> getCharacterisingFormula(
 			Set<PropositionalInterpretation<P>> set) {
 		if (set.isEmpty())
-			return new FormulaVerum<>(sig);
+			return new FormulaVerum<>();
 		if (set.size() == 1)
 			return set.stream().findFirst().get().getCharacterizingFormula();
 
@@ -83,7 +101,7 @@ public class PropositionalLogic<P> implements
 			if (formula == null)
 				formula = i.getCharacterizingFormula();
 			else
-				formula = new FormulaOR<PropositionalSignature<P>>(sig, formula, i.getCharacterizingFormula());
+				formula = new FormulaOR<PropositionalSignature<P>>(formula, i.getCharacterizingFormula());
 		}
 
 		return formula;
@@ -99,7 +117,7 @@ public class PropositionalLogic<P> implements
 	@Override
 	public Set<PropositionalInterpretation<P>> modelsOf(Formula<PropositionalSignature<P>> formula) {
 //		assert this.validFormula(formula) : "given formula ist not (syntactically) valid";
-		return formula.getSignature().stream().filter(i -> satisfies(i, formula)).collect(Collectors.toSet());
+		return getSignature().stream().filter(i -> satisfies(i, formula)).collect(Collectors.toSet());
 	}
 
 	/*

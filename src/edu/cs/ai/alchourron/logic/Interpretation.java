@@ -11,13 +11,13 @@ import edu.cs.ai.alchourron.LaTeX;
  */
 public interface Interpretation<S extends Signature> extends LaTeX {
 
-	/***
-	 * Gets the (smalles) signature matching to this Interpretation.
-	 * 
-	 * @author Kai Sauerwald
-	 * @return The signature of the interpretation
-	 */
-	public S getSignature();
+//	/***
+//	 * Gets the (smalles) signature matching to this Interpretation.
+//	 * 
+//	 * @author Kai Sauerwald
+//	 * @return The signature of the interpretation
+//	 */
+//	public S getSignature();
 
 	/***
 	 * Checkes whether the signature matching to this Interpretation.

@@ -21,6 +21,16 @@ import edu.cs.ai.math.combinatorics.PowerSet;
  * @param <P> Type of atoms
  */
 public class PropositionalNormalForms<P> {
+	
+	private PropositionalSignature<P> signature;
+	
+	/***
+	 * Returns the signature
+	 * @author Kai Sauerwald
+	 */
+	public PropositionalSignature<P> getSignature(){
+		return this.signature;
+	}
 
 	/*******************************************************************
 	 * Test Horn
@@ -69,18 +79,16 @@ public class PropositionalNormalForms<P> {
 		// if for any extension by positive atoms there exists a generic assignment.
 
 		// Signature
-		PropositionalSignature<P> signature = phi.getSignature();
-
 		return PowerSet.stream(signature.getPropositions()).allMatch(set -> {
 			// Build formula:
 			Formula<PropositionalSignature<P>> formula = phi;
 			for (P p : set) {
-				formula = new FormulaAND<>(formula.getSignature(), formula, new FormulaProposition<>(signature, p));
+				formula = new FormulaAND<>(formula, new FormulaProposition<>(p));
 			}
 
 			// i hate java.....
 			final Formula<PropositionalSignature<P>> tmp = formula;
-			final PropositionalLogic<P> logic = new PropositionalLogic<>();
+			final PropositionalLogic<P> logic = new PropositionalLogic<>(signature);
 
 			// search for a generic interpretation
 			return signature.stream().noneMatch(intp -> logic.satisfies(intp, tmp))
@@ -97,13 +105,13 @@ public class PropositionalNormalForms<P> {
 	 * @param formula The formula $\phi$
 	 */
 	public boolean isGeneric(PropositionalInterpretation<P> intp, Formula<PropositionalSignature<P>> formula) {
-		PropositionalLogic<P> logic = new PropositionalLogic<>();
+		PropositionalLogic<P> logic = new PropositionalLogic<>(signature);
 		if (!logic.satisfies(intp, formula))
 			return false;
 
-		return formula.getSignature().getPropositions().stream().allMatch(sigma -> {
-			return logic.satisfies(intp, new FormulaProposition<>(formula.getSignature(), sigma)) == logic.entails(formula,
-					new FormulaProposition<>(formula.getSignature(), sigma));
+		return getSignature().getPropositions().stream().allMatch(sigma -> {
+			return logic.satisfies(intp, new FormulaProposition<>(sigma)) == logic.entails(formula,
+					new FormulaProposition<>(sigma));
 		});
 	}
 
@@ -139,7 +147,7 @@ public class PropositionalNormalForms<P> {
 	private Formula<PropositionalSignature<P>> _clearTree(FormulaAND<PropositionalSignature<P>> phi) {
 		if (phi.getOperands().isEmpty())
 			throw new IllegalArgumentException();
-//			return new FormulaVerum<PropositionalSignature<P>>(phi.getSignature());
+//			return new FormulaVerum<PropositionalSignature<P>>();
 		if (phi.getOperands().size() == 1)
 			return clearTree((Formula<PropositionalSignature<P>>) phi.getOperands().get(0));
 
@@ -164,16 +172,16 @@ public class PropositionalNormalForms<P> {
 		}
 
 		if (set2.size() == 0)
-			return new FormulaVerum<PropositionalSignature<P>>(phi.getSignature());
+			return new FormulaVerum<PropositionalSignature<P>>();
 		if (set2.size() == 1)
 			return set2.stream().findFirst().get();
 
-		return new FormulaAND<PropositionalSignature<P>>(phi.getSignature(), set2);
+		return new FormulaAND<PropositionalSignature<P>>(set2);
 	}
 
 	private Formula<PropositionalSignature<P>> _clearTree(FormulaOR<PropositionalSignature<P>> phi) {
 		if (phi.getOperands().isEmpty())
-			return new FormulaVerum<PropositionalSignature<P>>(phi.getSignature());
+			return new FormulaVerum<PropositionalSignature<P>>();
 		if (phi.getOperands().size() == 1)
 			return clearTree((Formula<PropositionalSignature<P>>) phi.getOperands().get(0));
 
@@ -198,11 +206,11 @@ public class PropositionalNormalForms<P> {
 		}
 
 		if (set2.size() == 0)
-			return new FormulaVerum<PropositionalSignature<P>>(phi.getSignature());
+			return new FormulaVerum<PropositionalSignature<P>>();
 		if (set2.size() == 1)
 			return set2.stream().findFirst().get();
 
-		return new FormulaOR<PropositionalSignature<P>>(phi.getSignature(), set2);
+		return new FormulaOR<PropositionalSignature<P>>(set2);
 	}
 
 	/*******************************************************************
@@ -232,7 +240,7 @@ public class PropositionalNormalForms<P> {
 			list.add(formulaToCNF(form));
 		}
 
-		return new FormulaAND<PropositionalSignature<P>>(phi.getSignature(), list);
+		return new FormulaAND<PropositionalSignature<P>>(list);
 	}
 
 	private Formula<PropositionalSignature<P>> __formulaToCNF(FormulaOR<PropositionalSignature<P>> phi) {
@@ -240,10 +248,9 @@ public class PropositionalNormalForms<P> {
 			if (form instanceof FormulaAND<?>) {
 				FormulaAND<PropositionalSignature<P>> and = (FormulaAND<PropositionalSignature<P>>) form;
 				FormulaOR<PropositionalSignature<P>> theRestOR = new FormulaOR<PropositionalSignature<P>>(
-						phi.getSignature(),
 						phi.getOperands().stream().filter(a -> a != form).collect(Collectors.toList()));
-				return new FormulaAND<PropositionalSignature<P>>(phi.getSignature(), and.getOperands().stream().map(
-						a -> formulaToCNF(new FormulaOR<PropositionalSignature<P>>(a.getSignature(), a, theRestOR)))
+				return new FormulaAND<PropositionalSignature<P>>(and.getOperands().stream().map(
+						a -> formulaToCNF(new FormulaOR<PropositionalSignature<P>>(a, theRestOR)))
 						.collect(Collectors.toList()));
 			}
 		}
@@ -290,7 +297,7 @@ public class PropositionalNormalForms<P> {
 				Formula<PropositionalSignature<P>> form = (Formula<PropositionalSignature<P>>) iterable_element;
 				list.add(_formulaToNegationNormalForm(new FormulaNeg<PropositionalSignature<P>>(form)));
 			}
-			return new FormulaOR<PropositionalSignature<P>>(phi.getSignature(), list);
+			return new FormulaOR<PropositionalSignature<P>>(list);
 		}
 		if (param instanceof FormulaOR<?>) {
 			FormulaOR<PropositionalSignature<P>> or = (FormulaOR<PropositionalSignature<P>>) param;
@@ -300,7 +307,7 @@ public class PropositionalNormalForms<P> {
 				Formula<PropositionalSignature<P>> form = (Formula<PropositionalSignature<P>>) iterable_element;
 				list.add(_formulaToNegationNormalForm(new FormulaNeg<>(form)));
 			}
-			return new FormulaAND<PropositionalSignature<P>>(phi.getSignature(), list);
+			return new FormulaAND<PropositionalSignature<P>>(list);
 		}
 		throw new IllegalArgumentException();
 	}
@@ -313,7 +320,7 @@ public class PropositionalNormalForms<P> {
 		for (int i = 0; i < phi.getOperands().size(); i++) {
 			list.add(_formulaToNegationNormalForm((Formula<PropositionalSignature<P>>) phi.getOperands().get(i)));
 		}
-		return new FormulaAND<PropositionalSignature<P>>(phi.getSignature(), list);
+		return new FormulaAND<PropositionalSignature<P>>(list);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -323,6 +330,6 @@ public class PropositionalNormalForms<P> {
 		for (int i = 0; i < phi.getOperands().size(); i++) {
 			list.add(_formulaToNegationNormalForm((Formula<PropositionalSignature<P>>) phi.getOperands().get(i)));
 		}
-		return new FormulaOR<PropositionalSignature<P>>(phi.getSignature(), list);
+		return new FormulaOR<PropositionalSignature<P>>(list);
 	}
 }

@@ -3,13 +3,13 @@ package edu.cs.ai.alchourron.logic;
 import edu.cs.ai.alchourron.LaTeX;
 
 /***
- * Represents an formula
+ * Represents a formula
  * 
  * @author Kai Sauerwald
  *
  * @param <S> The signature
  */
-public abstract class Formula<S extends Signature> implements LaTeX, SyntacticElement {
+public interface Formula<S extends Signature> extends LaTeX, SyntacticElement {
 
 //	/**
 //	 * Returns the "children" for this formula.
@@ -21,29 +21,29 @@ public abstract class Formula<S extends Signature> implements LaTeX, SyntacticEl
 //		throw new UnsupportedOperationException("This operation is not implemented");
 //	}; 
 
-	protected S signature;
+//	protected S signature;
 
-	public Formula(S signature) {
-		this.signature = signature;
-	}
+//	public Formula(S signature) {
+//		this.signature = signature;
+//	}
+
+//	/***
+//	 * Gets the (smalles) signature matching to this formula.
+//	 * 
+//	 * @author Kai Sauerwald
+//	 * @return The signature of the formula
+//	 */
+//	public S getSignature() {
+//		return signature;
+//	}
 
 	/***
-	 * Gets the (smalles) signature matching to this formula.
-	 * 
-	 * @author Kai Sauerwald
-	 * @return The signature of the formula
-	 */
-	public S getSignature() {
-		return signature;
-	}
-
-	/***
-	 * Checks whether the formula matches this signature
+	 * Checks whether the formula fits a signature
 	 * 
 	 * @author Kai Sauerwald
 	 * @param signature
 	 */
-	public boolean isSignatureMatching(S signature) throws UnsupportedOperationException {
+	public default boolean isSignatureMatching(S signature) throws UnsupportedOperationException {
 		throw new UnsupportedOperationException("This operation is not implemented");
 	};
 }

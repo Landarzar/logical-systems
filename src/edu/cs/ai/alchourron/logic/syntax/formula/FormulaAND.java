@@ -24,8 +24,7 @@ public class FormulaAND<S extends ConjunctionLogicSignature> extends LogicalOper
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public FormulaAND(S signature, Collection<Formula<S>> operands) {
-		super(signature);
+	public FormulaAND(Collection<Formula<S>> operands) { 
 		this.operands = new ArrayList<>(operands);
 	}
 
@@ -35,8 +34,7 @@ public class FormulaAND<S extends ConjunctionLogicSignature> extends LogicalOper
 	 * @author Kai Sauerwald
 	 */
 	@SafeVarargs
-	public FormulaAND(S signature, Formula<S>... operands) {
-		super(signature);
+	public FormulaAND(Formula<S>... operands) {
 		this.operands = new ArrayList<>();
 		for (Formula<S> op : operands) {
 			this.operands.add(op);
@@ -65,7 +63,7 @@ public class FormulaAND<S extends ConjunctionLogicSignature> extends LogicalOper
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(operands, signature);
+		return Objects.hash(operands);
 	}
 
 	@Override
@@ -76,7 +74,7 @@ public class FormulaAND<S extends ConjunctionLogicSignature> extends LogicalOper
 			return false;
 		@SuppressWarnings("unchecked")
 		FormulaAND<S> other = (FormulaAND<S>) obj;
-		return Objects.equals(operands, other.operands) && Objects.equals(signature, other.signature);
+		return Objects.equals(operands, other.operands);
 	}
 
 	/*

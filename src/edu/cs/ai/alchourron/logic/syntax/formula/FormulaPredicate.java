@@ -18,11 +18,11 @@ import edu.cs.ai.alchourron.logic.syntax.terms.Term;
  * @param <R> The type for predicate symbols
  * @param <S> The signature type
  */
-public class FormulaPredicate<R extends Enum<R>, F extends Enum<F>, V, S extends VariableTermLogicSignature<V> & PredicateLogicSignature<R, F>>
+public class FormulaPredicate<R, S extends PredicateLogicSignature<R>>
 		extends FormulaAtom<S> {
 
 	protected R symbol;
-	protected List<Term<F, V>> terms;
+	protected List<Term<S>> terms;
 
 	/***
 	 * Constructs a new atomar predicate
@@ -31,8 +31,7 @@ public class FormulaPredicate<R extends Enum<R>, F extends Enum<F>, V, S extends
 	 * @param symbol
 	 * @param terms
 	 */
-	public FormulaPredicate(S signature, R symbol, List<Term<F, V>> terms) {
-		super(signature);
+	public FormulaPredicate(R symbol, List<Term<S>> terms) {
 		this.symbol = symbol;
 		this.terms = Collections.unmodifiableList(terms);
 	}
@@ -51,7 +50,7 @@ public class FormulaPredicate<R extends Enum<R>, F extends Enum<F>, V, S extends
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	public List<Term<F, V>> getTerms() {
+	public List<Term<S>> getTerms() {
 		return terms;
 	}
 
@@ -67,7 +66,7 @@ public class FormulaPredicate<R extends Enum<R>, F extends Enum<F>, V, S extends
 	@Override
 	public String toString() {
 
-		Iterator<Term<F, V>> it = this.getTerms().iterator();
+		Iterator<Term<S>> it = this.getTerms().iterator();
 		if (!it.hasNext())
 			return this.symbol.toString();
 
@@ -75,16 +74,11 @@ public class FormulaPredicate<R extends Enum<R>, F extends Enum<F>, V, S extends
 		sb.append(this.symbol);
 		sb.append('(');
 		for (;;) {
-			Term<F, V> e = it.next();
+			Term<S> e = it.next();
 			sb.append(e == this ? "(this Collection)" : e);
 			if (!it.hasNext())
 				return sb.append(')').toString();
 			sb.append(',').append(' ');
 		}
-	}
-
-	@Override
-	public S getSignature() {
-		return signature;
 	}
 }

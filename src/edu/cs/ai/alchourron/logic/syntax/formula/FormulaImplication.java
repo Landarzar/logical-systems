@@ -10,8 +10,7 @@ public class FormulaImplication<S extends ImplicationLogicSignature> extends Log
 	Formula<S> premise;
 	Formula<S> conclusion;
 
-	public FormulaImplication(S signature, Formula<S> premise, Formula<S> conclusion) {
-		super(signature);
+	public FormulaImplication(Formula<S> premise, Formula<S> conclusion) {
 		this.premise = premise;
 		this.conclusion = conclusion;
 	}

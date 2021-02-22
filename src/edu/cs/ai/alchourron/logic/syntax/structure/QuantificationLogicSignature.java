@@ -1,5 +1,7 @@
 package edu.cs.ai.alchourron.logic.syntax.structure;
 
+import java.util.Set;
+
 import edu.cs.ai.alchourron.logic.Signature;
 
 /****
@@ -13,4 +15,5 @@ import edu.cs.ai.alchourron.logic.Signature;
  */
 public interface QuantificationLogicSignature<Q, V> extends Signature {
 
+	public Set<Q> getQuantifier();
 }

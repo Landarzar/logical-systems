@@ -18,8 +18,7 @@ public class FormulaModus<M, S extends ModalLogicSignature<M>> extends LogicalOp
 
 	M modus;
 
-	public FormulaModus(S signature, M modus) {
-		super(signature);
+	public FormulaModus(M modus) {
 		this.modus = modus;
 	}
 
@@ -50,12 +49,6 @@ public class FormulaModus<M, S extends ModalLogicSignature<M>> extends LogicalOp
 
 	@Override
 	public List<Formula<S>> getOperands() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public S getSignature() {
 		// TODO Auto-generated method stub
 		return null;
 	}
