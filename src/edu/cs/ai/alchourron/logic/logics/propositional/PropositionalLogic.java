@@ -29,22 +29,13 @@ import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
 public class PropositionalLogic<P> implements
 		ModelTheoreticLogic<PropositionalInterpretation<P>, Formula<PropositionalSignature<P>>, Boolean, PropositionalSignature<P>> {
 	
-	private PropositionalSignature<P> signature;
-	
-	/***
-	 * Returns the signature
-	 * @author Kai Sauerwald
-	 */
-	public PropositionalSignature<P> getSignature(){
-		return this.signature;
-	}
+
 	
 	/**
 	 * Generats a new propositional logic over the given signature.
 	 * @author Kai Sauerwald
 	 */
-	public PropositionalLogic(PropositionalSignature<P> signature) {
-		this.signature = signature;
+	public PropositionalLogic() {
 	}
 
 	/*
@@ -115,9 +106,9 @@ public class PropositionalLogic<P> implements
 	 * Formula)
 	 */
 	@Override
-	public Set<PropositionalInterpretation<P>> modelsOf(Formula<PropositionalSignature<P>> formula) {
+	public Set<PropositionalInterpretation<P>> modelsOf(Formula<PropositionalSignature<P>> formula, PropositionalSignature<P> signature) {
 //		assert this.validFormula(formula) : "given formula ist not (syntactically) valid";
-		return getSignature().stream().filter(i -> satisfies(i, formula)).collect(Collectors.toSet());
+		return signature.stream().filter(i -> satisfies(i, formula)).collect(Collectors.toSet());
 	}
 
 	/*

@@ -21,16 +21,6 @@ import edu.cs.ai.math.combinatorics.PowerSet;
  * @param <P> Type of atoms
  */
 public class PropositionalNormalForms<P> {
-	
-	private PropositionalSignature<P> signature;
-	
-	/***
-	 * Returns the signature
-	 * @author Kai Sauerwald
-	 */
-	public PropositionalSignature<P> getSignature(){
-		return this.signature;
-	}
 
 	/*******************************************************************
 	 * Test Horn
@@ -74,7 +64,16 @@ public class PropositionalNormalForms<P> {
 		return true;
 	}
 
-	public boolean isHornDefinable(Formula<PropositionalSignature<P>> phi) {
+	/***
+	 * Tests if a the formula phi is horndefinable.
+	 * 
+	 * We use the characterization by Makowsky (1987): A formula is horndefinable
+	 * if for any extension by positive atoms there exists a generic assignment.
+	 * @author Kai Sauerwald
+	 * @param phi formula
+	 * @param signature signature
+	 */
+	public boolean isHornDefinable(Formula<PropositionalSignature<P>> phi, PropositionalSignature<P> signature) {
 		// We use the characterization by Makowsky (1987): A formula is horndefinable
 		// if for any extension by positive atoms there exists a generic assignment.
 
@@ -88,7 +87,7 @@ public class PropositionalNormalForms<P> {
 
 			// i hate java.....
 			final Formula<PropositionalSignature<P>> tmp = formula;
-			final PropositionalLogic<P> logic = new PropositionalLogic<>(signature);
+			final PropositionalLogic<P> logic = new PropositionalLogic<>();
 
 			// search for a generic interpretation
 			return signature.stream().noneMatch(intp -> logic.satisfies(intp, tmp))
@@ -105,13 +104,13 @@ public class PropositionalNormalForms<P> {
 	 * @param formula The formula $\phi$
 	 */
 	public boolean isGeneric(PropositionalInterpretation<P> intp, Formula<PropositionalSignature<P>> formula) {
-		PropositionalLogic<P> logic = new PropositionalLogic<>(signature);
+		PropositionalLogic<P> logic = new PropositionalLogic<>();
 		if (!logic.satisfies(intp, formula))
 			return false;
 
-		return getSignature().getPropositions().stream().allMatch(sigma -> {
+		return intp.getSignature().getPropositions().stream().allMatch(sigma -> {
 			return logic.satisfies(intp, new FormulaProposition<>(sigma)) == logic.entails(formula,
-					new FormulaProposition<>(sigma));
+					new FormulaProposition<>(sigma), intp.getSignature());
 		});
 	}
 
@@ -249,8 +248,8 @@ public class PropositionalNormalForms<P> {
 				FormulaAND<PropositionalSignature<P>> and = (FormulaAND<PropositionalSignature<P>>) form;
 				FormulaOR<PropositionalSignature<P>> theRestOR = new FormulaOR<PropositionalSignature<P>>(
 						phi.getOperands().stream().filter(a -> a != form).collect(Collectors.toList()));
-				return new FormulaAND<PropositionalSignature<P>>(and.getOperands().stream().map(
-						a -> formulaToCNF(new FormulaOR<PropositionalSignature<P>>(a, theRestOR)))
+				return new FormulaAND<PropositionalSignature<P>>(and.getOperands().stream()
+						.map(a -> formulaToCNF(new FormulaOR<PropositionalSignature<P>>(a, theRestOR)))
 						.collect(Collectors.toList()));
 			}
 		}

@@ -40,7 +40,7 @@ public interface ModelTheoreticLogic<I extends Interpretation<S>, F extends Form
 	 *                                       was lazy.</li>
 	 *                                       </ol>
 	 */
-	public default Set<I> modelsOf(F formula) throws UnsupportedOperationException {
+	public default Set<I> modelsOf(F formula, S signature) throws UnsupportedOperationException {
 		throw new UnsupportedOperationException(
 				"This logic does not support enumeration of models, or it is not implemeted (yet).");
 	};
@@ -85,9 +85,9 @@ public interface ModelTheoreticLogic<I extends Interpretation<S>, F extends Form
 	 *                                       throws an exception on a call with
 	 *                                       {@link f1} or {@link f2})
 	 */
-	public default boolean entails(F f1, F f2) {
-		Set<I> mf2 = modelsOf(f2);
-		Set<I> mf1 = modelsOf(f1);
+	public default boolean entails(F f1, F f2,S signature) {
+		Set<I> mf2 = modelsOf(f2,signature);
+		Set<I> mf1 = modelsOf(f1,signature);
 		return mf2.containsAll(mf1);
 	}
 }
