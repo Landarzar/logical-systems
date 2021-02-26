@@ -5,12 +5,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 
 import edu.cs.ai.alchourron.logic.Interpretation;
+import edu.cs.ai.alchourron.logic.Signature;
+import edu.cs.ai.alchourron.logic.syntax.structure.FunctionTermLogicSignature;
 import edu.cs.ai.alchourron.logic.syntax.structure.PredicateLogicSignature;
 import edu.cs.ai.math.settheory.Pair;
-import edu.cs.ai.math.settheory.Tuple;
+import edu.cs.ai.math.settheory.relation.AutoFunction;
 import edu.cs.ai.math.settheory.relation.Relation;
 
 /***
@@ -24,12 +25,12 @@ import edu.cs.ai.math.settheory.relation.Relation;
  * @param <K> The type of function symbols
  * @param <S> The type of the signature
  */
-public class FiniteStructure<U, R, K, S extends PredicateLogicSignature<R>>
+public class FiniteStructure<U, R, K, S extends Signature>
 		implements Interpretation<S> {
 
 	Set<U> universe;
 	Map<R, Relation<U>> relations;
-	Map<K, Function<Tuple<U>, U>> functions;
+	Map<K, AutoFunction<U>> functions;
 
 	/***
 	 * Constructs a new interpretation
@@ -40,14 +41,14 @@ public class FiniteStructure<U, R, K, S extends PredicateLogicSignature<R>>
 	 * @param func     The interpretation of function symbols
 	 */
 	public FiniteStructure(Set<U> universe, Collection<Pair<R, Relation<U>>> rel,
-			Collection<Pair<K, Function<Tuple<U>, U>>> func) {
+			Collection<Pair<K, AutoFunction<U>>> func) {
 		this.universe = Collections.unmodifiableSet(universe);
 
 		HashMap<R, Relation<U>> rmap = new HashMap<>();
 		rel.forEach(p -> rmap.put(p.getFirst(), p.getSecond()));
 		relations = Collections.unmodifiableMap(rmap);
 
-		HashMap<K, Function<Tuple<U>, U>> fmap = new HashMap<>();
+		HashMap<K, AutoFunction<U>> fmap = new HashMap<>();
 		func.forEach(p -> fmap.put(p.getFirst(), p.getSecond()));
 		functions = Collections.unmodifiableMap(fmap);
 	}
@@ -60,8 +61,27 @@ public class FiniteStructure<U, R, K, S extends PredicateLogicSignature<R>>
 		return relations.get(symb);
 	}
 
-	public Function<Tuple<U>, U> getFunction(K symb) {
+	public AutoFunction<U> getFunction(K symb) {
 		return functions.get(symb);
+	}
+	
+	public int getRelationArity(R relationsymb) {
+		return this.relations.get(relationsymb).getArity();
+	}
+	
+	public int getFunctionArity(K funcsymb) {
+		return this.functions.get(funcsymb).getArity();
+	}
+	
+	public Set<R> getRelationSymbols(){
+		return this.relations.keySet();
+	}
+	
+	/***
+	 * Returns all Functions Symbols which are defined here
+	 */
+	public Set<K> getFunctionSymbols(){
+		return this.functions.keySet();
 	}
 
 	/*
@@ -113,15 +133,18 @@ public class FiniteStructure<U, R, K, S extends PredicateLogicSignature<R>>
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (!(obj instanceof FiniteStructure))
-			return false;
-		return true;
-	}
-
-	@Override
 	public boolean isMatchingSignature(S signature) {
-		// TODO Auto-generated method stub
-		return false;
+		if (signature instanceof PredicateLogicSignature<?>) {
+			PredicateLogicSignature<R> predSig = (PredicateLogicSignature<R>) signature;
+			if(!getRelationSymbols().containsAll(predSig.getPredicateSymbols()))
+				return false;
+		}
+		if (signature instanceof FunctionTermLogicSignature<?>) {
+			FunctionTermLogicSignature<K> predSig = (FunctionTermLogicSignature<K>) signature;
+			if(!getFunctionSymbols().containsAll(predSig.getFunctionSymbols()))
+				return false;
+		}
+		
+		return true;
 	}
 }
