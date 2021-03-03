@@ -36,7 +36,7 @@ import edu.cs.ai.math.settheory.Tuple;
  * @param <Q> The type of quantors
  * @param <S> The signature type
  */
-public class GeneralizedFirstOrderLogic<R, K, V, Q, S extends GeneralizedFOSignature<R, K, V, Q>> implements
+public abstract class GeneralizedFirstOrderLogic<R, K, V, Q, S extends GeneralizedFOSignature<R, K, V, Q>> implements
 		ModelTheoreticLogic<FiniteStructure<?, R, K, S>, Formula<S>, Boolean, S> {
 
 	public Set<V> getFreeVariables(Term<S> term) {
@@ -101,6 +101,9 @@ public class GeneralizedFirstOrderLogic<R, K, V, Q, S extends GeneralizedFOSigna
 		}
 		throw new UnsupportedOperationException("Not implemeted yed");
 	}
+	
+	protected abstract <U> Boolean evalQuantifiedFormua(FiniteStructure<U, R, K, S> interpretation,
+			FormulaQuantification<Q, V, S> formula, Function<V, U> valuation);
 
 	/***
 	 * Evaluations a formula under a valuation function
@@ -121,30 +124,7 @@ public class GeneralizedFirstOrderLogic<R, K, V, Q, S extends GeneralizedFOSigna
 		}
 		if (formula instanceof FormulaQuantification<?, ?, ?>) {
 			FormulaQuantification<Q, V, S> quantor = (FormulaQuantification<Q, V, S>) formula;
-			if (quantor.getQuantifyer() == ClassicalQuantifier.FORALL) {
-				return interpretation.getUniverse().stream().allMatch(u -> {
-
-					Function<V, U> nval = var -> {
-						if (var.equals(quantor.getVariables()))
-							return u;
-						return valuation.apply(var);
-					};
-
-					return eval(interpretation, quantor.getQuantified(), nval);
-				});
-			}
-			if (quantor.getQuantifyer() == ClassicalQuantifier.EXISTS) {
-				return interpretation.getUniverse().stream().anyMatch(u -> {
-
-					Function<V, U> nval = var -> {
-						if (var.equals(quantor.getVariables()))
-							return u;
-						return valuation.apply(var);
-					};
-
-					return eval(interpretation, quantor.getQuantified(), nval);
-				});
-			}
+			return evalQuantifiedFormua(interpretation, quantor, valuation);
 		}
 		if (formula instanceof FormulaAND<?>) {
 			FormulaAND<S> and = (FormulaAND<S>) formula;

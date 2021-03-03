@@ -8,7 +8,8 @@ import java.util.Set;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.logics.predicatelogics.FOSignature;
-import edu.cs.ai.alchourron.logic.logics.predicatelogics.GeneralizedFOSignature;
+import edu.cs.ai.alchourron.logic.logics.predicatelogics.FirstOrderLogic;
+import edu.cs.ai.alchourron.logic.logics.predicatelogics.FOSignature;
 import edu.cs.ai.alchourron.logic.logics.predicatelogics.GeneralizedFirstOrderLogic;
 import edu.cs.ai.alchourron.logic.semantics.interpretations.FiniteStructure;
 import edu.cs.ai.alchourron.logic.syntax.formula.ClassicalQuantifier;
@@ -65,17 +66,17 @@ public class FOTest {
 			}
 		};
 
-		FiniteStructure<Integer, ABPredicates, Empty, GeneralizedFOSignature<ABPredicates, Empty, Character, ClassicalQuantifier>> structure = new FiniteStructure<>(
+		FiniteStructure<Integer, ABPredicates, Empty, FOSignature<ABPredicates, Empty, Character>> structure = new FiniteStructure<>(
 				Set.of(0, 1, 2, 3, 4, 5), List.of(new Pair<>(ABPredicates.IsA, IsAIntp),
 						new Pair<>(ABPredicates.IsB, IsBIntp), new Pair<>(ABPredicates.SUCC, SuccIntp)),
 				List.of());
 
-		Formula<GeneralizedFOSignature<ABPredicates, Empty, Character, ClassicalQuantifier>> myform = new FormulaQuantification<>(
+		Formula<FOSignature<ABPredicates, Empty, Character>> myform = new FormulaQuantification<>(
 				ClassicalQuantifier.EXISTS, 'x',
-				new FormulaPredicate<ABPredicates, GeneralizedFOSignature<ABPredicates, Empty, Character, ClassicalQuantifier>>(
+				new FormulaPredicate<ABPredicates, FOSignature<ABPredicates, Empty, Character>>(
 						ABPredicates.IsA, List.of(new VariableTerm<>('x'))));
 
-		GeneralizedFirstOrderLogic<ABPredicates, Empty, Character, ClassicalQuantifier,GeneralizedFOSignature<ABPredicates, Empty, Character, ClassicalQuantifier>> fo = new GeneralizedFirstOrderLogic<>();
+		FirstOrderLogic<ABPredicates, Empty, Character> fo = new FirstOrderLogic<>();
 		System.out.println(structure + " |= " + myform + " ? " + fo.satisfies(structure, myform));
 
 	}

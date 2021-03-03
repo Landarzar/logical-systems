@@ -46,7 +46,7 @@ import edu.cs.ai.math.settheory.relation.implementation.RelationGeneralImpl;
  * @param <V> The type for first-order variables
  * @param <P> The type for second-order variables
  */
-public class GeneralizedSecondOrderLogic<R, K, V, Q, P, QSO, S extends GeneralizedSOSignature<R, K, V, Q, P, QSO>> implements
+public abstract class GeneralizedSecondOrderLogic<R, K, V, Q, P, QSO, S extends GeneralizedSOSignature<R, K, V, Q, P, QSO>> implements
 		ModelTheoreticLogic<FiniteStructure<?, R, K, S>, Formula<S>, Boolean, S> {
 
 	public Set<Pair<P, Integer>> getFreeSOVariables(Formula<S> formula) {
@@ -153,6 +153,16 @@ public class GeneralizedSecondOrderLogic<R, K, V, Q, P, QSO, S extends Generaliz
 		}
 		throw new UnsupportedOperationException("Not implemeted yed");
 	}
+	
+
+	protected abstract <U> Boolean evalQuantifiedFormua(FiniteStructure<U, R, K, S> interpretation,
+			FormulaQuantification<Q, V, S> formula, Function<V, U> valuation,
+			Function<P, Relation<U>> SOvaluation);
+	
+
+	protected abstract <U> Boolean evalQuantifiedSOFormua(FiniteStructure<U, R, K, S> interpretation,
+			FormulaSOQuantification<QSO, P, S> formula, Function<V, U> valuation,
+			Function<P, Relation<U>> SOvaluation);
 
 	/***
 	 * Evaluations a formula under a valuation function
@@ -180,66 +190,12 @@ public class GeneralizedSecondOrderLogic<R, K, V, Q, P, QSO, S extends Generaliz
 		}
 		if (formula instanceof FormulaQuantification<?, ?, ?>) {
 			FormulaQuantification<Q, V, S> quantor = (FormulaQuantification<Q, V, S>) formula;
-			if (quantor.getQuantifyer() == ClassicalQuantifier.FORALL) {
-				return interpretation.getUniverse().stream().allMatch(u -> {
-
-					Function<V, U> nval = var -> {
-						if (var.equals(quantor.getVariables()))
-							return u;
-						return valuation.apply(var);
-					};
-
-					return eval(interpretation, quantor.getQuantified(), nval, SOvaluation);
-				});
-			}
-			if (quantor.getQuantifyer() == ClassicalQuantifier.EXISTS) {
-				return interpretation.getUniverse().stream().anyMatch(u -> {
-
-					Function<V, U> nval = var -> {
-						if (var.equals(quantor.getVariables()))
-							return u;
-						return valuation.apply(var);
-					};
-
-					return eval(interpretation, quantor.getQuantified(), nval, SOvaluation);
-				});
-			}
+			return evalQuantifiedFormua(interpretation, quantor, valuation, SOvaluation);
 		}
 
 		if (formula instanceof FormulaSOQuantification<?, ?, ?>) {
 			FormulaSOQuantification<QSO, P, S> quantor = (FormulaSOQuantification<QSO, P, S>) formula;
-			Optional<Pair<P, Integer>> findFirst = getFreeSOVariables(quantor.getQuantified()).stream()
-					.filter(p -> p.getFirst().equals(quantor.getVariables())).findFirst();
-
-			if (findFirst.isEmpty())
-				return eval(interpretation, quantor.getQuantified(), valuation, SOvaluation);
-
-			int tuplearity = findFirst.get().getSecond();
-			Stream<Relation<U>> relationStream = PowerSetLexicographic
-					.stream(KTupleEnumeration.stream(new ArrayList<>(interpretation.getUniverse()), tuplearity)
-							.collect(Collectors.toUnmodifiableList()))
-					.map(s -> new RelationGeneralImpl<>(tuplearity, s));
-
-			if (quantor.getQuantifyer() == ClassicalQuantifier.FORALL) {
-				return relationStream.allMatch(r -> {
-					Function<P, Relation<U>> nval = var -> {
-						if (var.equals(quantor.getVariables()))
-							return r;
-						return SOvaluation.apply(var);
-					};
-					return eval(interpretation, quantor.getQuantified(), valuation, nval);
-				});
-			}
-			if (quantor.getQuantifyer() == ClassicalQuantifier.EXISTS) {
-				return relationStream.anyMatch(r -> {
-					Function<P, Relation<U>> nval = var -> {
-						if (var.equals(quantor.getVariables()))
-							return r;
-						return SOvaluation.apply(var);
-					};
-					return eval(interpretation, quantor.getQuantified(), valuation, nval);
-				});
-			}
+			return evalQuantifiedSOFormua(interpretation, quantor, valuation, SOvaluation);
 		}
 		if (formula instanceof FormulaAND<?>) {
 			FormulaAND<S> and = (FormulaAND<S>) formula;
