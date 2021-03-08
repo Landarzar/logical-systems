@@ -2,3 +2,5 @@
 /target/
 logical-systems.iml
 .idea
+
+project/target
