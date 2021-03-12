@@ -39,8 +39,8 @@ public class GeneralizedSOSignature<R, K, V, Q, P, QSO> extends GeneralizedFOSig
 	 * @param symbols The symbols of predicates
 	 * @param arity   The arity of predicates
 	 */
-	public GeneralizedSOSignature(Set<Q> quantifieres, List<R> symbols, List<Integer> arity, Set<QSO> soquantifiers) {
-		super(quantifieres, symbols, arity);
+	public GeneralizedSOSignature(Set<Q> quantifieres, List<R> rsymbols, List<Integer> rarity, List<K> fsymbols, List<Integer> farity, Set<QSO> soquantifiers) {
+		super(quantifieres, rsymbols, rarity, fsymbols, farity);
 		this.soquantifiers = soquantifiers;
 	}
 

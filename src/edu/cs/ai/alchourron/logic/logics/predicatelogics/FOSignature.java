@@ -36,8 +36,8 @@ public class FOSignature<R, K, V> extends GeneralizedFOSignature<R, K, V, Classi
 	 * @param symbols
 	 * @param arity
 	 */
-	public FOSignature(List symbols, List arity) {
-		super(Set.of(ClassicalQuantifier.values()), symbols, arity);
+	public FOSignature(List<R> rsymbols, List<Integer> rarity, List<K> fsymbols, List<Integer> farity) {
+		super(Set.of(ClassicalQuantifier.values()), rsymbols, rarity,fsymbols,farity);
 	}
 
 }

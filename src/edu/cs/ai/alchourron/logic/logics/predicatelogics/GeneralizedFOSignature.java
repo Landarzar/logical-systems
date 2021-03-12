@@ -99,8 +99,11 @@ public class GeneralizedFOSignature<R, K, V, Q>
 	 * @param symbols The symbols of predicates
 	 * @param arity   The arity of predicates
 	 */
-	public GeneralizedFOSignature(Set<Q> quantifieres, List<R> symbols, List<Integer> arity) {
-		this.predicateSymbols = new ArrayList<>(symbols);
+	public GeneralizedFOSignature(Set<Q> quantifieres, List<R> rsymbols, List<Integer> rarity, List<K> fsymbols, List<Integer> farity) {
+		this.predicateSymbols = new ArrayList<>(rsymbols);
+		this.predicateArity = new ArrayList<>(rarity);
+		this.functionSymbols = new ArrayList<>(fsymbols);
+		this.functionArity = new ArrayList<>(farity);
 		this.quantifieres = quantifieres;
 	}
 	

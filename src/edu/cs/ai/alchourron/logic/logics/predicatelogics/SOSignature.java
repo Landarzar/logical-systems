@@ -33,8 +33,8 @@ public class SOSignature<R, K, V, P> extends GeneralizedSOSignature<R, K, V, Cla
 	 * @param arity
 	 * @param soquantifiers
 	 */
-	public SOSignature(List<R> symbols, List<Integer> arity) {
-		super(Set.of(ClassicalQuantifier.values()), symbols, arity, Set.of(ClassicalQuantifier.values()));
+	public SOSignature(List<R> rsymbols, List<Integer> rarity, List<K> fsymbols, List<Integer> farity) {
+		super(Set.of(ClassicalQuantifier.values()), rsymbols, rarity, fsymbols, farity, Set.of(ClassicalQuantifier.values()));
 		// TODO Auto-generated constructor stub
 	}
 

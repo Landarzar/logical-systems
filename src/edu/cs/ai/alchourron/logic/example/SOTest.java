@@ -43,7 +43,7 @@ public class SOTest {
 	public static void main(String[] args) {
 
 		SOSignature<ABPredicates, Empty, Character, SOVars> signature = new SOSignature<>(
-				List.of(ABPredicates.SignA, ABPredicates.SignB, ABPredicates.SUCC), List.of(1, 1, 2));
+				List.of(ABPredicates.SignA, ABPredicates.SignB, ABPredicates.SUCC), List.of(), List.of(), List.of(1, 1, 2));
 
 		Relation<Integer> IsAIntp = new RelationGeneralImpl<>(1,
 				Set.of(new Tuple<>(0), new Tuple<>(2), new Tuple<>(4)));
