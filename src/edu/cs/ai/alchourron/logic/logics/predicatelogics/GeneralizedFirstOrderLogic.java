@@ -118,7 +118,7 @@ public abstract class GeneralizedFirstOrderLogic<R, K, V, Q, S extends Generaliz
 
 		if (formula instanceof FormulaPredicate<?, ?>) {
 			FormulaPredicate<R, S> pred = (FormulaPredicate<R, S>) formula;
-			Tuple<U> tuple = new Tuple<U>(pred.getTerms().stream().sorted().map(t -> eval(interpretation, t, valuation))
+			Tuple<U> tuple = new Tuple<U>(pred.getTerms().stream().map(t -> eval(interpretation, t, valuation))
 					.collect(Collectors.toUnmodifiableList()));
 			return interpretation.getRelation(pred.getSymbol()).contains(tuple);
 		}
@@ -172,7 +172,7 @@ public abstract class GeneralizedFirstOrderLogic<R, K, V, Q, S extends Generaliz
 			Function<V, U> valuation) {
 		if (term instanceof FunctionTerm<?, ?>) {
 			FunctionTerm<K,S> fterm = (FunctionTerm<K,S>) term;
-			Tuple<U> tuple = new Tuple<>(fterm.getSubTerms().stream().sorted()
+			Tuple<U> tuple = new Tuple<>(fterm.getSubTerms().stream()
 					.map(t -> eval(interpretation, t, valuation)).collect(Collectors.toUnmodifiableList()));
 
 			return interpretation.getFunction(fterm.getSymbol()).apply(tuple);
