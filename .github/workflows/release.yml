@@ -1,8 +1,10 @@
 # release workflow from https://docs.github.com/en/actions/guides/publishing-java-packages-with-maven
 name: Publish package to GitHub Packages
 on:
-  release:
-    types: [created]
+  #release:
+  #  types: [created]
+  push:
+    branches: [ ci ]
 jobs:
   publish:
     runs-on: ubuntu-latest
