@@ -13,9 +13,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 13
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+      - uses: s4u/maven-settings-action@v2.4.0
 
       - name: Publish package
-        run: mvn --batch-mode deploy -s $GITHUB_WORKSPACE/settings.xml
+        run: mvn --batch-mode deploy -s $HOME/.m2/settings.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
