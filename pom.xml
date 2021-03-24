@@ -2,10 +2,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>edu.cs.ai</groupId>
-    <artifactId>alchourron-logic</artifactId>
+    <artifactId>logical-systems</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>alchourron-logic</name>
+    <name>logical-systems</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -15,7 +15,7 @@
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/Landarzar/alchourron-logic</url>
+            <url>https://maven.pkg.github.com/Landarzar/logical-systems</url>
         </repository>
     </distributionManagement>
 
