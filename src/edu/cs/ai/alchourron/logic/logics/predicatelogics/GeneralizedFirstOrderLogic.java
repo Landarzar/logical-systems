@@ -2,6 +2,7 @@ package edu.cs.ai.alchourron.logic.logics.predicatelogics;
 
 import java.security.InvalidParameterException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
 import edu.cs.ai.alchourron.logic.syntax.terms.FunctionTerm;
 import edu.cs.ai.alchourron.logic.syntax.terms.Term;
 import edu.cs.ai.alchourron.logic.syntax.terms.VariableTerm;
+import edu.cs.ai.math.combinatorics.KTupleEnumeration;
 import edu.cs.ai.math.settheory.Tuple;
 
 /***
@@ -96,10 +98,26 @@ public abstract class GeneralizedFirstOrderLogic<R, K, V, Q, S extends Generaliz
 	@Override
 	public Boolean eval(FiniteStructure<?, R, K, S> interpretation,
 			Formula<S> formula) {
-		if (getFreeVariables(formula).isEmpty()) {
+		Set<V> fv = getFreeVariables(formula);
+		if (fv.isEmpty()) {
 			return eval(interpretation, formula, var -> null);
 		}
-		throw new UnsupportedOperationException("Not implemeted yed");
+		else
+		{
+			List<V> fvlist = fv.stream().collect(Collectors.toUnmodifiableList());
+			
+			return 	KTupleEnumeration.stream(interpretation.getUniverse().stream().collect(Collectors.toUnmodifiableList()) , fv.size()).allMatch( tuple -> {
+				
+				// I really hate the Java type system
+				@SuppressWarnings("rawtypes")
+				Function myval = var -> {
+					int idx = fvlist.indexOf(var);
+					return tuple.getIth(idx);
+				};
+
+				return (Boolean) eval(interpretation, formula, myval);
+			});	
+		}
 	}
 	
 	protected abstract <U> Boolean evalQuantifiedFormua(FiniteStructure<U, R, K, S> interpretation,

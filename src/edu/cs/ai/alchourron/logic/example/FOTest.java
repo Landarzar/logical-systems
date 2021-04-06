@@ -75,9 +75,15 @@ public class FOTest {
 				ClassicalQuantifier.EXISTS, 'x',
 				new FormulaPredicate<ABPredicates, FOSignature<ABPredicates, Empty, Character>>(
 						ABPredicates.IsA, List.of(new VariableTerm<>('x'))));
+		
+
+		Formula<FOSignature<ABPredicates, Empty, Character>> myform2 = 
+				new FormulaPredicate<ABPredicates, FOSignature<ABPredicates, Empty, Character>>(
+						ABPredicates.IsA, List.of(new VariableTerm<>('x')));
 
 		FirstOrderLogic<ABPredicates, Empty, Character> fo = new FirstOrderLogic<>();
 		System.out.println(structure + " |= " + myform + " ? " + fo.satisfies(structure, myform));
+		System.out.println(structure + " |= " + myform2 + " ? " + fo.satisfies(structure, myform2));
 
 	}
 
