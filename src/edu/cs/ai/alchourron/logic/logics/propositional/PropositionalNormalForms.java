@@ -13,6 +13,7 @@ import edu.cs.ai.alchourron.logic.semantics.interpretations.PropositionalInterpr
 import edu.cs.ai.alchourron.logic.syntax.formula.*;
 import edu.cs.ai.alchourron.logic.syntax.structure.ClassicalConnectivesLogicSignature;
 import edu.cs.ai.math.combinatorics.PowerSet;
+import edu.cs.algo.QMCAlgorithm;
 
 /***
  * 
@@ -21,6 +22,19 @@ import edu.cs.ai.math.combinatorics.PowerSet;
  * @param <P> Type of atoms
  */
 public class PropositionalNormalForms<P> {
+	
+	
+	
+	public Formula<PropositionalSignature<P>> computeQMC(Formula<PropositionalSignature<P>> formula){
+		PropositionalLogic<P> logic = new  PropositionalLogic<P>();
+		
+		Set<PropositionalInterpretation<P>> models = logic.modelsOf(formula, new PropositionalSignature<>(formula));
+		
+		QMCAlgorithm algo = new QMCAlgorithm();
+		// TODO: Compute it
+		
+		return null;
+	}
 
 	/*******************************************************************
 	 * Test Horn
@@ -82,7 +96,7 @@ public class PropositionalNormalForms<P> {
 			// Build formula:
 			Formula<PropositionalSignature<P>> formula = phi;
 			for (P p : set) {
-				formula = new FormulaAND<>(formula, new FormulaProposition<>(p));
+				formula = new FormulaAND<>(formula, new FormulaPropositionalAtom<>(p));
 			}
 
 			// i hate java.....
@@ -109,8 +123,8 @@ public class PropositionalNormalForms<P> {
 			return false;
 
 		return intp.getSignature().getPropositions().stream().allMatch(sigma -> {
-			return logic.satisfies(intp, new FormulaProposition<>(sigma)) == logic.entails(formula,
-					new FormulaProposition<>(sigma), intp.getSignature());
+			return logic.satisfies(intp, new FormulaPropositionalAtom<>(sigma)) == logic.entails(formula,
+					new FormulaPropositionalAtom<>(sigma), intp.getSignature());
 		});
 	}
 

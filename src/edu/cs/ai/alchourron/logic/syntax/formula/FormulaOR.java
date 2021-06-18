@@ -86,6 +86,8 @@ public class FormulaOR<S extends DisjunctionLogicSignature> extends LogicalOpera
 		return builder.toString();
 	}
 
+
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -93,23 +95,7 @@ public class FormulaOR<S extends DisjunctionLogicSignature> extends LogicalOpera
 	 */
 	@Override
 	public String toLaTeX() {
-		StringBuilder builder = new StringBuilder();
-//		builder.append("(");
-
-		boolean first = true;
-
-		for (Formula<S> propositionalFormula : operands) {
-			if (first) {
-				builder.append(propositionalFormula.toLaTeX());
-				first = false;
-				continue;
-			}
-//			builder.append(" \\land "); // Short form
-			builder.append(propositionalFormula.toLaTeX());
-		}
-
-//		builder.append(")");
-		return builder.toString();
+		return super.toLaTeX(" \\lor ");
 	}
 
 	/*

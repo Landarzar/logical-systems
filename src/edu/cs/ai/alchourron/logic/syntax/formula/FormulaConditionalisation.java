@@ -31,5 +31,4 @@ public class FormulaConditionalisation<S extends Signature> extends LogicalOpera
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

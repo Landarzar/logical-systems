@@ -42,4 +42,9 @@ public class FormulaVerum<S extends VerumLogicSignature> extends FormulaAtom<S> 
 	public boolean isSignatureMatching(S signature) throws UnsupportedOperationException {
 		return true;
 	}
+	
+	@Override
+	public String toLaTeX() {
+		return "\\top";
+	}
 }

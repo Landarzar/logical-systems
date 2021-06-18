@@ -13,11 +13,11 @@ import edu.cs.ai.alchourron.logic.syntax.structure.PropositionLogicSignature;
  * @param <PSym> The type for symbols
  * @param <S>    The signature type
  */
-public class FormulaProposition<PSym, S extends PropositionLogicSignature<PSym>> extends FormulaAtom<S> {
+public class FormulaPropositionalAtom<PSym, S extends PropositionLogicSignature<PSym>> extends FormulaAtom<S> {
 
 	protected PSym symbol;
 
-	public FormulaProposition(PSym symbol) {
+	public FormulaPropositionalAtom(PSym symbol) {
 		this.symbol = symbol;
 	}
 
@@ -49,9 +49,14 @@ public class FormulaProposition<PSym, S extends PropositionLogicSignature<PSym>>
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!(obj instanceof FormulaProposition))
+		if (!(obj instanceof FormulaPropositionalAtom))
 			return false;
-		FormulaProposition other = (FormulaProposition) obj;
+		FormulaPropositionalAtom other = (FormulaPropositionalAtom) obj;
 		return Objects.equals(symbol, other.symbol);
+	}
+	
+	@Override
+	public String toLaTeX() {
+		return toString();
 	}
 }

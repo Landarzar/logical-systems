@@ -40,10 +40,14 @@ public class FormulaModus<M, S extends ModalLogicSignature<M>> extends LogicalOp
 	public String stringify() {
 		return "(" + getKindofModus() + getOperands().get(0) + ")";
 	}
+	
+	@Override
+	public String toLaTeX() {
+		return getKindofModus() + getOperands().get(0).toLaTeX();
+	}
 
 	@Override
 	public boolean isAtom() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

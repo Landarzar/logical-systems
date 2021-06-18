@@ -10,7 +10,7 @@ import edu.cs.ai.alchourron.logic.Interpretation;
 import edu.cs.ai.alchourron.logic.logics.propositional.PropositionalSignature;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaAND;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaNeg;
-import edu.cs.ai.alchourron.logic.syntax.formula.FormulaProposition;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPropositionalAtom;
 
 /***
  * Represents propositional interpretations.
@@ -142,9 +142,9 @@ public class PropositionalInterpretation<P> implements Interpretation<Propositio
 		for (P pSym : signature.getPropositions()) {
 			Formula<PropositionalSignature<P>> tmp;
 			if (isTrue(pSym))
-				tmp = new FormulaProposition<>(pSym);
+				tmp = new FormulaPropositionalAtom<>(pSym);
 			else
-				tmp = new FormulaNeg<>(new FormulaProposition<>(pSym));
+				tmp = new FormulaNeg<>(new FormulaPropositionalAtom<>(pSym));
 
 			if (result == null)
 				result = tmp;

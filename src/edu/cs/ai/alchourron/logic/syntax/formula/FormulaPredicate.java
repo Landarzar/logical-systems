@@ -97,4 +97,31 @@ public class FormulaPredicate<R, S extends PredicateLogicSignature<R>>
 		FormulaPredicate other = (FormulaPredicate) obj;
 		return Objects.equals(symbol, other.symbol) && Objects.equals(terms, other.terms);
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.cs.ai.alchourron.LaTeX#toLaTeX()
+	 */
+	@Override
+	public String toLaTeX() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(getSymbol());
+		builder.append("(");
+
+		boolean first = true;
+
+		for (Term<S> term : getTerms()) {
+			if (first) {
+				builder.append(term.toLaTeX());
+				first = false;
+				continue;
+			}
+			builder.append(","); 
+			builder.append(term.toLaTeX());
+		}
+
+		builder.append(")");
+		return builder.toString();
+	}
 }

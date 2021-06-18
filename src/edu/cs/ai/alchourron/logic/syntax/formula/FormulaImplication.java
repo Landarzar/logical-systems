@@ -64,4 +64,23 @@ public class FormulaImplication<S extends ImplicationLogicSignature> extends Log
 		FormulaImplication other = (FormulaImplication) obj;
 		return Objects.equals(conclusion, other.conclusion) && Objects.equals(premise, other.premise);
 	}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.cs.ai.alchourron.LaTeX#toLaTeX()
+	 */
+	@Override
+	public String toLaTeX() {
+		StringBuilder builder = new StringBuilder();
+//		builder.append("(");
+
+		boolean first = true;
+
+		builder.append(getPremise());
+		builder.append(" \\rightarrow ");
+		builder.append(getConclusion());
+
+//		builder.append(")");
+		return builder.toString();
+	}
 }

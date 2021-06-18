@@ -96,4 +96,32 @@ public class FunctionTerm<K,S extends FunctionTermLogicSignature<K>> implements 
 		FunctionTerm other = (FunctionTerm) obj;
 		return arity == other.arity && Objects.equals(children, other.children) && Objects.equals(symbol, other.symbol);
 	}
+
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.cs.ai.alchourron.LaTeX#toLaTeX()
+	 */
+	@Override
+	public String toLaTeX() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(getSymbol());
+		builder.append("(");
+
+		boolean first = true;
+
+		for (Term<S> term : getSubTerms()) {
+			if (first) {
+				builder.append(term.toLaTeX());
+				first = false;
+				continue;
+			}
+			builder.append(","); 
+			builder.append(term.toLaTeX());
+		}
+
+		builder.append(")");
+		return builder.toString();
+	}
 }

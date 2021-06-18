@@ -1,27 +1,24 @@
 package edu.cs.ai.alchourron.logic.logics.propositional;
 
 import java.math.BigInteger;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.Signature;
 import edu.cs.ai.alchourron.logic.semantics.interpretations.PropositionalInterpretation;
-import edu.cs.ai.alchourron.logic.syntax.structure.BiImplicationLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.FalsumLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.ImplicationLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.PropositionLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.ClassicalConnectivesLogicSignature;
-import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.formula.*;
+import edu.cs.ai.alchourron.logic.syntax.structure.*;
 
 /***
  * Represents a propositional signature, which uses Elements of the type Psym as
@@ -29,18 +26,40 @@ import edu.cs.ai.alchourron.logic.syntax.structure.VerumLogicSignature;
  * 
  * @author Kai Sauerwald
  *
- * @param <PSym> The type of the symbols
+ * @param <P> The type of the symbols
  */
-public class PropositionalSignature<PSym> implements Signature, VerumLogicSignature, FalsumLogicSignature,
-		ClassicalConnectivesLogicSignature, PropositionLogicSignature<PSym>, ImplicationLogicSignature,
-		BiImplicationLogicSignature, Iterable<PropositionalInterpretation<PSym>> {
+public class PropositionalSignature<P> implements Signature, VerumLogicSignature, FalsumLogicSignature,
+		ClassicalConnectivesLogicSignature, PropositionLogicSignature<P>, ImplicationLogicSignature,
+		BiImplicationLogicSignature, Iterable<PropositionalInterpretation<P>> {
+	
+	public static <P> Set<P> getAtoms(Formula<PropositionalSignature<P>> formula){
+		if (formula instanceof FormulaPropositionalAtom<?,?>) {
+			FormulaPropositionalAtom<P,PropositionalSignature<P>> f = (FormulaPropositionalAtom<P,PropositionalSignature<P>>) formula;
+			return Set.of(f.getSymbol());
+		}
+		else if (formula instanceof LogicalOperator<?>) {
+			FormulaAND<PropositionalSignature<P>> f = (FormulaAND<PropositionalSignature<P>>) formula;
+			HashSet<P> set = new HashSet<P>();
+			f.getOperands().forEach(o -> set.addAll(getAtoms(o)));
+			return set;
+		}
+		else if (formula instanceof FormulaFalsum<?>) {
+			return Set.of();
+		}
+		else if (formula instanceof FormulaVerum<?>) {
+			return Set.of();
+		}
+
+		// This happens if none of the special cases matches
+		throw new InvalidParameterException("The given formula object is not a valid propositional formula: "+ formula);
+	}
 
 	/***
 	 * The symbols of this signature
 	 * 
 	 * @author Kai Sauerwald
 	 */
-	ArrayList<PSym> symbols;
+	ArrayList<P> symbols;
 
 	/***
 	 * Constructs a new propositional signature
@@ -48,10 +67,10 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 	 * @author Kai Sauerwald
 	 * @param symbols The symbols of this signature
 	 */
-	public PropositionalSignature(PSym... symbols) {
+	public PropositionalSignature(P... symbols) {
 		this.symbols = new ArrayList<>();
 		for (int i = 0; i < symbols.length; i++) {
-			PSym v = symbols[i];
+			P v = symbols[i];
 			this.symbols.add(v);
 		}
 	}
@@ -62,8 +81,18 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 	 * @author Kai Sauerwald
 	 * @param symbols The symbols of this signature
 	 */
-	public PropositionalSignature(Collection<PSym> symbols) {
+	public PropositionalSignature(Collection<P> symbols) {
 		this.symbols = new ArrayList<>(symbols);
+	}
+	
+	/***
+	 * Constructs a new propositional signature
+	 * 
+	 * @author Kai Sauerwald
+	 * @param symbols The symbols of this signature
+	 */
+	public PropositionalSignature(Formula<PropositionalSignature<P>> formula) {
+		this(getAtoms(formula));
 	}
 
 //	/***
@@ -71,7 +100,7 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 //	 * 
 //	 * @author Kai Sauerwald
 //	 */
-//	public List<PSym> getSymbols() {
+//	public List<P> getSymbols() {
 //		return Collections.unmodifiableList(symbols);
 //	}
 	
@@ -81,7 +110,7 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 	 * @author Kai Sauerwald
 	 */
 	@Override
-	public Set<PSym> getPropositions() {
+	public Set<P> getPropositions() {
 		return Collections.unmodifiableSet(new HashSet<>(symbols));
 	}
 
@@ -90,7 +119,7 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 	 * 
 	 * @author Kai Sauerwald.
 	 */
-	public Stream<PropositionalInterpretation<PSym>> stream() {
+	public Stream<PropositionalInterpretation<P>> stream() {
 		return StreamSupport.stream(Spliterators.spliterator(iterator(), /* initial size */ 0L, Spliterator.IMMUTABLE),
 				false);
 	}
@@ -103,15 +132,15 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 	 * @see java.lang.Iterable#iterator()
 	 */
 	@Override
-	public Iterator<PropositionalInterpretation<PSym>> iterator() {
+	public Iterator<PropositionalInterpretation<P>> iterator() {
 		String cmp = "";
 		for (int i = 0; i < symbols.size(); i++) {
 			cmp += "1";
 		}
 		final String cmp2 = cmp;
 
-		PropositionalSignature<PSym> sig = this;
-		return new Iterator<PropositionalInterpretation<PSym>>() {
+		PropositionalSignature<P> sig = this;
+		return new Iterator<PropositionalInterpretation<P>>() {
 
 			BigInteger bigint = BigInteger.ZERO;
 			String max = cmp2;
@@ -132,15 +161,15 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 			 * @see java.util.Iterator#next()
 			 */
 			@Override
-			public PropositionalInterpretation<PSym> next() {
-				LinkedList<PSym> temp = new LinkedList<>();
+			public PropositionalInterpretation<P> next() {
+				LinkedList<P> temp = new LinkedList<>();
 				for (int i = 0; i < symbols.size(); i++) {
 					if (bigint.testBit(i))
 						temp.add(symbols.get(i));
 				}
 
 				bigint = bigint.add(BigInteger.ONE);
-				return new PropositionalInterpretation<PSym>(sig, temp);
+				return new PropositionalInterpretation<P>(sig, temp);
 			}
 
 		};
@@ -168,7 +197,7 @@ public class PropositionalSignature<PSym> implements Signature, VerumLogicSignat
 		if (!(o instanceof PropositionalSignature))
 			return false;
 
-		PropositionalSignature<PSym> sig = (PropositionalSignature<PSym>) o;
+		PropositionalSignature<P> sig = (PropositionalSignature<P>) o;
 
 		return this.symbols.equals(sig.symbols);
 	}

@@ -110,23 +110,7 @@ public class FormulaAND<S extends ConjunctionLogicSignature> extends LogicalOper
 	 */
 	@Override
 	public String toLaTeX() {
-		StringBuilder builder = new StringBuilder();
-//		builder.append("(");
-
-		boolean first = true;
-
-		for (Formula<S> propositionalFormula : operands) {
-			if (first) {
-				builder.append(propositionalFormula.toLaTeX());
-				first = false;
-				continue;
-			}
-//			builder.append(" \\land "); // Short form
-			builder.append(propositionalFormula.toLaTeX());
-		}
-
-//		builder.append(")");
-		return builder.toString();
+		return super.toLaTeX(" \\land ");
 	}
 
 	/*

@@ -34,4 +34,10 @@ public class FormulaFalsum<S extends FalsumLogicSignature> extends FormulaAtom<S
 			return true;
 		return super.equals(obj);
 	}
+	
+	
+	@Override
+	public String toLaTeX() {
+		return "\\bot";
+	}
 }

@@ -62,4 +62,9 @@ public class VariableTerm<V, S extends VariableTermLogicSignature<V>> implements
 		VariableTerm other = (VariableTerm) obj;
 		return Objects.equals(variable, other.variable);
 	}
+	
+	@Override
+	public String toLaTeX() {
+		return toString();
+	}
 }

@@ -63,4 +63,24 @@ public class FormulaBiImplication<S extends BiImplicationLogicSignature> extends
 		FormulaBiImplication other = (FormulaBiImplication) obj;
 		return Objects.equals(implicant1, other.implicant1) && Objects.equals(implicant2, other.implicant2);
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.cs.ai.alchourron.LaTeX#toLaTeX()
+	 */
+	@Override
+	public String toLaTeX() {
+		StringBuilder builder = new StringBuilder();
+//		builder.append("(");
+
+		boolean first = true;
+
+		builder.append(getFirst());
+		builder.append(" \\leftrightarrow ");
+		builder.append(getSecond());
+
+//		builder.append(")");
+		return builder.toString();
+	}
 }

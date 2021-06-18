@@ -3,6 +3,7 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 import java.util.List;
 import java.util.Objects;
 
+import edu.cs.ai.alchourron.LaTeX;
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.syntax.structure.SecondOrderQuantificationLogic;
 
@@ -66,6 +67,15 @@ public class FormulaSOQuantification<QSO, P, S extends SecondOrderQuantification
 	@Override
 	public String toString() {
 		return quantifiyer.toString() + " " + variable + ". " + quantified;
+	}
+
+	@Override
+	public String toLaTeX() {
+		if (!(getQuantifyer() instanceof LaTeX))
+			return quantifiyer.toString() + " " + variable + ". " + quantified.toLaTeX();
+		LaTeX qtex = (LaTeX) getQuantifyer();
+		
+		return qtex.toLaTeX() + " " + variable + ". " + quantified.toLaTeX();
 	}
 	
 	@Override

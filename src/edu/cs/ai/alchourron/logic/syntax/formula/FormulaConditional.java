@@ -79,13 +79,22 @@ public class FormulaConditional<S extends Signature, B extends Formula<S>> imple
 		return List.of(this.getAntecendence(), this.getConsequence());
 	}
 
-//	/*
-//	 * (non-Javadoc)
-//	 * 
-//	 * @see edu.cs.ai.alchourron.logic.Formula#getSyntaxTree()
-//	 */
-//	@Override
-//	public List<Formula<S>> getSyntaxTree() throws UnsupportedOperationException {
-//		return List.of(this.getAntecendence(),this.getConsequence());
-//	}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see edu.cs.ai.alchourron.LaTeX#toLaTeX()
+	 */
+	@Override
+	public String toLaTeX() {
+		StringBuilder builder = new StringBuilder();
+//		builder.append("(");
+
+		boolean first = true;
+
+		builder.append("( " + getAntecendence() + " | ");
+		builder.append(getConsequence() + " )");
+
+//		builder.append(")");
+		return builder.toString();
+	}
 }

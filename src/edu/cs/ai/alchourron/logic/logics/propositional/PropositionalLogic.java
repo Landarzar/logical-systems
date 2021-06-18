@@ -13,7 +13,7 @@ import edu.cs.ai.alchourron.logic.syntax.formula.FormulaFalsum;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaImplication;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaNeg;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaOR;
-import edu.cs.ai.alchourron.logic.syntax.formula.FormulaProposition;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPropositionalAtom;
 import edu.cs.ai.alchourron.logic.syntax.formula.FormulaVerum;
 import edu.cs.ai.alchourron.logic.syntax.formula.LogicalOperator;
 
@@ -62,8 +62,8 @@ public class PropositionalLogic<P> implements
 				|| syntacton instanceof FormulaNeg<?>) {
 			LogicalOperator<PropositionalSignature<P>> le = (LogicalOperator<PropositionalSignature<P>>) syntacton;
 			return le.getOperands().stream().allMatch(se -> validSyntaxTree(se, sig));
-		} else if (syntacton instanceof FormulaProposition<?, ?>) {
-			FormulaProposition<P, PropositionalSignature<P>> atom = (FormulaProposition<P, PropositionalSignature<P>>) syntacton;
+		} else if (syntacton instanceof FormulaPropositionalAtom<?, ?>) {
+			FormulaPropositionalAtom<P, PropositionalSignature<P>> atom = (FormulaPropositionalAtom<P, PropositionalSignature<P>>) syntacton;
 			if (!sig.getPropositions().contains(atom.getSymbol()))
 				return false;
 			return true;
@@ -133,8 +133,8 @@ public class PropositionalLogic<P> implements
 	public boolean satisfies(PropositionalInterpretation<P> interpretation,
 			Formula<PropositionalSignature<P>> formula) {
 
-		if (formula instanceof FormulaProposition<?,?>) {
-			FormulaProposition<P,PropositionalSignature<P>> f = (FormulaProposition<P,PropositionalSignature<P>>) formula;
+		if (formula instanceof FormulaPropositionalAtom<?,?>) {
+			FormulaPropositionalAtom<P,PropositionalSignature<P>> f = (FormulaPropositionalAtom<P,PropositionalSignature<P>>) formula;
 			return interpretation.isTrue(f.getSymbol());
 		}
 		else if (formula instanceof FormulaAND<?>) {
@@ -172,12 +172,12 @@ public class PropositionalLogic<P> implements
 		throw new InvalidParameterException("The given formula object is not a valid propositional formula: "+ formula);
 	}
 
-	/***
-	 * Test satisfaction
-	 * @param interpretation
-	 * @param formula
-	 * @return
-	 */
+//	/***
+//	 * Test satisfaction
+//	 * @param interpretation
+//	 * @param formula
+//	 * @return
+//	 */
 //	public boolean satisfies(PropositionalInterpretation<P> interpretation,
 //			FormulaProposition<P, PropositionalSignature<P>> formula) {
 //		return interpretation.isTrue(formula.getSymbol());
