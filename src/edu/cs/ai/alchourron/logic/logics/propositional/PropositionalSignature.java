@@ -38,7 +38,7 @@ public class PropositionalSignature<P> implements Signature, VerumLogicSignature
 			return Set.of(f.getSymbol());
 		}
 		else if (formula instanceof LogicalOperator<?>) {
-			FormulaAND<PropositionalSignature<P>> f = (FormulaAND<PropositionalSignature<P>>) formula;
+			LogicalOperator<PropositionalSignature<P>> f = (LogicalOperator<PropositionalSignature<P>>) formula;
 			HashSet<P> set = new HashSet<P>();
 			f.getOperands().forEach(o -> set.addAll(getAtoms(o)));
 			return set;

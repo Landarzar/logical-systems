@@ -1,17 +1,22 @@
 
 package edu.cs.ai.alchourron.logic.logics.propositional;
 
-import java.security.InvalidAlgorithmParameterException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.semantics.interpretations.PropositionalInterpretation;
-import edu.cs.ai.alchourron.logic.syntax.formula.*;
-import edu.cs.ai.alchourron.logic.syntax.structure.ClassicalConnectivesLogicSignature;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaAND;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaAtom;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaFalsum;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaNeg;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaOR;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaPropositionalAtom;
+import edu.cs.ai.alchourron.logic.syntax.formula.FormulaVerum;
 import edu.cs.ai.math.combinatorics.PowerSet;
 import edu.cs.algo.QMCAlgorithm;
 
@@ -25,15 +30,54 @@ public class PropositionalNormalForms<P> {
 	
 	
 	
-	public Formula<PropositionalSignature<P>> computeQMC(Formula<PropositionalSignature<P>> formula){
+	public Formula<PropositionalSignature<P>> computeQMC(Formula<PropositionalSignature<P>> formula, PropositionalSignature<P> signature){
 		PropositionalLogic<P> logic = new  PropositionalLogic<P>();
 		
 		Set<PropositionalInterpretation<P>> models = logic.modelsOf(formula, new PropositionalSignature<>(formula));
+
+        ArrayList<ArrayList<Integer>> evaluationsTable = new ArrayList<>(models.size());
 		
-		QMCAlgorithm algo = new QMCAlgorithm();
-		// TODO: Compute it
+		/* Fill table of evaluations
+         * one row per minterm
+         * true = 1 , false = 0
+         */
+        for (PropositionalInterpretation<P> ip : models){
+            ArrayList<Integer> eval = new ArrayList<>(signature.getPropositions().size());
+            for (P symbol : signature.getPropositions()){
+                if (ip.isTrue(symbol))
+                    eval.add(1);
+                else
+                    eval.add(0);
+            }
+            evaluationsTable.add(eval);
+        }
+
+        HashSet<ArrayList<Integer>> primeImplicants = QMCAlgorithm.getPrimeImplicants(evaluationsTable);
+        Map<ArrayList<Integer>, ArrayList<Boolean>> piChart = QMCAlgorithm.getPIChart(primeImplicants);
+        HashSet<ArrayList<Integer>> finalImplicants = QMCAlgorithm.getFinalImplicants(piChart);
+        
+
+        List<P> variables = new ArrayList<>(signature.getPropositions());
+        HashSet<Formula<PropositionalSignature<P>>> implicants = new HashSet<>(finalImplicants.size());
+        
+        for ( ArrayList<Integer> finalImplicant : finalImplicants){
+            HashSet<Formula<PropositionalSignature<P>>> set = new HashSet<>();
+            // if there is only one final implicant, which one contains "don't care" (-1), this formula is equivalent to "top"
+            if (finalImplicants.size()==1 && !(finalImplicant.contains(1) || finalImplicant.contains(0)))
+                return new FormulaVerum<PropositionalSignature<P>>();
+            for (int i = 0; i < finalImplicant.size(); i++) {
+                if (finalImplicant.get(i) == -1)
+                    continue;
+                else if (finalImplicant.get(i) == 1)
+                    set.add( new FormulaPropositionalAtom<P, PropositionalSignature<P>>(variables.get(i)) );
+                else
+                    set.add( new FormulaNeg<PropositionalSignature<P>>( new FormulaPropositionalAtom<P, PropositionalSignature<P>>(variables.get(i)) ));
+            }
+            if (!set.isEmpty())
+                implicants.add(new FormulaAND<PropositionalSignature<P>>(set));
+        }
 		
-		return null;
+		return new  FormulaOR<>(implicants);
 	}
 
 	/*******************************************************************

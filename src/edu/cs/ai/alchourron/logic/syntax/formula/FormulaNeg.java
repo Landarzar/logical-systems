@@ -79,7 +79,8 @@ public class FormulaNeg<S extends NegationLogicSignature> extends LogicalOperato
 	@Override
 	public String toLaTeX() {
 		// TODO Auto-generated method stub
-		return "\\neg " + this.operand.toLaTeX();
+//		return "\\neg " + this.operand.toLaTeX();
+		return super.toLaTeX("\\neg");
 	}
 
 	/*

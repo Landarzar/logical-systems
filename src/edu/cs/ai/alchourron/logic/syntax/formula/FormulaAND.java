@@ -110,7 +110,7 @@ public class FormulaAND<S extends ConjunctionLogicSignature> extends LogicalOper
 	 */
 	@Override
 	public String toLaTeX() {
-		return super.toLaTeX(" \\land ");
+		return super.toLaTeX("\\land");
 	}
 
 	/*

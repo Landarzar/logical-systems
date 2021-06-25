@@ -3,6 +3,7 @@ package edu.cs.ai.alchourron.logic.syntax.formula;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.Signature;
@@ -59,9 +60,15 @@ public abstract class LogicalOperator<S extends Signature> implements Formula<S>
 	 */
 	protected String toLaTeX(String symbol) {
 		StringBuilder builder = new StringBuilder();
-//		builder.append("(");
+		
+		if(getOperands().size() <= 0)
+			return symbol;
+				
+		if(getOperands().size() <= 1)
+			return symbol + " " + getOperands().stream().map(o -> o.toLaTeX()).collect( Collectors.joining() );
 
 		boolean first = true;
+		builder.append("(");
 
 		for (Formula<S> propositionalFormula : getOperands()) {
 			if (first) {
@@ -69,11 +76,12 @@ public abstract class LogicalOperator<S extends Signature> implements Formula<S>
 				first = false;
 				continue;
 			}
-			builder.append(symbol); // Short form
+			builder.append(" " +symbol+ " "); // Short form
 			builder.append(propositionalFormula.toLaTeX());
 		}
+		
 
-//		builder.append(")");
+		builder.append(")");
 		return builder.toString();
 	}
 }
