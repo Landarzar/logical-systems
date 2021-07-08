@@ -47,7 +47,7 @@ public class FormulaImplication<S extends ImplicationLogicSignature> extends Log
 
 	@Override
 	public String toString() {
-		return premise.toLaTeX() + " => " + conclusion.toString();
+		return premise.toString() + " => " + conclusion.toString();
 	}
 
 	@Override
@@ -74,11 +74,12 @@ public class FormulaImplication<S extends ImplicationLogicSignature> extends Log
 		StringBuilder builder = new StringBuilder();
 //		builder.append("(");
 
-		boolean first = true;
+		String premise = getPremise().isAtom() ? getPremise().toLaTeX() : "(" + getPremise().toLaTeX() + ")";
+		String conclusion = getConclusion().isAtom() ? getConclusion().toLaTeX() : "(" + getConclusion().toLaTeX() + ")";
 
-		builder.append(getPremise());
+		builder.append(premise);
 		builder.append(" \\rightarrow ");
-		builder.append(getConclusion());
+		builder.append(conclusion);
 
 //		builder.append(")");
 		return builder.toString();

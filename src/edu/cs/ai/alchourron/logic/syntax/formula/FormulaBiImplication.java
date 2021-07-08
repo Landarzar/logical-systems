@@ -46,7 +46,7 @@ public class FormulaBiImplication<S extends BiImplicationLogicSignature> extends
 
 	@Override
 	public String toString() {
-		return implicant1.toLaTeX() + " <=> " + implicant2.toString();
+		return implicant1.toString() + " <=> " + implicant2.toString();
 	}
 
 	@Override
@@ -72,15 +72,12 @@ public class FormulaBiImplication<S extends BiImplicationLogicSignature> extends
 	@Override
 	public String toLaTeX() {
 		StringBuilder builder = new StringBuilder();
-//		builder.append("(");
+		String first = getFirst().isAtom() ? getFirst().toLaTeX() : "(" + getFirst().toLaTeX() + ")";
+		String second = getSecond().isAtom() ? getSecond().toLaTeX() : "(" + getSecond().toLaTeX() + ")";
 
-		boolean first = true;
-
-		builder.append(getFirst());
+		builder.append(first);
 		builder.append(" \\leftrightarrow ");
-		builder.append(getSecond());
-
-//		builder.append(")");
+		builder.append(second);
 		return builder.toString();
 	}
 }
