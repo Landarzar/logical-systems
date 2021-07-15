@@ -27,7 +27,7 @@ public class FirstOrderLogic<R, K, V> extends GeneralizedFirstOrderLogic<R, K, V
 			FormulaQuantification<ClassicalQuantifier, V, FOSignature<R, K, V>> formula, Function<V, U> valuation) {
 
 		if (formula.getQuantifyer() == ClassicalQuantifier.FORALL) {
-			return interpretation.getUniverse().stream().allMatch(u -> {
+			return interpretation.getUniverse().parallelStream().allMatch(u -> {
 
 				Function<V, U> nval = var -> {
 					if (var.equals(formula.getVariables()))
@@ -39,7 +39,7 @@ public class FirstOrderLogic<R, K, V> extends GeneralizedFirstOrderLogic<R, K, V
 			});
 		}
 		else if (formula.getQuantifyer() == ClassicalQuantifier.EXISTS) {
-			return interpretation.getUniverse().stream().anyMatch(u -> {
+			return interpretation.getUniverse().parallelStream().anyMatch(u -> {
 
 				Function<V, U> nval = var -> {
 					if (var.equals(formula.getVariables()))
