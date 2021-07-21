@@ -27,57 +27,60 @@ import edu.cs.algo.QMCAlgorithm;
  * @param <P> Type of atoms
  */
 public class PropositionalNormalForms<P> {
-	
-	
+
+	public Formula<PropositionalSignature<P>> computeQMC(Set<PropositionalInterpretation<P>> models, PropositionalSignature<P> signature){
+		PropositionalLogic<P> logic = new  PropositionalLogic<P>();
+
+		ArrayList<ArrayList<Integer>> evaluationsTable = new ArrayList<>(models.size());
+
+		/* Fill table of evaluations
+		 * one row per minterm
+		 * true = 1 , false = 0
+		 */
+		for (PropositionalInterpretation<P> ip : models){
+			ArrayList<Integer> eval = new ArrayList<>(signature.getPropositions().size());
+			for (P symbol : signature.getPropositions()){
+				if (ip.isTrue(symbol))
+					eval.add(1);
+				else
+					eval.add(0);
+			}
+			evaluationsTable.add(eval);
+		}
+
+		HashSet<ArrayList<Integer>> primeImplicants = QMCAlgorithm.getPrimeImplicants(evaluationsTable);
+		Map<ArrayList<Integer>, ArrayList<Boolean>> piChart = QMCAlgorithm.getPIChart(primeImplicants);
+		HashSet<ArrayList<Integer>> finalImplicants = QMCAlgorithm.getFinalImplicants(piChart);
+
+
+		List<P> variables = new ArrayList<>(signature.getPropositions());
+		HashSet<Formula<PropositionalSignature<P>>> implicants = new HashSet<>(finalImplicants.size());
+
+		for ( ArrayList<Integer> finalImplicant : finalImplicants){
+			HashSet<Formula<PropositionalSignature<P>>> set = new HashSet<>();
+			// if there is only one final implicant, which one contains "don't care" (-1), this formula is equivalent to "top"
+			if (finalImplicants.size()==1 && !(finalImplicant.contains(1) || finalImplicant.contains(0)))
+				return new FormulaVerum<>();
+			for (int i = 0; i < finalImplicant.size(); i++) {
+				if (finalImplicant.get(i) == -1)
+					continue;
+				else if (finalImplicant.get(i) == 1)
+					set.add( new FormulaPropositionalAtom<>(variables.get(i)) );
+				else
+					set.add( new FormulaNeg<>( new FormulaPropositionalAtom<>(variables.get(i)) ));
+			}
+			if (!set.isEmpty())
+				implicants.add(set.size() > 1 ? new FormulaAND<>(set) : set.iterator().next());
+		}
+
+		return implicants.size() > 1 ? new FormulaOR<>(implicants) : implicants.iterator().next();
+	}
 	
 	public Formula<PropositionalSignature<P>> computeQMC(Formula<PropositionalSignature<P>> formula, PropositionalSignature<P> signature){
 		PropositionalLogic<P> logic = new  PropositionalLogic<P>();
-		
 		Set<PropositionalInterpretation<P>> models = logic.modelsOf(formula, new PropositionalSignature<>(formula));
 
-        ArrayList<ArrayList<Integer>> evaluationsTable = new ArrayList<>(models.size());
-		
-		/* Fill table of evaluations
-         * one row per minterm
-         * true = 1 , false = 0
-         */
-        for (PropositionalInterpretation<P> ip : models){
-            ArrayList<Integer> eval = new ArrayList<>(signature.getPropositions().size());
-            for (P symbol : signature.getPropositions()){
-                if (ip.isTrue(symbol))
-                    eval.add(1);
-                else
-                    eval.add(0);
-            }
-            evaluationsTable.add(eval);
-        }
-
-        HashSet<ArrayList<Integer>> primeImplicants = QMCAlgorithm.getPrimeImplicants(evaluationsTable);
-        Map<ArrayList<Integer>, ArrayList<Boolean>> piChart = QMCAlgorithm.getPIChart(primeImplicants);
-        HashSet<ArrayList<Integer>> finalImplicants = QMCAlgorithm.getFinalImplicants(piChart);
-        
-
-        List<P> variables = new ArrayList<>(signature.getPropositions());
-        HashSet<Formula<PropositionalSignature<P>>> implicants = new HashSet<>(finalImplicants.size());
-        
-        for ( ArrayList<Integer> finalImplicant : finalImplicants){
-            HashSet<Formula<PropositionalSignature<P>>> set = new HashSet<>();
-            // if there is only one final implicant, which one contains "don't care" (-1), this formula is equivalent to "top"
-            if (finalImplicants.size()==1 && !(finalImplicant.contains(1) || finalImplicant.contains(0)))
-                return new FormulaVerum<PropositionalSignature<P>>();
-            for (int i = 0; i < finalImplicant.size(); i++) {
-                if (finalImplicant.get(i) == -1)
-                    continue;
-                else if (finalImplicant.get(i) == 1)
-                    set.add( new FormulaPropositionalAtom<P, PropositionalSignature<P>>(variables.get(i)) );
-                else
-                    set.add( new FormulaNeg<PropositionalSignature<P>>( new FormulaPropositionalAtom<P, PropositionalSignature<P>>(variables.get(i)) ));
-            }
-            if (!set.isEmpty())
-                implicants.add(new FormulaAND<PropositionalSignature<P>>(set));
-        }
-		
-		return new  FormulaOR<>(implicants);
+		return this.computeQMC(models, signature);
 	}
 
 	/*******************************************************************
