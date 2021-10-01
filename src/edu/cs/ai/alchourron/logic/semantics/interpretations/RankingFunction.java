@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Collectors;
 
 import edu.cs.ai.math.settheory.Pair;
@@ -24,7 +25,7 @@ import edu.cs.ai.math.settheory.relation.implementation.AbstractTotalPreorderImp
  */
 public class RankingFunction<T> extends AbstractCollection<Pair<T, Integer>> {
 
-	private HashSet<Pair<T, Integer>> elements = new HashSet<>();
+	private CopyOnWriteArraySet<Pair<T, Integer>> elements = new CopyOnWriteArraySet<>();
 
 	public RankingFunction() {
 	}

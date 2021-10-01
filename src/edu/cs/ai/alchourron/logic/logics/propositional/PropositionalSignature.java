@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -39,7 +40,7 @@ public class PropositionalSignature<P> implements Signature, VerumLogicSignature
 		}
 		else if (formula instanceof LogicalOperator<?>) {
 			LogicalOperator<PropositionalSignature<P>> f = (LogicalOperator<PropositionalSignature<P>>) formula;
-			HashSet<P> set = new HashSet<P>();
+			Set<P> set = new CopyOnWriteArraySet<P>();
 			f.getOperands().forEach(o -> set.addAll(getAtoms(o)));
 			return set;
 		}

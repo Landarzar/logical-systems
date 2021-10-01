@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import edu.cs.ai.alchourron.logic.Signature;
 import edu.cs.ai.alchourron.logic.syntax.formula.ClassicalQuantifier;
@@ -123,7 +124,7 @@ public class GeneralizedFOSignature<R, K, V, Q>
 	
 	@Override
 	public Set<K> getFunctionSymbols() {
-		return Collections.unmodifiableSet(new HashSet<>(functionSymbols));
+		return Collections.unmodifiableSet(new CopyOnWriteArraySet<>(functionSymbols));
 	}
 	
 	@Override
