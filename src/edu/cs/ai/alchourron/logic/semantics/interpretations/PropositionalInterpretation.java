@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.Interpretation;
@@ -33,7 +34,7 @@ public class PropositionalInterpretation<P> implements Interpretation<Propositio
 	 */
 	public PropositionalInterpretation(PropositionalSignature<P> sig, P... trueValued) {
 		this.signature = sig;
-		this.trueValued = new HashSet<>();
+		this.trueValued = new CopyOnWriteArraySet<>();
 		for (int i = 0; i < trueValued.length; i++) {
 			P v = trueValued[i];
 			this.trueValued.add(v);
