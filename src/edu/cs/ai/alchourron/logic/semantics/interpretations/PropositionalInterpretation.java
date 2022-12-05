@@ -150,7 +150,7 @@ public class PropositionalInterpretation<P> implements Interpretation<Propositio
 			if (result == null)
 				result = tmp;
 			else
-				result = new FormulaAND<>(tmp);
+				result = new FormulaAND<>(result, tmp);
 		}
 		return result;
 	}
