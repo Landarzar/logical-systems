@@ -1,2 +1,2 @@
 # alchourron - logical_systems
-An library about the structure of logics
+A library about the structure of logics. This library allows modelling/implementing logics that fit into the general scheme of "Institutions" from category theory.
