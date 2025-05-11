@@ -141,18 +141,18 @@ public class PropositionalTeam<P> implements Interpretation<PropositionalSignatu
 	public Formula<PropositionalSignature<P>> getCharacterizingFormula() {
 		Formula<PropositionalSignature<P>> result = null;
 
-		for (P pSym : signature.getPropositions()) {
-			Formula<PropositionalSignature<P>> tmp;
-			if (isTrue(pSym))
-				tmp = new FormulaPropositionalAtom<>(pSym);
-			else
-				tmp = new FormulaNeg<>(new FormulaPropositionalAtom<>(pSym));
-
-			if (result == null)
-				result = tmp;
-			else
-				result = new FormulaAND<>(result, tmp);
-		}
+//		for (P pSym : signature.getPropositions()) {
+//			Formula<PropositionalSignature<P>> tmp;
+//			if (isTrue(pSym))
+//				tmp = new FormulaPropositionalAtom<>(pSym);
+//			else
+//				tmp = new FormulaNeg<>(new FormulaPropositionalAtom<>(pSym));
+//
+//			if (result == null)
+//				result = tmp;
+//			else
+//				result = new FormulaAND<>(result, tmp);
+//		}
 		return result;
 	}
 
