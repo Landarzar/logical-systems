@@ -12,14 +12,17 @@ import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import edu.cs.ai.alchourron.logic.Formula;
 import edu.cs.ai.alchourron.logic.Signature;
 import edu.cs.ai.alchourron.logic.semantics.interpretations.PropositionalInterpretation;
+import edu.cs.ai.alchourron.logic.semantics.interpretations.PropositionalTeam;
 import edu.cs.ai.alchourron.logic.syntax.formula.*;
 import edu.cs.ai.alchourron.logic.syntax.structure.*;
+import edu.cs.ai.math.combinatorics.PowerSet;
 
 /***
  * Represents a propositional signature, which uses Elements of the type Psym as
@@ -74,6 +77,19 @@ public class PropositionalSignature<P> implements Signature, VerumLogicSignature
 			P v = symbols[i];
 			this.symbols.add(v);
 		}
+	}
+	
+
+	/**
+	 * Creates an iterator, that iterates over all interpretations under this
+	 * signature.
+	 * 
+	 * @author Kai Sauerwald
+	 * @see java.lang.Iterable#iterator()
+	 */
+	public Iterator<PropositionalTeam<P>> iteratorTeams() {
+		return  PowerSet.stream(StreamSupport.stream(this.spliterator(), false)
+				    .collect(Collectors.toUnmodifiableSet())).map(s -> new PropositionalTeam<>(this, s) ).iterator();
 	}
 
 	/***

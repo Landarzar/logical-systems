@@ -25,8 +25,7 @@ import edu.cs.ai.math.settheory.relation.Relation;
  * @param <K> The type of function symbols
  * @param <S> The type of the signature
  */
-public class FiniteStructure<U, R, K, S extends Signature>
-		implements Interpretation<S> {
+public class FiniteStructure<U, R, K, S extends Signature> implements Interpretation<S> {
 
 	Set<U> universe;
 	Map<R, Relation<U>> relations;
@@ -44,13 +43,23 @@ public class FiniteStructure<U, R, K, S extends Signature>
 			Collection<Pair<K, AutoFunction<U>>> func) {
 		this.universe = Collections.unmodifiableSet(universe);
 
+		if(rel == null) {
+			relations = Collections.unmodifiableMap(new HashMap<>());
+		}
+		else {
 		HashMap<R, Relation<U>> rmap = new HashMap<>();
 		rel.forEach(p -> rmap.put(p.getFirst(), p.getSecond()));
 		relations = Collections.unmodifiableMap(rmap);
+		}
 
-		HashMap<K, AutoFunction<U>> fmap = new HashMap<>();
-		func.forEach(p -> fmap.put(p.getFirst(), p.getSecond()));
-		functions = Collections.unmodifiableMap(fmap);
+		if(func == null) {
+			functions = Collections.unmodifiableMap(new HashMap<>());
+		}
+		else {
+			HashMap<K, AutoFunction<U>> fmap = new HashMap<>();
+			func.forEach(p -> fmap.put(p.getFirst(), p.getSecond()));
+			functions = Collections.unmodifiableMap(fmap);
+		}
 	}
 
 	public Set<U> getUniverse() {
@@ -64,23 +73,23 @@ public class FiniteStructure<U, R, K, S extends Signature>
 	public AutoFunction<U> getFunction(K symb) {
 		return functions.get(symb);
 	}
-	
+
 	public int getRelationArity(R relationsymb) {
 		return this.relations.get(relationsymb).getArity();
 	}
-	
+
 	public int getFunctionArity(K funcsymb) {
 		return this.functions.get(funcsymb).getArity();
 	}
-	
-	public Set<R> getRelationSymbols(){
+
+	public Set<R> getRelationSymbols() {
 		return this.relations.keySet();
 	}
-	
+
 	/***
 	 * Returns all Functions Symbols which are defined here
 	 */
-	public Set<K> getFunctionSymbols(){
+	public Set<K> getFunctionSymbols() {
 		return this.functions.keySet();
 	}
 
@@ -136,15 +145,15 @@ public class FiniteStructure<U, R, K, S extends Signature>
 	public boolean isMatchingSignature(S signature) {
 		if (signature instanceof PredicateLogicSignature<?>) {
 			PredicateLogicSignature<R> predSig = (PredicateLogicSignature<R>) signature;
-			if(!getRelationSymbols().containsAll(predSig.getPredicateSymbols()))
+			if (!getRelationSymbols().containsAll(predSig.getPredicateSymbols()))
 				return false;
 		}
 		if (signature instanceof FunctionTermLogicSignature<?>) {
 			FunctionTermLogicSignature<K> predSig = (FunctionTermLogicSignature<K>) signature;
-			if(!getFunctionSymbols().containsAll(predSig.getFunctionSymbols()))
+			if (!getFunctionSymbols().containsAll(predSig.getFunctionSymbols()))
 				return false;
 		}
-		
+
 		return true;
 	}
 }
